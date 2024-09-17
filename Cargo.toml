@@ -1,0 +1,20 @@
+[package]
+name = "gitrack"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "gitrack"
+path = "src/lib.rs"
+
+
+[[bin]]
+name = "gitrack"
+path = "src/generator/gen.rs"
+
+[dependencies]
+upon = "0.8"
+serde = { version = "1.0", features = ["derive", "std"] }
+serde_json = "1.0"
+regex = "1.10.5"
+
