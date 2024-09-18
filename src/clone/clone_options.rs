@@ -65,7 +65,7 @@ pub fn mirror_option() -> CommandOption<'static> {
 pub fn origin_option(name_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--origin");
-        g.add_option_string(format!("{}", name_arg ));
+        g.add_option(name_arg);
     })
 }
 
@@ -75,7 +75,7 @@ pub fn origin_option(name_arg :&str) -> CommandOption {
 pub fn branch_option(name_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--branch");
-        g.add_option_string(format!("{}", name_arg ));
+        g.add_option(name_arg);
     })
 }
 
@@ -85,7 +85,7 @@ pub fn branch_option(name_arg :&str) -> CommandOption {
 pub fn upload_pack_option(upload_pack_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--upload-pack");
-        g.add_option_string(format!("{}", upload_pack_arg ));
+        g.add_option(upload_pack_arg);
     })
 }
 
@@ -101,7 +101,7 @@ pub fn template_option(template_directory_arg :&str) -> CommandOption {
 pub fn depth_option(depth_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--depth");
-        g.add_option_string(format!("{}", depth_arg ));
+        g.add_option(depth_arg);
     })
 }
 
@@ -159,6 +159,6 @@ pub fn separate_git_dir_option(git_dir_arg :&str) -> CommandOption {
 pub fn jobs_option(n_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--jobs");
-        g.add_option_string(format!("{}", n_arg ));
+        g.add_option(n_arg);
     })
 }

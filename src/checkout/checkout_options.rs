@@ -45,8 +45,8 @@ pub fn theirs_option() -> CommandOption<'static> {
 pub fn b_option(new_branch_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
          g.add_option("-b");
-        if new_branch_arg.len() > 0 {
-            g.add_option_string(format!("{}", new_branch_arg));
+        if !new_branch_arg.is_empty() {
+            g.add_option(new_branch_arg);
         }
     })
 }
@@ -84,7 +84,7 @@ pub fn detach_option() -> CommandOption<'static> {
 pub fn orphan_option(new_branch_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--orphan");
-        g.add_option_string(format!("{}", new_branch_arg ));
+        g.add_option(new_branch_arg);
     })
 }
 

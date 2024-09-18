@@ -109,8 +109,8 @@ pub fn tags_option() -> CommandOption<'static> {
 /// This option controls if and under what conditions new commits of populated submodules should be fetched too.
 /// --recurse-submodules[=yes|on-demand|no]
 pub fn recurse_submodules_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--recurse-submodules"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules={}", value)))
     }
@@ -141,8 +141,8 @@ pub fn submodule_prefix_option(path_arg :&str) -> CommandOption {
 /// All other methods of configuring fetch’s submodule recursion (such as settings in gitmodules(5) and git-config(1)) override this option, as does specifying --[no-]recurse-submodules directly.
 /// --recurse-submodules-default=[yes|on-demand]
 pub fn recurse_submodules_default_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules-default")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--recurse-submodules-default"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules-default={}", value)))
     }
@@ -162,7 +162,7 @@ pub fn update_head_ok_option() -> CommandOption<'static> {
 pub fn upload_pack_option(upload_pack_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--upload-pack");
-        g.add_option_string(format!("{}", upload_pack_arg ));
+        g.add_option(upload_pack_arg);
     })
 }
 

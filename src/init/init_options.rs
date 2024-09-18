@@ -33,8 +33,8 @@ pub fn separate_git_dir_option(git_dir_arg :&str) -> CommandOption {
 /// When not specified, Git will use permissions reported by umask(2).
 /// --shared[=(false|true|umask|group|all|world|everybody|0xxx)]
 pub fn shared_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--shared")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--shared"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--shared={}", value)))
     }

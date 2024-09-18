@@ -1,15 +1,15 @@
 use upon::Engine;
 
 
-pub const TEMPLATE_MOD_RS: &'static str = "mod_rs";
-pub const TEMPLATE_OPTION_SIMPLE: &'static str = "simple";
-pub const TEMPLATE_OPTION_DOC_COMMENTS: &'static str = "doc_comments";
-pub const TEMPLATE_OPTION_EQUAL_NO_OPTIONAL: &'static str = "equal_no_optional";
-pub const TEMPLATE_OPTION_EQUAL_OPTIONAL: &'static str = "equal_optional";
-pub const TEMPLATE_OPTION_WITH_PARAMETER: &'static str = "with_parameter";
-pub const TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER: &'static str = "with_optional_parameter";
-pub const TEMPLATE_COMMAND : &'static str = "command";
-pub const TEMPLATE_GIT_BASE_COMMAND: &'static str = "git_base_command";
+pub const TEMPLATE_MOD_RS: &str = "mod_rs";
+pub const TEMPLATE_OPTION_SIMPLE: &str = "simple";
+pub const TEMPLATE_OPTION_DOC_COMMENTS: &str = "doc_comments";
+pub const TEMPLATE_OPTION_EQUAL_NO_OPTIONAL: &str = "equal_no_optional";
+pub const TEMPLATE_OPTION_EQUAL_OPTIONAL: &str = "equal_optional";
+pub const TEMPLATE_OPTION_WITH_PARAMETER: &str = "with_parameter";
+pub const TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER: &str = "with_optional_parameter";
+pub const TEMPLATE_COMMAND : &str = "command";
+pub const TEMPLATE_GIT_BASE_COMMAND: &str = "git_base_command";
 
 pub fn command_templates() -> Engine<'static> {
     let mut engine = Engine::new();
@@ -32,15 +32,15 @@ pub fn command_templates() -> Engine<'static> {
     );
     let _ = engine.add_template(
         TEMPLATE_OPTION_EQUAL_OPTIONAL,
-        "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    if {{ option_argument }}.len() == 0 {\n        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!(\"{{ git_option }}\")))\n    } else {\n        Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!(\"{{ git_option }}={}\", {{ option_argument }})))\n    }\n}\n"
+        "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    if {{ option_argument }}.is_empty() {\n        Box::new(|g: &mut CommandExecutor| g.add_option(\"{{ git_option }}\"))\n    } else {\n        Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!(\"{{ git_option }}={}\", {{ option_argument }})))\n    }\n}\n"
     );
     let _ = engine.add_template(
         TEMPLATE_OPTION_WITH_PARAMETER,
-        "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    Box::new(move |g: &mut CommandExecutor| {\n        g.add_option(\"{{ git_option }}\");\n        g.add_option_string(format!(\"{}\", {{ option_argument }} ));\n    })\n}\n"
+        "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    Box::new(move |g: &mut CommandExecutor| {\n        g.add_option(\"{{ git_option }}\");\n        g.add_option({{ option_argument }});\n    })\n}\n"
     );
     let _ = engine.add_template(
         TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
-        "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    Box::new(move |g: &mut CommandExecutor| {\n         g.add_option(\"{{ git_option }}\");\n        if {{ option_argument }}.len() > 0 {\n            g.add_option_string(format!(\"{}\", {{ option_argument }}));\n        }\n    })\n}\n"
+        "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    Box::new(move |g: &mut CommandExecutor| {\n         g.add_option(\"{{ git_option }}\");\n        if !{{ option_argument }}.is_empty() {\n            g.add_option({{ option_argument }});\n        }\n    })\n}\n"
     );
     let _ = engine.add_template(
         TEMPLATE_COMMAND,

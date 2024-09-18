@@ -3,7 +3,7 @@ mod options;
 
 use crate::options::{normalize, CmdOptionKind};
 use crate::template::{command_templates, TEMPLATE_COMMAND, TEMPLATE_GIT_BASE_COMMAND, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
-use serde_json::Value;
+use serde_json::{from_str, Value};
 use std::string::String;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{env, fs};
@@ -102,56 +102,56 @@ fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options
             .expect("could not render template simple_option");
 
         let function = match options::option_kind(argument) {
-            CmdOptionKind::CmdSimple(git_option, option_name) =>
+            CmdOptionKind::Simple(git_option, option_name) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_SIMPLE,
                     upon::value! {option_name: option_name, git_option: git_option},
                 ),
 
-            CmdOptionKind::CmdEqualNoOptional(git_option, option_name, argument) =>
+            CmdOptionKind::EqualNoOptional(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
                 ),
 
-            CmdOptionKind::CmdEqualOptionalWithoutName(git_option, option_name) =>
+            CmdOptionKind::EqualOptionalWithoutName(git_option, option_name) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_OPTIONAL,
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: String::from("value")},
                 ),
 
-            CmdOptionKind::CmdEqualWithoutName(git_option, option_name) =>
+            CmdOptionKind::EqualWithoutName(git_option, option_name) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_OPTIONAL,
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: String::from("value")},
                 ),
 
-            CmdOptionKind::CmdEqualOptionalWithName(git_option, option_name, argument) =>
+            CmdOptionKind::EqualOptionalWithName(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
                 ),
 
-            CmdOptionKind::CmdWithParameter(git_option, option_name, argument) =>
+            CmdOptionKind::WithParameter(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_WITH_PARAMETER,
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
                 ),
 
-            CmdOptionKind::CmdWithOptionalParameter(git_option, option_name, argument) =>
+            CmdOptionKind::WithOptionalParameter(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
                 ),
 
-            CmdOptionKind::CmdNone => String::from("")
+            CmdOptionKind::None => String::from("")
         };
 
         options_content.push(format!("{}\n{}", function_desc, function));
@@ -164,13 +164,12 @@ fn render(engine: &Engine, template_name: &str, template_values: upon::Value) ->
     engine.template(template_name)
         .render(template_values)
         .to_string()
-        .expect(format!("could not render {}", template_name).as_str())
+        .expect("could not render template")
 }
 
 fn read_descriptions(file_name: &str) -> Value {
     let contents = fs::read_to_string(file_name)
         .expect("Should have been able to read the file");
-    let json: serde_json::Value = serde_json::from_str(contents.as_str())
-        .expect("file should be proper JSON");
-    json
+    from_str(contents.as_str())
+        .expect("file should be proper JSON")
 }

@@ -196,7 +196,7 @@ pub fn gpg_sign_option(keyid_arg :&str) -> CommandOption {
 pub fn m_option(msg_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("-m");
-        g.add_option_string(format!("{}", msg_arg ));
+        g.add_option(msg_arg);
     })
 }
 

@@ -37,7 +37,7 @@ pub fn verify_option() -> CommandOption<'static> {
 pub fn n_option(num_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("-n");
-        g.add_option_string(format!("{}", num_arg ));
+        g.add_option(num_arg);
     })
 }
 
@@ -117,7 +117,7 @@ pub fn no_merged_option(commit_arg :&str) -> CommandOption {
 pub fn points_at_option(object_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--points-at");
-        g.add_option_string(format!("{}", object_arg ));
+        g.add_option(object_arg);
     })
 }
 

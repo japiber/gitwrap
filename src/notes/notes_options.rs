@@ -48,7 +48,7 @@ pub fn allow_empty_option() -> CommandOption<'static> {
 pub fn ref_option(ref_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--ref");
-        g.add_option_string(format!("{}", ref_arg ));
+        g.add_option(ref_arg);
     })
 }
 

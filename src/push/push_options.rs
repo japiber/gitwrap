@@ -86,8 +86,8 @@ pub fn no_signed_option() -> CommandOption<'static> {
 /// See git-receive-pack(1) for the details on the receiving end.
 /// --sign=(true|false|if-asked)
 pub fn sign_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--sign")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--sign"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--sign={}", value)))
     }
@@ -209,8 +209,8 @@ pub fn no_recurse_submodules_option() -> CommandOption<'static> {
 /// A value of no or using --no-recurse-submodules can be used to override the push.recurseSubmodules configuration variable when no submodule recursion is required.
 /// --recurse-submodules=(check|on-demand|only|no)
 pub fn recurse_submodules_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--recurse-submodules"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules={}", value)))
     }

@@ -23,7 +23,7 @@ pub fn local_option() -> CommandOption<'static> {
 pub fn file_option(config_file_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--file");
-        g.add_option_string(format!("{}", config_file_arg ));
+        g.add_option(config_file_arg);
     })
 }
 
@@ -33,7 +33,7 @@ pub fn file_option(config_file_arg :&str) -> CommandOption {
 pub fn blob_option(blob_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--blob");
-        g.add_option_string(format!("{}", blob_arg ));
+        g.add_option(blob_arg);
     })
 }
 

@@ -9,7 +9,7 @@ use crate::command_executor::{CommandExecutor, CommandOption};
 pub fn onto_option(newbase_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--onto");
-        g.add_option_string(format!("{}", newbase_arg ));
+        g.add_option(newbase_arg);
     })
 }
 
@@ -64,8 +64,8 @@ pub fn apply_option() -> CommandOption<'static> {
 /// Note that commits which start empty are kept (unless --no-keep-empty is specified), and commits which are clean cherry-picks (as determined by git log --cherry-mark ...) are detected and dropped as a preliminary step (unless --reapply-cherry-picks is passed).
 /// --empty={drop,keep,ask}
 pub fn empty_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--empty")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--empty"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--empty={}", value)))
     }
@@ -256,7 +256,7 @@ pub fn verify_option() -> CommandOption<'static> {
 pub fn c_option(n_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("-C");
-        g.add_option_string(format!("{}", n_arg ));
+        g.add_option(n_arg);
     })
 }
 
@@ -376,8 +376,8 @@ pub fn interactive_option() -> CommandOption<'static> {
 /// It is currently only possible to recreate the merge commits using the ort merge strategy; different merge strategies can be used only via explicit exec git merge -s <strategy> [...]  commands.
 /// -r, --rebase-merges[=(rebase-cousins|no-rebase-cousins)]
 pub fn rebase_merges_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--rebase-merges")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--rebase-merges"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--rebase-merges={}", value)))
     }
@@ -391,7 +391,7 @@ pub fn rebase_merges_option(value :&str) -> CommandOption {
 pub fn exec_option(cmd_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--exec");
-        g.add_option_string(format!("{}", cmd_arg ));
+        g.add_option(cmd_arg);
     })
 }
 

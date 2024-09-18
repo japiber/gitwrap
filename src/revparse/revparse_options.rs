@@ -65,7 +65,7 @@ pub fn no_flags_option() -> CommandOption<'static> {
 pub fn default_option(arg_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--default");
-        g.add_option_string(format!("{}", arg_arg ));
+        g.add_option(arg_arg);
     })
 }
 
@@ -77,7 +77,7 @@ pub fn default_option(arg_arg :&str) -> CommandOption {
 pub fn prefix_option(arg_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--prefix");
-        g.add_option_string(format!("{}", arg_arg ));
+        g.add_option(arg_arg);
     })
 }
 
@@ -110,8 +110,8 @@ pub fn sq_option() -> CommandOption<'static> {
 /// The minimum length is 4, the default is the effective value of the core.abbrev configuration variable (see git-config(1)).
 /// --short[=length]
 pub fn short_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--short")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--short"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--short={}", value)))
     }
@@ -128,8 +128,8 @@ pub fn not_option() -> CommandOption<'static> {
 /// The option core.warnAmbiguousRefs is used to select the strict abbreviation mode.
 /// --abbrev-ref[=(strict|loose)]
 pub fn abbrev_ref_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--abbrev-ref")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--abbrev-ref"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--abbrev-ref={}", value)))
     }
@@ -159,8 +159,8 @@ pub fn all_option() -> CommandOption<'static> {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --branches[=pattern], --tags[=pattern], --remotes[=pattern]
 pub fn branches_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--branches")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--branches"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--branches={}", value)))
     }
@@ -172,8 +172,8 @@ pub fn branches_option(value :&str) -> CommandOption {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --branches[=pattern], --tags[=pattern], --remotes[=pattern]
 pub fn tags_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--tags")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--tags"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--tags={}", value)))
     }
@@ -185,8 +185,8 @@ pub fn tags_option(value :&str) -> CommandOption {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --branches[=pattern], --tags[=pattern], --remotes[=pattern]
 pub fn remotes_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--remotes")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--remotes"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--remotes={}", value)))
     }
@@ -269,7 +269,7 @@ pub fn is_bare_repository_option() -> CommandOption<'static> {
 pub fn resolve_git_dir_option(path_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--resolve-git-dir");
-        g.add_option_string(format!("{}", path_arg ));
+        g.add_option(path_arg);
     })
 }
 
@@ -280,7 +280,7 @@ pub fn resolve_git_dir_option(path_arg :&str) -> CommandOption {
 pub fn git_path_option(path_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--git-path");
-        g.add_option_string(format!("{}", path_arg ));
+        g.add_option(path_arg);
     })
 }
 

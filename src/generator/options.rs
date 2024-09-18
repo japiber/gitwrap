@@ -22,15 +22,25 @@ const EXP_CMD_WITH_PARAMETER: &str = r#"^(-{1,2}([\w\-]+)) ?<([\w\-)]+)>$"#;
 // --foo [bar]
 const EXP_CMD_WITH_OPTIONAL_PARAMETER: &str = r#"^(-{1,2}([\w\-]+)) ?\[([\w\-)]+)]$"#;
 
+const CMD_PATTERNS: [&str; 7] = [
+        EXP_CMD_SIMPLE,
+        EXP_CMD_EQUAL_NO_OPTIONAL,
+        EXP_CMD_EQUAL_OPTIONAL_WITHOUT_NAME,
+        EXP_CMD_EQUAL_WITHOUT_NAME,
+        EXP_CMD_EQUAL_OPTIONAL_WITH_NAME,
+        EXP_CMD_WITH_PARAMETER,
+        EXP_CMD_WITH_OPTIONAL_PARAMETER
+];
+
 pub enum CmdOptionKind {
-    CmdSimple(String, String),
-    CmdEqualNoOptional(String, String, String),
-    CmdEqualOptionalWithoutName(String, String),
-    CmdEqualWithoutName(String, String),
-    CmdEqualOptionalWithName(String, String, String),
-    CmdWithParameter(String, String, String),
-    CmdWithOptionalParameter(String, String, String),
-    CmdNone
+    Simple(String, String),
+    EqualNoOptional(String, String, String),
+    EqualOptionalWithoutName(String, String),
+    EqualWithoutName(String, String),
+    EqualOptionalWithName(String, String, String),
+    WithParameter(String, String, String),
+    WithOptionalParameter(String, String, String),
+    None
 }
 
 pub(crate) fn option_kind(option: &str) -> CmdOptionKind {
@@ -47,74 +57,74 @@ pub(crate) fn option_kind(option: &str) -> CmdOptionKind {
             4 => match_cmd_equal_optional_with_name(option),
             5 => match_cmd_with_parameter(option),
             6 => match_cmd_with_optional_parameter(option),
-            _ => CmdOptionKind::CmdNone
+            _ => CmdOptionKind::None
         }
     } else {
-        CmdOptionKind::CmdNone
+        CmdOptionKind::None
     }
 }
 
 fn match_cmd_simple(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_SIMPLE).unwrap();
-    for (_, [f1, f2]) in re.captures_iter(option).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdSimple(String::from(f1), normalize(f2))
+    if let Some((_, [f1, f2])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::Simple(String::from(f1), normalize(f2))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 fn match_cmd_equal_no_optional(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_NO_OPTIONAL).unwrap();
-    for (_, [f1, f2, f3]) in re.captures_iter(option).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdEqualNoOptional(String::from(f1), normalize(f2), normalize_argument(f3))
+    if let Some((_, [f1, f2, f3])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::EqualNoOptional(String::from(f1), normalize(f2), normalize_argument(f3))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 fn match_cmd_equal_optional_without_name(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_OPTIONAL_WITHOUT_NAME).unwrap();
-    for (_, [f1, f2]) in re.captures_iter(option).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdEqualOptionalWithoutName(String::from(f1), normalize(f2))
+    if let Some((_, [f1, f2])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::EqualOptionalWithoutName(String::from(f1), normalize(f2))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 fn match_cmd_equal_without_name(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_WITHOUT_NAME).unwrap();
-    for (_, [f1, f2]) in re.captures_iter(option).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdEqualWithoutName(String::from(f1), normalize(f2))
+    if let Some((_, [f1, f2])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::EqualWithoutName(String::from(f1), normalize(f2))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 fn match_cmd_equal_optional_with_name(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_OPTIONAL_WITH_NAME).unwrap();
-    for (_, [f1, f2, f3]) in re.captures_iter(option).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdEqualOptionalWithName(String::from(f1), normalize(f2), normalize_argument(f3))
+    if let Some((_, [f1, f2, f3])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::EqualOptionalWithName(String::from(f1), normalize(f2), normalize_argument(f3))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 fn match_cmd_with_parameter(parameter: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_WITH_PARAMETER).unwrap();
-    for (_, [f1, f2, f3]) in re.captures_iter(parameter).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdWithParameter(String::from(f1), normalize(f2), normalize_argument(f3))
+    if let Some((_, [f1, f2, f3])) = re.captures_iter(parameter).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::WithParameter(String::from(f1), normalize(f2), normalize_argument(f3))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 fn match_cmd_with_optional_parameter(parameter: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_WITH_OPTIONAL_PARAMETER).unwrap();
-    for (_, [f1, f2, f3]) in re.captures_iter(parameter).map(|caps| caps.extract()) {
-        return CmdOptionKind::CmdWithOptionalParameter(String::from(f1), normalize(f2), normalize_argument(f3))
+    if let Some((_, [f1, f2, f3])) = re.captures_iter(parameter).map(|caps| caps.extract()).next() {
+        return CmdOptionKind::WithOptionalParameter(String::from(f1), normalize(f2), normalize_argument(f3))
     }
 
-    CmdOptionKind::CmdNone
+    CmdOptionKind::None
 }
 
 pub fn normalize(cmd: &str) -> String {
@@ -128,13 +138,5 @@ pub fn normalize_argument(arg: &str) -> String {
 
 
 fn options_regex_set() -> RegexSet {
-    RegexSetBuilder::new(&[
-        EXP_CMD_SIMPLE,
-        EXP_CMD_EQUAL_NO_OPTIONAL,
-        EXP_CMD_EQUAL_OPTIONAL_WITHOUT_NAME,
-        EXP_CMD_EQUAL_WITHOUT_NAME,
-        EXP_CMD_EQUAL_OPTIONAL_WITH_NAME,
-        EXP_CMD_WITH_PARAMETER,
-        EXP_CMD_WITH_OPTIONAL_PARAMETER
-    ]).build().unwrap()
+    RegexSetBuilder::new(CMD_PATTERNS).build().unwrap()
 }

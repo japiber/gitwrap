@@ -15,8 +15,8 @@ pub fn verbose_option() -> CommandOption<'static> {
 /// This option controls if new commits of all populated submodules should be fetched too.
 /// --recurse-submodules[=yes|on-demand|no]
 pub fn recurse_submodules_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--recurse-submodules"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--recurse-submodules={}", value)))
     }
@@ -26,8 +26,8 @@ pub fn recurse_submodules_option(value :&str) -> CommandOption {
 /// This option controls if new commits of all populated submodules should be fetched too.
 /// --no-recurse-submodules[=yes|on-demand|no]
 pub fn no_recurse_submodules_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--no-recurse-submodules")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--no-recurse-submodules"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--no-recurse-submodules={}", value)))
     }
@@ -156,8 +156,8 @@ pub fn allow_unrelated_histories_option() -> CommandOption<'static> {
 /// If there is a remote-tracking branch corresponding to the upstream branch and the upstream branch was rebased since last fetched, the rebase uses that information to avoid rebasing non-local changes.
 /// -r, --rebase[=false|true|preserve|interactive]
 pub fn rebase_option(value :&str) -> CommandOption {
-    if value.len() == 0 {
-        Box::new(|g: &mut CommandExecutor| g.add_option_string(format!("--rebase")))
+    if value.is_empty() {
+        Box::new(|g: &mut CommandExecutor| g.add_option("--rebase"))
     } else {
         Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--rebase={}", value)))
     }
@@ -270,7 +270,7 @@ pub fn update_head_ok_option() -> CommandOption<'static> {
 pub fn upload_pack_option(upload_pack_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--upload-pack");
-        g.add_option_string(format!("{}", upload_pack_arg ));
+        g.add_option(upload_pack_arg);
     })
 }
 
