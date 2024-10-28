@@ -2216,6 +2216,154 @@
     ]
   },
   {
+    "command_name": "branch",
+    "enabled": true,
+    "options": [
+      {
+        "argument": "--abbrev[=<n>]",
+        "arguments": "--abbrev[=<n>]",
+        "description": "use <n> digits to display SHA-1s"
+      },
+      {
+        "argument": "--all",
+        "arguments": "-a, --all",
+        "description": "All list both remote-tracking and local branches"
+      },
+      {
+        "argument": "<branch_name>",
+        "arguments": "<branch_name>",
+        "description": "specify a valid branch name"
+      },
+      {
+        "argument": "--color[=<when>]",
+        "arguments": "--color[=<when>]",
+        "description": "use colored output"
+      },
+      {
+        "argument": "--column[=<style>]",
+        "arguments": "--column[=<style>]",
+        "description": "list branches in columns"
+      },
+      {
+        "argument": "--contains <commit>",
+        "arguments": "--contains <commit>",
+        "description": "print only branches that contain the commit"
+      },
+      {
+        "argument": "--no-contains <commit>",
+        "arguments": "--no-contains <commit>",
+        "description": "print only branches that don't contain the commit"
+      },
+      {
+        "argument": "--create-reflog",
+        "arguments": "-l, --create-reflog",
+        "description": "create the branch's reflog"
+      },
+      {
+        "argument": "--delete",
+        "arguments": "-d, --delete",
+        "description": "delete fully merged branch"
+      },
+      {
+        "alias": "delete-force",
+        "argument": "-D",
+        "arguments": "-D",
+        "description": "delete branch (even if not merged)"
+      },
+      {
+        "argument": "--edit-description",
+        "arguments": "--edit-description",
+        "description": "edit the description for the branch"
+      },
+      {
+        "argument": "--force",
+        "arguments": "-f, --force",
+        "description": "force creation, move/rename, deletion"
+      },
+      {
+        "argument": "--format <format>",
+        "arguments": "--format <format>",
+        "description": "format to use for the output"
+      },
+      {
+        "argument": "--ignore-case",
+        "arguments": "-i, --ignore-case",
+        "description": "sorting and filtering are case insensitive"
+      },
+      {
+        "argument": "--list",
+        "arguments": "--list",
+        "description": "list branch names"
+      },
+      {
+        "argument": "--points-at <object>",
+        "arguments": "--points-at <object>",
+        "description": "print only branches of the object"
+      },
+      {
+        "argument": "--merged <commit>",
+        "arguments": "--merged <commit>",
+        "description": "print only branches that are merged"
+      },
+      {
+        "argument": "--no-merged <commit>",
+        "arguments": "--no-merged <commit>",
+        "description": "print only branches that are not merged"
+      },
+      {
+        "argument": "--move",
+        "arguments": "-m, --move",
+        "description": "move/rename a branch and its reflog"
+      },
+      {
+        "alias": "move-force",
+        "argument": "-M",
+        "arguments": "-M",
+        "description": "move/rename a branch, even if target exists"
+      },
+      {
+        "argument": "--quiet",
+        "arguments": "-q, --quiet",
+        "description": "suppress informational messages"
+      },
+      {
+        "argument": "--remotes",
+        "arguments": "-r, --remotes",
+        "description": "act on remote-tracking branches"
+      },
+      {
+        "argument": "--show-current",
+        "arguments": "--show-current",
+        "description": "print the name of the current branch. In detached HEAD state, nothing is printed"
+      },
+      {
+        "argument": "--unset-upstream [<branchname>]",
+        "arguments": "--unset-upstream",
+        "description": "SetUpstream change upstream info"
+      },
+      {
+        "argument": "--set-upstream-to <upstream>",
+        "arguments": "-u, --set-upstream-to <upstream>",
+        "description": "change the upstream info to upstream"
+      },
+      {
+        "argument": "--sort <key>",
+        "arguments": "--sort <key>",
+        "description": "field name to sort on"
+      },
+      {
+        "argument": "--track",
+        "arguments": "-t, --track",
+        "description": "set up tracking mode (see git-pull(1)"
+      },
+      {
+        "argument": "--verbose",
+        "arguments": "-v, --verbose",
+        "description": "show hash and subject, give twice for upstream branch"
+      }
+    ]
+  },
+  {
     "command_name": "",
     "enabled": false,
     "options": [

@@ -8,6 +8,7 @@ pub const TEMPLATE_OPTION_EQUAL_NO_OPTIONAL: &str = "equal_no_optional";
 pub const TEMPLATE_OPTION_EQUAL_OPTIONAL: &str = "equal_optional";
 pub const TEMPLATE_OPTION_WITH_PARAMETER: &str = "with_parameter";
 pub const TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER: &str = "with_optional_parameter";
+pub const TEMPLATE_OPTION_VALUE_PARAMETER: &str = "value_parameter";
 pub const TEMPLATE_COMMAND : &str = "command";
 pub const TEMPLATE_GIT_BASE_COMMAND: &str = "git_base_command";
 
@@ -41,6 +42,10 @@ pub fn command_templates() -> Engine<'static> {
     let _ = engine.add_template(
         TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
         "pub fn {{ option_name }}_option({{ option_argument }} :&str) -> CommandOption {\n    Box::new(move |g: &mut CommandExecutor| {\n         g.add_option(\"{{ git_option }}\");\n        if !{{ option_argument }}.is_empty() {\n            g.add_option({{ option_argument }});\n        }\n    })\n}\n"
+    );
+    let _ = engine.add_template(
+        TEMPLATE_OPTION_VALUE_PARAMETER,
+        "pub fn {{ value_parameter }}_option(value :&str) -> CommandOption {\n    Box::new(move |g: &mut CommandExecutor| {\n         g.add_option(value);\n    })\n}\n"
     );
     let _ = engine.add_template(
         TEMPLATE_COMMAND,

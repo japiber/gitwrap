@@ -2,7 +2,7 @@ mod template;
 mod options;
 
 use crate::options::{normalize, CmdOptionKind};
-use crate::template::{command_templates, TEMPLATE_COMMAND, TEMPLATE_GIT_BASE_COMMAND, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
+use crate::template::{command_templates, TEMPLATE_COMMAND, TEMPLATE_GIT_BASE_COMMAND, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_VALUE_PARAMETER, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
 use serde_json::{from_str, Value};
 use std::string::String;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -89,6 +89,8 @@ fn command_mod_file_generator(engine: &Engine, command_name: &str, mod_file_path
 fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options_file_path: &str) {
     let mut options_content: Vec<String> = Vec::new();
 
+    options_content.push(String::from("// Code generated automatically"));
+    options_content.push(String::from("// This file must not be edited by hand"));
     options_content.push(String::from("use crate::command_executor::{CommandExecutor, CommandOption};"));
 
     for opt in options {
@@ -151,6 +153,13 @@ fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options
                     upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
                 ),
 
+            CmdOptionKind::ValueParameter(value_parameter) => 
+                render(
+                    engine,
+                    TEMPLATE_OPTION_VALUE_PARAMETER,
+                    upon::value!{value_parameter: value_parameter},
+                ),
+            
             CmdOptionKind::None => String::from("")
         };
 

@@ -51,6 +51,20 @@ pub fn b_option(new_branch_arg :&str) -> CommandOption {
     })
 }
 
+
+/// Creates the branch <new_branch> and start it at <start_point>; if it already exists, then reset it to <start_point>.
+/// This is equivalent to running 'git branch' with '-f'; see git-branch(1) for details.
+/// -B [new_branch]
+pub fn b_option(new_branch_arg :&str) -> CommandOption {
+    Box::new(move |g: &mut CommandExecutor| {
+         g.add_option("-B");
+        if !new_branch_arg.is_empty() {
+            g.add_option(new_branch_arg);
+        }
+    })
+}
+
+
 /// When creating a new branch, set up 'upstream' configuration.
 /// See '--track' in git-branch(1) for details.
 /// -t, --track
