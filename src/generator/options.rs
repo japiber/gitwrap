@@ -73,7 +73,7 @@ pub(crate) fn option_kind(option: &str) -> CmdOptionKind {
 fn match_cmd_simple(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_SIMPLE).unwrap();
     if let Some((_, [f1, f2])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::Simple(String::from(f1), normalize(f2))
+        return CmdOptionKind::Simple(String::from(f1), String::from(f2))
     }
 
     CmdOptionKind::None
@@ -82,7 +82,7 @@ fn match_cmd_simple(option: &str) -> CmdOptionKind {
 fn match_cmd_equal_no_optional(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_NO_OPTIONAL).unwrap();
     if let Some((_, [f1, f2, f3])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::EqualNoOptional(String::from(f1), normalize(f2), normalize_argument(f3))
+        return CmdOptionKind::EqualNoOptional(String::from(f1), String::from(f2), normalize_argument(f3))
     }
 
     CmdOptionKind::None
@@ -91,7 +91,7 @@ fn match_cmd_equal_no_optional(option: &str) -> CmdOptionKind {
 fn match_cmd_equal_optional_without_name(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_OPTIONAL_WITHOUT_NAME).unwrap();
     if let Some((_, [f1, f2])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::EqualOptionalWithoutName(String::from(f1), normalize(f2))
+        return CmdOptionKind::EqualOptionalWithoutName(String::from(f1), String::from(f2))
     }
 
     CmdOptionKind::None
@@ -100,7 +100,7 @@ fn match_cmd_equal_optional_without_name(option: &str) -> CmdOptionKind {
 fn match_cmd_equal_without_name(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_WITHOUT_NAME).unwrap();
     if let Some((_, [f1, f2])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::EqualWithoutName(String::from(f1), normalize(f2))
+        return CmdOptionKind::EqualWithoutName(String::from(f1), String::from(f2))
     }
 
     CmdOptionKind::None
@@ -109,7 +109,7 @@ fn match_cmd_equal_without_name(option: &str) -> CmdOptionKind {
 fn match_cmd_equal_optional_with_name(option: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_EQUAL_OPTIONAL_WITH_NAME).unwrap();
     if let Some((_, [f1, f2, f3])) = re.captures_iter(option).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::EqualOptionalWithName(String::from(f1), normalize(f2), normalize_argument(f3))
+        return CmdOptionKind::EqualOptionalWithName(String::from(f1), String::from(f2), normalize_argument(f3))
     }
 
     CmdOptionKind::None
@@ -118,7 +118,7 @@ fn match_cmd_equal_optional_with_name(option: &str) -> CmdOptionKind {
 fn match_cmd_with_parameter(parameter: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_WITH_PARAMETER).unwrap();
     if let Some((_, [f1, f2, f3])) = re.captures_iter(parameter).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::WithParameter(String::from(f1), normalize(f2), normalize_argument(f3))
+        return CmdOptionKind::WithParameter(String::from(f1), String::from(f2), normalize_argument(f3))
     }
 
     CmdOptionKind::None
@@ -127,7 +127,7 @@ fn match_cmd_with_parameter(parameter: &str) -> CmdOptionKind {
 fn match_cmd_with_optional_parameter(parameter: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_WITH_OPTIONAL_PARAMETER).unwrap();
     if let Some((_, [f1, f2, f3])) = re.captures_iter(parameter).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::WithOptionalParameter(String::from(f1), normalize(f2), normalize_argument(f3))
+        return CmdOptionKind::WithOptionalParameter(String::from(f1), String::from(f2), normalize_argument(f3))
     }
 
     CmdOptionKind::None
@@ -136,7 +136,7 @@ fn match_cmd_with_optional_parameter(parameter: &str) -> CmdOptionKind {
 fn match_cmd_value_parameter(parameter: &str) -> CmdOptionKind {
     let re = Regex::new(EXP_CMD_VALUE_PARAMETER).unwrap();
     if let Some((_, [f1])) = re.captures_iter(parameter).map(|caps| caps.extract()).next() {
-        return CmdOptionKind::ValueParameter(normalize(f1))
+        return CmdOptionKind::ValueParameter(String::from(f1))
     }
 
     CmdOptionKind::None    

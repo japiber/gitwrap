@@ -407,6 +407,7 @@
         "description": "Set the starting point at which to create the new commits to the merge base of <upstream> <branch>.\nRunning git rebase --keep-base <upstream> <branch> is equivalent to running git rebase --onto <upstream>... <upstream>.\n\nThis option is useful in the case where one is developing a feature on top of an upstream branch.\nWhile the feature is being worked on, the upstream branch may advance and it may not be the best idea to keep rebasing on top of the upstream but to keep the base commit as-is.\n\nAlthough both this option and --fork-point find the merge base between <upstream> and <branch>, this option uses the merge base as the starting point on which new commits will be created, whereas --fork-point uses the merge base to determine the set of commits which will be rebased."
       },
       {
+        "method_name": "continue-rebase",
         "argument": "--continue",
         "arguments": "--continue",
         "description": "Restart the rebasing process after having resolved a merge conflict."
@@ -537,7 +538,7 @@
         "description": "Allows the pre-rebase hook to run, which is the default.\nThis option can be used to override --no-verify.\nSee also githooks(5)."
       },
       {
-        "method_name": "EnsureContext",
+        "method_name": "ensure-context",
         "argument": "-C<n>",
         "arguments": "-C<n>",
         "description": "Ensure at least <n> lines of surrounding context match before and after each change.\nWhen fewer lines of surrounding context exist they all must match.\nBy default no context is ever ignored.\nImplies --apply."
@@ -961,13 +962,13 @@
         "description": "When checking out paths from the index, check out stage #2 (ours) or #3 (theirs) for unmerged paths."
       },
       {
-        "method_name": "NewBranch",
+        "method_name": "new-branch",
         "argument": "-b [new_branch]",
         "arguments": "-b [new_branch]",
         "description": "Create a new branch named <new_branch> and start it at <start_point>; see git-branch(1) for details."
       },
       {
-        "method_name": "NewBranchForce",
+        "method_name": "new-branch-force",
         "argument": "-B [new_branch]",
         "arguments": "-B [new_branch]",
         "description": "Creates the branch <new_branch> and start it at <start_point>; if it already exists, then reset it to <start_point>.\nThis is equivalent to running 'git branch' with '-f'; see git-branch(1) for details."
@@ -983,7 +984,7 @@
         "description": "Do not set up 'upstream' configuration, even if the branch.autoSetupMerge configuration variable is true."
       },
       {
-        "method_name": "NewBranchReflog",
+        "method_name": "new-branch-reflog",
         "argument": "-l",
         "arguments": "-l",
         "description": "Create the new branch’s reflog; see git-branch(1) for details."
@@ -1549,6 +1550,7 @@
         "description": "Abort the current conflict resolution process, and try to reconstruct the pre-merge state.\nIf there were uncommitted worktree changes present when the merge started, git merge --abort will in some cases be unable to reconstruct these changes.\nIt is therefore recommended to always commit or stash your changes before running git merge.\ngit merge --abort is equivalent to git reset --merge when MERGE_HEAD is present."
       },
       {
+        "method_name": "continue-merge",
         "argument": "--continue",
         "arguments": "--continue",
         "description": "After a git merge stops due to conflicts you can conclude the merge by running git merge --continue (see 'HOW TO RESOLVE CONFLICTS' section below)."
@@ -2023,6 +2025,7 @@
         "description": "Allow an empty note object to be stored. The default behavior is to automatically remove empty notes."
       },
       {
+        "method_name": "ref_notes",
         "argument": "--ref <ref>",
         "arguments": "--ref <ref>",
         "description": "Manipulate the notes tree in <ref>. This overrides GIT_NOTES_REF and the \"core.notesRef\" configuration.\nThe ref specifies the full refname when it begins with refs/notes/;\nwhen it begins with notes/, refs/ and otherwise refs/notes/ is prefixed to form a full name of the ref."
@@ -2265,7 +2268,7 @@
         "description": "delete fully merged branch"
       },
       {
-        "alias": "delete-force",
+        "method_name": "delete-force",
         "argument": "-D",
         "arguments": "-D",
         "description": "delete branch (even if not merged)"
@@ -2311,12 +2314,13 @@
         "description": "print only branches that are not merged"
       },
       {
+        "method_name": "move-branch",
         "argument": "--move",
         "arguments": "-m, --move",
         "description": "move/rename a branch and its reflog"
       },
       {
-        "alias": "move-force",
+        "method_name": "move-force",
         "argument": "-M",
         "arguments": "-M",
         "description": "move/rename a branch, even if target exists"

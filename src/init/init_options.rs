@@ -1,29 +1,33 @@
+// Code generated automatically
+
+// This file must not be edited by hand
+
 use crate::command_executor::{CommandExecutor, CommandOption};
 
 /// Only print error and warning messages; all other output will be suppressed.
 /// -q, --quiet
-pub fn quiet_option() -> CommandOption<'static> {
+pub fn quiet() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--quiet"))
 }
 
 /// Create a bare repository.
 /// If GIT_DIR environment is not set, it is set to the current working directory.
 /// --bare
-pub fn bare_option() -> CommandOption<'static> {
+pub fn bare() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--bare"))
 }
 
 /// Specify the directory from which templates will be used.
 /// (See the 'TEMPLATE DIRECTORY' section below.)
 /// --template=<template_directory>
-pub fn template_option(template_directory_arg :&str) -> CommandOption {
+pub fn template(template_directory_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--template={}", template_directory_arg)))
 }
 
 /// Instead of initializing the repository as a directory to either $GIT_DIR or ./.git/, create a text file there containing the path to the actual repository.
 /// This file acts as filesystem-agnostic Git symbolic link to the repository.
 /// --separate-git-dir=<git-dir>
-pub fn separate_git_dir_option(git_dir_arg :&str) -> CommandOption {
+pub fn separate_git_dir(git_dir_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--separate-git-dir={}", git_dir_arg)))
 }
 
@@ -32,7 +36,7 @@ pub fn separate_git_dir_option(git_dir_arg :&str) -> CommandOption {
 /// When specified, the config variable 'core.sharedRepository' is set so that files and directories under $GIT_DIR are created with the requested permissions.
 /// When not specified, Git will use permissions reported by umask(2).
 /// --shared[=(false|true|umask|group|all|world|everybody|0xxx)]
-pub fn shared_option(value :&str) -> CommandOption {
+pub fn shared(value :&str) -> CommandOption {
     if value.is_empty() {
         Box::new(|g: &mut CommandExecutor| g.add_option("--shared"))
     } else {
