@@ -1,38 +1,42 @@
+// Code generated automatically
+
+// This file must not be edited by hand
+
 use crate::command_executor::{CommandExecutor, CommandOption};
 
 /// Give the output in the short-format.
 /// -s, --short
-pub fn short_option() -> CommandOption<'static> {
+pub fn short() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--short"))
 }
 
 /// Show the branch and tracking info even in short-format.
 /// -b, --branch
-pub fn branch_option() -> CommandOption<'static> {
+pub fn branch() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--branch"))
 }
 
 /// Show the number of entries currently stashed away.
 /// --show-stash
-pub fn show_stash_option() -> CommandOption<'static> {
+pub fn show_stash() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--show-stash"))
 }
 
 /// Give the output in an easy-to-parse format for scripts. This is similar to the short output, but will remain stable across Git versions and regardless of user configuration. See below for details. The version parameter is used to specify the format version. This is optional and defaults to the original version v1 format.
 /// --porcelain[=<version>]
-pub fn porcelain_option(version_arg :&str) -> CommandOption {
+pub fn porcelain(version_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--porcelain={}", version_arg)))
 }
 
 /// Give the output in the long-format. This is the default.
 /// --long
-pub fn long_option() -> CommandOption<'static> {
+pub fn long() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--long"))
 }
 
 /// In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of git diff --cached). If -v is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of git diff).
 /// -v, --verbose
-pub fn verbose_option() -> CommandOption<'static> {
+pub fn verbose() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--verbose"))
 }
 
@@ -52,13 +56,13 @@ pub fn verbose_option() -> CommandOption<'static> {
 /// 
 /// The default can be changed using the status.showUntrackedFiles configuration variable documented in git-config(1).
 /// -u[<mode>], --untracked-files[=<mode>]
-pub fn untracked_files_option(mode_arg :&str) -> CommandOption {
+pub fn untracked_files(mode_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--untracked-files={}", mode_arg)))
 }
 
 /// Ignore changes to submodules when looking for changes. <when> can be either "none", "untracked", "dirty" or "all", which is the default. Using "none" will consider the submodule modified when it either contains untracked or modified files or its HEAD differs from the commit recorded in the superproject and can be used to override any settings of the ignore option in git- config(1) or gitmodules(5). When "untracked" is used submodules are not considered dirty when they only contain untracked content (but they are still scanned for modified content). Using "dirty" ignores all changes to the work tree of submodules, only changes to the commits stored in the superproject are shown (this was the behavior before 1.7.0). Using "all" hides all changes to submodules (and suppresses the output of submodule summaries when the config option status.submoduleSummary is set).
 /// --ignore-submodules[=<when>]
-pub fn ignore_submodules_option(when_arg :&str) -> CommandOption {
+pub fn ignore_submodules(when_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--ignore-submodules={}", when_arg)))
 }
 
@@ -74,54 +78,54 @@ pub fn ignore_submodules_option(when_arg :&str) -> CommandOption {
 /// 
 /// When matching mode is specified, paths that explicitly match an ignored pattern are shown. If a directory matches an ignore pattern, then it is shown, but not paths contained in the ignored directory. If a directory does not match an ignore pattern, but all contents are ignored, then the directory is not shown, but all contents are shown.
 /// --ignored[=<mode>]
-pub fn ignored_option(mode_arg :&str) -> CommandOption {
+pub fn ignored(mode_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--ignored={}", mode_arg)))
 }
 
 /// Terminate entries with NUL, instead of LF. This implies the --porcelain=v1 output format if no other format is given.
 /// -z, --null
-pub fn null_option() -> CommandOption<'static> {
+pub fn null() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--null"))
 }
 
 /// Display untracked files in columns. See configuration variable column.status for option syntax. --column and --no-column without options are equivalent to always and never respectively.
 /// --column[=<options>], --no-column
-pub fn column_option(options_arg :&str) -> CommandOption {
+pub fn column(options_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--column={}", options_arg)))
 }
 
 /// Display untracked files in columns. See configuration variable column.status for option syntax. --column and --no-column without options are equivalent to always and never respectively.
 /// --column[=<options>], --no-column
-pub fn no_column_option() -> CommandOption<'static> {
+pub fn no_column() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-column"))
 }
 
 /// Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch. Defaults to true.
 /// --ahead-behind, --no-ahead-behind
-pub fn ahead_behind_option() -> CommandOption<'static> {
+pub fn ahead_behind() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--ahead-behind"))
 }
 
 /// Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch. Defaults to true.
 /// --ahead-behind, --no-ahead-behind
-pub fn no_ahead_behind_option() -> CommandOption<'static> {
+pub fn no_ahead_behind() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-ahead-behind"))
 }
 
 /// Turn on/off rename detection regardless of user configuration. See also git-diff(1) --no-renames.
 /// --renames, --no-renames
-pub fn renames_option() -> CommandOption<'static> {
+pub fn renames() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--renames"))
 }
 
 /// Turn on/off rename detection regardless of user configuration. See also git-diff(1) --no-renames.
 /// --renames, --no-renames
-pub fn no_renames_option() -> CommandOption<'static> {
+pub fn no_renames() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-renames"))
 }
 
 /// Turn on rename detection, optionally setting the similarity threshold. See also git-diff(1) --find-renames.
 /// -M, --find-renames[=<n>]
-pub fn find_renames_option(n_arg :&str) -> CommandOption {
+pub fn find_renames(n_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--find-renames={}", n_arg)))
 }

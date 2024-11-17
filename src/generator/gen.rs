@@ -2,7 +2,7 @@ mod template;
 mod options;
 
 use crate::options::{normalize, CmdOptionKind};
-use crate::template::{command_templates, TEMPLATE_COMMAND, TEMPLATE_GIT_BASE_COMMAND, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
+use crate::template::{command_templates, TEMPLATE_COMMAND, TEMPLATE_GIT_BASE_COMMAND, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_VALUE_PARAMETER, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
 use serde_json::{from_str, Value};
 use std::string::String;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -89,11 +89,14 @@ fn command_mod_file_generator(engine: &Engine, command_name: &str, mod_file_path
 fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options_file_path: &str) {
     let mut options_content: Vec<String> = Vec::new();
 
+    options_content.push(String::from("// Code generated automatically"));
+    options_content.push(String::from("// This file must not be edited by hand"));
     options_content.push(String::from("use crate::command_executor::{CommandExecutor, CommandOption};"));
 
     for opt in options {
         let argument = opt.get("argument").unwrap().as_str().unwrap();
         let arguments = opt.get("arguments").unwrap().as_str().unwrap();
+        let method_name = opt.get("method_name");
         let descriptions: Vec<&str> = opt.get("description").unwrap().as_str().unwrap().lines().collect();
 
         let function_desc = engine.template(TEMPLATE_OPTION_DOC_COMMENTS)
@@ -106,51 +109,58 @@ fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options
                 render(
                     engine,
                     TEMPLATE_OPTION_SIMPLE,
-                    upon::value! {option_name: option_name, git_option: git_option},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option},
                 ),
 
             CmdOptionKind::EqualNoOptional(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
-                    upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option, option_argument: argument},
                 ),
 
             CmdOptionKind::EqualOptionalWithoutName(git_option, option_name) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_OPTIONAL,
-                    upon::value!{option_name: option_name, git_option: git_option, option_argument: String::from("value")},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option, option_argument: String::from("value")},
                 ),
 
             CmdOptionKind::EqualWithoutName(git_option, option_name) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_OPTIONAL,
-                    upon::value!{option_name: option_name, git_option: git_option, option_argument: String::from("value")},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option, option_argument: String::from("value")},
                 ),
 
             CmdOptionKind::EqualOptionalWithName(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
-                    upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option, option_argument: argument},
                 ),
 
             CmdOptionKind::WithParameter(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_WITH_PARAMETER,
-                    upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option, option_argument: argument},
                 ),
 
             CmdOptionKind::WithOptionalParameter(git_option, option_name, argument) =>
                 render(
                     engine,
                     TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
-                    upon::value!{option_name: option_name, git_option: git_option, option_argument: argument},
+                    upon::value!{method_name: option_method_name(method_name, option_name), git_option: git_option, option_argument: argument},
                 ),
 
+            CmdOptionKind::ValueParameter(value_parameter) => 
+                render(
+                    engine,
+                    TEMPLATE_OPTION_VALUE_PARAMETER,
+                    upon::value!{method_name: option_method_name(method_name, value_parameter)},
+                ),
+            
             CmdOptionKind::None => String::from("")
         };
 
@@ -158,6 +168,13 @@ fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options
     }
 
     fs::write(options_file_path, options_content.join("\n\n")).expect("Unable to write command options file");
+}
+
+fn option_method_name(method_name: Option<&Value>, option_name: String) -> String {
+    normalize(match method_name {
+        None => option_name.as_str(),
+        Some(v) => v.as_str().unwrap()
+    })
 }
 
 fn render(engine: &Engine, template_name: &str, template_values: upon::Value) -> String {

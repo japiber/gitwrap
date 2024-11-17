@@ -1,3 +1,7 @@
+// Code generated automatically
+
+// This file must not be edited by hand
+
 use crate::command_executor::{CommandExecutor, CommandOption};
 
 /// Starting point at which to create the new commits.
@@ -6,7 +10,7 @@ use crate::command_executor::{CommandExecutor, CommandOption};
 /// As a special case, you may use "A...B" as a shortcut for the merge base of A and B if there is exactly one merge base.
 /// You can leave out at most one of A and B, in which case it defaults to HEAD.
 /// --onto <newbase>
-pub fn onto_option(newbase_arg :&str) -> CommandOption {
+pub fn onto(newbase_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--onto");
         g.add_option(newbase_arg);
@@ -22,13 +26,13 @@ pub fn onto_option(newbase_arg :&str) -> CommandOption {
 /// 
 /// Although both this option and --fork-point find the merge base between <upstream> and <branch>, this option uses the merge base as the starting point on which new commits will be created, whereas --fork-point uses the merge base to determine the set of commits which will be rebased.
 /// --keep-base
-pub fn keep_base_option() -> CommandOption<'static> {
+pub fn keep_base() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--keep-base"))
 }
 
 /// Restart the rebasing process after having resolved a merge conflict.
 /// --continue
-pub fn continue_option() -> CommandOption<'static> {
+pub fn continue_rebase() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--continue"))
 }
 
@@ -36,7 +40,7 @@ pub fn continue_option() -> CommandOption<'static> {
 /// If <branch> was provided when the rebase operation was started, then HEAD will be reset to <branch>.
 /// Otherwise HEAD will be reset to where it was when the rebase operation was started.
 /// --abort
-pub fn abort_option() -> CommandOption<'static> {
+pub fn abort() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--abort"))
 }
 
@@ -44,14 +48,14 @@ pub fn abort_option() -> CommandOption<'static> {
 /// The index and working tree are also left unchanged as a result.
 /// If a temporary stash entry was created using --autostash, it will be saved to the stash list.
 /// --quit
-pub fn quit_option() -> CommandOption<'static> {
+pub fn quit() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--quit"))
 }
 
 /// Use applying strategies to rebase (calling git-am internally).
 /// This option may become a no-op in the future once the merge backend handles everything the apply one does.
 /// --apply
-pub fn apply_option() -> CommandOption<'static> {
+pub fn apply() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--apply"))
 }
 
@@ -63,7 +67,7 @@ pub fn apply_option() -> CommandOption<'static> {
 /// 
 /// Note that commits which start empty are kept (unless --no-keep-empty is specified), and commits which are clean cherry-picks (as determined by git log --cherry-mark ...) are detected and dropped as a preliminary step (unless --reapply-cherry-picks is passed).
 /// --empty={drop,keep,ask}
-pub fn empty_option(value :&str) -> CommandOption {
+pub fn empty(value :&str) -> CommandOption {
     if value.is_empty() {
         Box::new(|g: &mut CommandExecutor| g.add_option("--empty"))
     } else {
@@ -81,7 +85,7 @@ pub fn empty_option(value :&str) -> CommandOption {
 /// 
 /// For commits which do not start empty but become empty after rebasing, see the --empty flag.
 /// --no-keep-empty, --keep-empty
-pub fn no_keep_empty_option() -> CommandOption<'static> {
+pub fn no_keep_empty() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-keep-empty"))
 }
 
@@ -94,7 +98,7 @@ pub fn no_keep_empty_option() -> CommandOption<'static> {
 /// 
 /// For commits which do not start empty but become empty after rebasing, see the --empty flag.
 /// --no-keep-empty, --keep-empty
-pub fn keep_empty_option() -> CommandOption<'static> {
+pub fn keep_empty() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--keep-empty"))
 }
 
@@ -107,7 +111,7 @@ pub fn keep_empty_option() -> CommandOption<'static> {
 /// Advice will also be issued unless advice.skippedCherryPicks is set to false (see git-config(1)).
 /// --reapply-cherry-picks allows rebase to forgo reading all upstream commits, potentially improving performance.
 /// --reapply-cherry-picks, --no-reapply-cherry-picks
-pub fn reapply_cherry_picks_option() -> CommandOption<'static> {
+pub fn reapply_cherry_picks() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--reapply-cherry-picks"))
 }
 
@@ -120,7 +124,7 @@ pub fn reapply_cherry_picks_option() -> CommandOption<'static> {
 /// Advice will also be issued unless advice.skippedCherryPicks is set to false (see git-config(1)).
 /// --reapply-cherry-picks allows rebase to forgo reading all upstream commits, potentially improving performance.
 /// --reapply-cherry-picks, --no-reapply-cherry-picks
-pub fn no_reapply_cherry_picks_option() -> CommandOption<'static> {
+pub fn no_reapply_cherry_picks() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-reapply-cherry-picks"))
 }
 
@@ -128,26 +132,26 @@ pub fn no_reapply_cherry_picks_option() -> CommandOption<'static> {
 /// Rebasing commits with an empty message used to fail and this option would override that behavior, allowing commits with empty messages to be rebased.
 /// Now commits with an empty message do not cause rebasing to halt.
 /// --allow-empty-message
-pub fn allow_empty_message_option() -> CommandOption<'static> {
+pub fn allow_empty_message() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--allow-empty-message"))
 }
 
 /// Restart the rebasing process by skipping the current patch.
 /// --skip
-pub fn skip_option() -> CommandOption<'static> {
+pub fn skip() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--skip"))
 }
 
 /// Edit the todo list during an interactive rebase.
 /// --edit-todo
-pub fn edit_todo_option() -> CommandOption<'static> {
+pub fn edit_todo() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--edit-todo"))
 }
 
 /// Show the current patch in an interactive rebase or when rebase is stopped because of conflicts.
 /// This is the equivalent of git show REBASE_HEAD.
 /// --show-current-patch
-pub fn show_current_patch_option() -> CommandOption<'static> {
+pub fn show_current_patch() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--show-current-patch"))
 }
 
@@ -157,7 +161,7 @@ pub fn show_current_patch_option() -> CommandOption<'static> {
 /// Because of this, when a merge conflict happens, the side reported as ours is the so-far rebased series, starting with <upstream>, and theirs is the working branch.
 /// In other words, the sides are swapped.
 /// -m, --merge
-pub fn merge_option() -> CommandOption<'static> {
+pub fn merge() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--merge"))
 }
 
@@ -166,7 +170,7 @@ pub fn merge_option() -> CommandOption<'static> {
 /// 
 /// Because git rebase replays each commit from the working branch on top of the <upstream> branch using the given strategy, using the ours strategy simply empties all patches from the <branch>, which makes little sense.
 /// -s <strategy>, --strategy=<strategy>
-pub fn strategy_option(strategy_arg :&str) -> CommandOption {
+pub fn strategy(strategy_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--strategy={}", strategy_arg)))
 }
 
@@ -174,19 +178,19 @@ pub fn strategy_option(strategy_arg :&str) -> CommandOption {
 /// This implies --merge and, if no strategy has been specified, -s ort.
 /// Note the reversal of ours and theirs as noted above for the -m option.
 /// -X <strategy-option>, --strategy-option=<strategy-option>
-pub fn strategy_option_option(strategy_option_arg :&str) -> CommandOption {
+pub fn strategy_option(strategy_option_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--strategy-option={}", strategy_option_arg)))
 }
 
 /// Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.
 /// --rerere-autoupdate, --no-rerere-autoupdate
-pub fn rerere_autoupdate_option() -> CommandOption<'static> {
+pub fn rerere_autoupdate() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--rerere-autoupdate"))
 }
 
 /// Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.
 /// --rerere-autoupdate, --no-rerere-autoupdate
-pub fn no_rerere_autoupdate_option() -> CommandOption<'static> {
+pub fn no_rerere_autoupdate() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-rerere-autoupdate"))
 }
 
@@ -194,7 +198,7 @@ pub fn no_rerere_autoupdate_option() -> CommandOption<'static> {
 /// The keyid argument is optional and defaults to the committer identity; if specified, it must be stuck to the option without a space.
 /// --no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier --gpg-sign.
 /// -S[<keyid>], --gpg-sign[=<keyid>], --no-gpg-sign
-pub fn gpg_sign_option(keyid_arg :&str) -> CommandOption {
+pub fn gpg_sign(keyid_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--gpg-sign={}", keyid_arg)))
 }
 
@@ -202,41 +206,41 @@ pub fn gpg_sign_option(keyid_arg :&str) -> CommandOption {
 /// The keyid argument is optional and defaults to the committer identity; if specified, it must be stuck to the option without a space.
 /// --no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier --gpg-sign.
 /// -S[<keyid>], --gpg-sign[=<keyid>], --no-gpg-sign
-pub fn no_gpg_sign_option() -> CommandOption<'static> {
+pub fn no_gpg_sign() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-gpg-sign"))
 }
 
 /// Be quiet.
 /// Implies --no-stat.
 /// -q, --quiet
-pub fn quiet_option() -> CommandOption<'static> {
+pub fn quiet() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--quiet"))
 }
 
 /// Be verbose.
 /// Implies --stat.
 /// -v, --verbose
-pub fn verbose_option() -> CommandOption<'static> {
+pub fn verbose() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--verbose"))
 }
 
 /// Show a diffstat of what changed upstream since the last rebase.
 /// The diffstat is also controlled by the configuration option rebase.stat.
 /// --stat
-pub fn stat_option() -> CommandOption<'static> {
+pub fn stat() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--stat"))
 }
 
 /// Do not show a diffstat as part of the rebase process.
 /// -n, --no-stat
-pub fn no_stat_option() -> CommandOption<'static> {
+pub fn no_stat() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-stat"))
 }
 
 /// This option bypasses the pre-rebase hook.
 /// See also githooks(5).
 /// --no-verify
-pub fn no_verify_option() -> CommandOption<'static> {
+pub fn no_verify() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-verify"))
 }
 
@@ -244,7 +248,7 @@ pub fn no_verify_option() -> CommandOption<'static> {
 /// This option can be used to override --no-verify.
 /// See also githooks(5).
 /// --verify
-pub fn verify_option() -> CommandOption<'static> {
+pub fn verify() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--verify"))
 }
 
@@ -253,7 +257,7 @@ pub fn verify_option() -> CommandOption<'static> {
 /// By default no context is ever ignored.
 /// Implies --apply.
 /// -C<n>
-pub fn c_option(n_arg :&str) -> CommandOption {
+pub fn ensure_context(n_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("-C");
         g.add_option(n_arg);
@@ -266,7 +270,7 @@ pub fn c_option(n_arg :&str) -> CommandOption {
 /// 
 /// You may find this helpful after reverting a topic branch merge, as this option recreates the topic branch with fresh commits so it can be remerged successfully without needing to "revert the reversion" (see the revert-a-faulty-merge How-To[1] for details).
 /// --no-ff, --force-rebase, -f
-pub fn no_ff_option() -> CommandOption<'static> {
+pub fn no_ff() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-ff"))
 }
 
@@ -275,7 +279,7 @@ pub fn no_ff_option() -> CommandOption<'static> {
 /// 
 /// You may find this helpful after reverting a topic branch merge, as this option recreates the topic branch with fresh commits so it can be remerged successfully without needing to "revert the reversion" (see the revert-a-faulty-merge How-To[1] for details).
 /// --no-ff, --force-rebase, -f
-pub fn force_rebase_option() -> CommandOption<'static> {
+pub fn force_rebase() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--force-rebase"))
 }
 
@@ -289,7 +293,7 @@ pub fn force_rebase_option() -> CommandOption<'static> {
 /// 
 /// If your branch was based on <upstream> but <upstream> was rewound and your branch contains commits which were dropped, this option can be used with --keep-base in order to drop those commits from your branch.
 /// --fork-point, --no-fork-point
-pub fn fork_point_option() -> CommandOption<'static> {
+pub fn fork_point() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--fork-point"))
 }
 
@@ -303,7 +307,7 @@ pub fn fork_point_option() -> CommandOption<'static> {
 /// 
 /// If your branch was based on <upstream> but <upstream> was rewound and your branch contains commits which were dropped, this option can be used with --keep-base in order to drop those commits from your branch.
 /// --fork-point, --no-fork-point
-pub fn no_fork_point_option() -> CommandOption<'static> {
+pub fn no_fork_point() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-fork-point"))
 }
 
@@ -316,42 +320,42 @@ pub fn no_fork_point_option() -> CommandOption<'static> {
 /// merge backend: Treat lines with only whitespace changes as unchanged when merging.
 /// Unfortunately, this means that any patch hunks that were intended to modify whitespace and nothing else will be dropped, even if the other side had no changes that conflicted.
 /// --ignore-whitespace
-pub fn ignore_whitespace_option() -> CommandOption<'static> {
+pub fn ignore_whitespace() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--ignore-whitespace"))
 }
 
 /// This flag is passed to the git apply program (see git-apply(1)) that applies the patch.
 /// Implies --apply.
 /// --whitespace=<option>
-pub fn whitespace_option(option_arg :&str) -> CommandOption {
+pub fn whitespace(option_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| g.add_option_string(format!("--whitespace={}", option_arg)))
 }
 
 /// Instead of using the current time as the committer date, use the author date of the commit being rebased as the committer date.
 /// This option implies --force-rebase.
 /// --committer-date-is-author-date
-pub fn committer_date_is_author_date_option() -> CommandOption<'static> {
+pub fn committer_date_is_author_date() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--committer-date-is-author-date"))
 }
 
 /// Instead of using the author date of the original commit, use the current time as the author date of the rebased commit.
 /// This option implies --force-rebase.
 /// --ignore-date, --reset-author-date
-pub fn ignore_date_option() -> CommandOption<'static> {
+pub fn ignore_date() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--ignore-date"))
 }
 
 /// Instead of using the author date of the original commit, use the current time as the author date of the rebased commit.
 /// This option implies --force-rebase.
 /// --ignore-date, --reset-author-date
-pub fn reset_author_date_option() -> CommandOption<'static> {
+pub fn reset_author_date() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--reset-author-date"))
 }
 
 /// Add a Signed-off-by trailer to all the rebased commits.
 /// Note that if --interactive is given then only commits marked to be picked, edited or reworded will have the trailer added.
 /// --signoff
-pub fn signoff_option() -> CommandOption<'static> {
+pub fn signoff() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--signoff"))
 }
 
@@ -362,7 +366,7 @@ pub fn signoff_option() -> CommandOption<'static> {
 /// The commit list format can be changed by setting the configuration option rebase.instructionFormat.
 /// A customized instruction format will automatically have the long commit hash prepended to the format.
 /// -i, --interactive
-pub fn interactive_option() -> CommandOption<'static> {
+pub fn interactive() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--interactive"))
 }
 
@@ -375,7 +379,7 @@ pub fn interactive_option() -> CommandOption<'static> {
 /// 
 /// It is currently only possible to recreate the merge commits using the ort merge strategy; different merge strategies can be used only via explicit exec git merge -s <strategy> [...]  commands.
 /// -r, --rebase-merges[=(rebase-cousins|no-rebase-cousins)]
-pub fn rebase_merges_option(value :&str) -> CommandOption {
+pub fn rebase_merges(value :&str) -> CommandOption {
     if value.is_empty() {
         Box::new(|g: &mut CommandExecutor| g.add_option("--rebase-merges"))
     } else {
@@ -388,7 +392,7 @@ pub fn rebase_merges_option(value :&str) -> CommandOption {
 /// <cmd> will be interpreted as one or more shell commands.
 /// Any command that fails will interrupt the rebase, with exit code 1.
 /// -x <cmd>, --exec <cmd>
-pub fn exec_option(cmd_arg :&str) -> CommandOption {
+pub fn exec(cmd_arg :&str) -> CommandOption {
     Box::new(move |g: &mut CommandExecutor| {
         g.add_option("--exec");
         g.add_option(cmd_arg);
@@ -401,7 +405,7 @@ pub fn exec_option(cmd_arg :&str) -> CommandOption {
 /// When used with --onto, it will skip changes already contained in <newbase> (instead of <upstream>) whereas without
 /// --onto it will operate on every change.
 /// --root
-pub fn root_option() -> CommandOption<'static> {
+pub fn root() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--root"))
 }
 
@@ -412,7 +416,7 @@ pub fn root_option() -> CommandOption<'static> {
 /// 
 /// If the --autosquash option is enabled by default using the configuration variable rebase.autoSquash, this option can be used to override and disable this setting.
 /// --autosquash, --no-autosquash
-pub fn autosquash_option() -> CommandOption<'static> {
+pub fn autosquash() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--autosquash"))
 }
 
@@ -423,7 +427,7 @@ pub fn autosquash_option() -> CommandOption<'static> {
 /// 
 /// If the --autosquash option is enabled by default using the configuration variable rebase.autoSquash, this option can be used to override and disable this setting.
 /// --autosquash, --no-autosquash
-pub fn no_autosquash_option() -> CommandOption<'static> {
+pub fn no_autosquash() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-autosquash"))
 }
 
@@ -431,7 +435,7 @@ pub fn no_autosquash_option() -> CommandOption<'static> {
 /// This means that you can run rebase on a dirty worktree.
 /// However, use with care: the final stash application after a successful rebase might result in non-trivial conflicts.
 /// --autostash, --no-autostash
-pub fn autostash_option() -> CommandOption<'static> {
+pub fn autostash() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--autostash"))
 }
 
@@ -439,7 +443,7 @@ pub fn autostash_option() -> CommandOption<'static> {
 /// This means that you can run rebase on a dirty worktree.
 /// However, use with care: the final stash application after a successful rebase might result in non-trivial conflicts.
 /// --autostash, --no-autostash
-pub fn no_autostash_option() -> CommandOption<'static> {
+pub fn no_autostash() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-autostash"))
 }
 
@@ -449,7 +453,7 @@ pub fn no_autostash_option() -> CommandOption<'static> {
 /// Even though this option applies once a rebase is started, it’s set for the whole rebase at the start based on either the rebase.rescheduleFailedExec configuration (see git-config(1) or "CONFIGURATION" below) or whether this option is provided.
 /// Otherwise an explicit --no-reschedule-failed-exec at the start would be overridden by the presence of rebase.rescheduleFailedExec=true configuration.
 /// --reschedule-failed-exec, --no-reschedule-failed-exec
-pub fn reschedule_failed_exec_option() -> CommandOption<'static> {
+pub fn reschedule_failed_exec() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--reschedule-failed-exec"))
 }
 
@@ -459,6 +463,6 @@ pub fn reschedule_failed_exec_option() -> CommandOption<'static> {
 /// Even though this option applies once a rebase is started, it’s set for the whole rebase at the start based on either the rebase.rescheduleFailedExec configuration (see git-config(1) or "CONFIGURATION" below) or whether this option is provided.
 /// Otherwise an explicit --no-reschedule-failed-exec at the start would be overridden by the presence of rebase.rescheduleFailedExec=true configuration.
 /// --reschedule-failed-exec, --no-reschedule-failed-exec
-pub fn no_reschedule_failed_exec_option() -> CommandOption<'static> {
+pub fn no_reschedule_failed_exec() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--no-reschedule-failed-exec"))
 }

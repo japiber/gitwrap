@@ -143,3 +143,11 @@ where
 {
     git_command("ls-files", options).exec()
 }
+
+
+pub fn branch<'a, I>(options: I) -> ExecResult
+where
+    I: IntoIterator<Item=CommandOption<'a>>
+{
+    git_command("branch", options).exec()
+}
