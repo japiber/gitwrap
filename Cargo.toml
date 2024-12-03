@@ -1,12 +1,24 @@
 [package]
 name = "gitrack"
-version = "0.1.0"
+description = "GitRack is a simple wrapper around `git` command"
+authors = ["Juan Antonio Piñero"]
+version = "0.3.3"
 edition = "2021"
+repository = "https://github.com/japiber/gitrack"
+license = "Apache-2.0"
+keywords = ["gitops", "git"]
+categories = ["command-line-interface", "development-tools"]
+readme = "README.md"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[badges]
+maintenance = { status = "experimental" }
 
 [lib]
 name = "gitrack"
 path = "src/lib.rs"
-
 
 [[bin]]
 name = "gitrack"
@@ -16,5 +28,5 @@ path = "src/generator/gen.rs"
 upon = "0.8"
 serde = { version = "1.0", features = ["derive", "std"] }
 serde_json = "1.0"
-regex = "1.10.5"
+regex = "1.11"
 
