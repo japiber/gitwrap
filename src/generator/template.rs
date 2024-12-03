@@ -12,7 +12,7 @@ pub const TEMPLATE_OPTION_VALUE_PARAMETER: &str = "value_parameter";
 pub const TEMPLATE_COMMAND : &str = "command";
 pub const TEMPLATE_GIT_BASE_COMMAND: &str = "git_base_command";
 
-static GIT_TEMPLATES_COMMON: &'static [(&str, &str)] = &[
+static GIT_TEMPLATES_COMMON: &[(&str, &str)] = &[
     (
         TEMPLATE_MOD_RS,
         "mod {{ command_name }}_options;\npub use {{ command_name }}_options::*;\n"

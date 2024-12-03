@@ -1,9 +1,10 @@
 mod command_executor;
 mod git_commands;
-pub mod options;
+mod options;
 
 pub use git_commands::*;
 
 pub use command_executor::*;
+pub use options::*;
 
 
