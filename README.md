@@ -1,13 +1,13 @@
-# GitRack: Git command Wrapper
+# GitWrap: Git command Wrapper
 
-[![Rust Report Card](https://rust-reportcard.xuri.me/badge/github.com/japiber/gitrack?style=flat)](https://rust-reportcard.xuri.me/badge/github.com/japiber/gitrack?style=flat
+[![Rust Report Card](https://rust-reportcard.xuri.me/badge/github.com/japiber/gitwrap?style=flat)](https://rust-reportcard.xuri.me/badge/github.com/japiber/gitwrap?style=flat
 
 
-GitRack is a simple wrapper around `git` command.
+GitWrap is a simple wrapper around `git` command.
 
 ```rust
-use gitrack::{clone, CommandOption};
-use gitrack::options::clone;
+use gitwrap::{clone, CommandOption};
+use gitwrap::options::clone;
 
 
 fn initialize(&self) -> Result<(), RepoErr> {
