@@ -2,7 +2,7 @@
 name = "gitwrap"
 description = "GitWrap is a simple wrapper around `git` command"
 authors = ["Juan Antonio Piñero"]
-version = "0.3.5"
+version = "0.3.6"
 edition = "2021"
 repository = "https://github.com/japiber/gitwrap"
 license = "Apache-2.0"

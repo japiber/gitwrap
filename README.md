@@ -32,7 +32,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.3.5"
+gitwrap = "0.3.6"
 ```
 
 ## Usage
@@ -46,21 +46,36 @@ use gitwrap::{clone, CommandOption};
 use gitwrap::options::clone;
 
 
-    fn initialize(repo_url: &str, repo_path: &str, insecure: bool) -> Result<(), RepoErr> {
-        let mut opt: Vec<CommandOption> = Vec::new();
-        opt.push(clone::repository(repo_url));
-        opt.push(clone::directory(repo_path));
-        if let Some(auth_header) = build_auth_header() {
-            opt.push(clone::config("http.extraHeader", &auth_header))
-        }
-        if insecure {
-            opt.push(clone::config("http.sslVerify", "false"))
-        }
-
-        match clone(opt) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(RepoErr::InitializeError(Box::new(e))),
-        }
+fn initialize(repo_url: &str, repo_path: &str, insecure: bool) -> Result<(), RepoErr> {
+    let mut opt: Vec<CommandOption> = Vec::new();
+    opt.push(clone::repository(repo_url));
+    opt.push(clone::directory(repo_path));
+    if let Some(auth_header) = build_auth_header() {
+        opt.push(clone::config("http.extraHeader", &auth_header))
+    }
+    if insecure {
+        opt.push(clone::config("http.sslVerify", "false"))
     }
 
+    match clone(opt) {
+        Ok(_) => Ok(()),
+        Err(e) => Err(RepoErr::InitializeError(Box::new(e))),
+    }
+}
+```
+
+### 2. setting repo configuration
+
+```rust
+use gitwrap::{config, CommandOption, ExecResult};
+use gitwrap::options::config;
+
+fn set_repo_config(commit_user: &str, commit_email: &str) -> Result<(), RepoStoreErr> {
+    match (config(config::entry("user.email", commit.commit_email)),
+           config(config::entry("user.name", commit.commit_user))) {
+        (Ok(_), Ok(_)) => Ok(()),
+        (Err(e), _) => Err(RepoStoreErr::InitializeError(Box::new(e))),
+        (_, Err(e)) => Err(RepoStoreErr::InitializeError(Box::new(e))),
+    }
+}
 ```

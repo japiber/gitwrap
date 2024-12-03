@@ -1,3 +1,5 @@
+use std::error::Error;
+use std::fmt::{Debug, Display, Formatter};
 use std::process::Command;
 
 pub enum ExecError {
@@ -6,13 +8,37 @@ pub enum ExecError {
     ExitStatus(i32),
 }
 
+impl Error for ExecError {}
+
+impl ExecError {
+    fn format(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExecError::InvalidOutput => write!(f, "invalid output"),
+            ExecError::FailedExecuteProcess => write!(f, "failed to execute process"),
+            ExecError::ExitStatus(x) => write!(f, "exit status: {}", x),
+        }
+    }
+}
+
+impl Display for ExecError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.format(f)
+    }
+}
+
+impl Debug for ExecError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.format(f)
+    }
+}
+
 pub type ExecResult = Result<String, ExecError>;
 
 pub type CommandOption<'a> = Box<dyn Fn(&mut CommandExecutor) + 'a>;
 
 pub type Executor = fn(&str, Vec<String>) -> ExecResult;
 
-
+#[derive(Debug, Clone)]
 pub struct CommandExecutor {
     base: String,
     options: Vec<String>,
