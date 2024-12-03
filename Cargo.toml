@@ -1,10 +1,10 @@
 [package]
-name = "gitrack"
-description = "GitRack is a simple wrapper around `git` command"
+name = "gitwrap"
+description = "GitWrap is a simple wrapper around `git` command"
 authors = ["Juan Antonio Piñero"]
 version = "0.3.3"
 edition = "2021"
-repository = "https://github.com/japiber/gitrack"
+repository = "https://github.com/japiber/gitwrap"
 license = "Apache-2.0"
 keywords = ["gitops", "git"]
 categories = ["command-line-interface", "development-tools"]
@@ -17,11 +17,11 @@ unsafe_code = "forbid"
 maintenance = { status = "experimental" }
 
 [lib]
-name = "gitrack"
+name = "gitwrap"
 path = "src/lib.rs"
 
 [[bin]]
-name = "gitrack"
+name = "gitwrap"
 path = "src/generator/gen.rs"
 
 [dependencies]
