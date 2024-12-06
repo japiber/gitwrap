@@ -2,7 +2,7 @@ mod template;
 mod options;
 
 use crate::options::{normalize, CmdOptionKind};
-use crate::template::{command_templates, TEMPLATE_COMMAND, TEMPLATE_GIT_BASE_COMMAND, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_VALUE_PARAMETER, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
+use crate::template::{command_templates, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_VALUE_PARAMETER, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
 use serde_json::{from_str, Value};
 use std::string::String;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -38,48 +38,21 @@ pub fn main() {
             command_generator(output_dir.as_str(), &engine, command_name, options);
         }
     }
-    git_commands_file_generator(output_dir.as_str(), &engine, commands)
-}
-
-fn git_commands_file_generator(output_dir: &str, engine: &Engine, commands: Vec<&str>) {
-    let mut commands_content: Vec<String> = Vec::new();
-    commands_content.push(
-        String::from("use crate::command_executor::{command, CommandExecutor, CommandOption, ExecResult};\n")
-    );
-    commands_content.push(
-            render(
-            engine,
-            TEMPLATE_GIT_BASE_COMMAND,
-            upon::value!{git_cli_command: "git"}
-        ));
-
-    for cmd in commands {
-        commands_content.push(
-            render(
-                engine,
-                TEMPLATE_COMMAND,
-                upon::value!{command_name: normalize(cmd), git_command: cmd},
-            ));
-    }
-
-    let git_commands_file_path = format!("{output_dir}/git_commands.rs");
-
-    fs::write(git_commands_file_path, commands_content.join("\n\n")).expect("Unable to write git commands file");
 }
 
 fn command_generator(output_dir: &str, engine: &Engine, command_name: &str, options: &Vec<Value>) {
     let normalized_command_name = normalize(command_name);
     let command_path = format!("{output_dir}/{normalized_command_name}");
     fs::create_dir_all(command_path.as_str()).expect("could not create dir");
-    command_mod_file_generator(engine, normalized_command_name.as_str(), format!("{command_path}/{MOD_RS_FILENAME}").as_str());
-    command_options_file_generator(engine, options, format!("{command_path}/{normalized_command_name}_options.rs").as_str());
+    command_mod_file_generator(engine, command_name, format!("{command_path}/{MOD_RS_FILENAME}").as_str());
+    command_options_file_generator(engine, options, format!("{command_path}/options.rs").as_str());
     println!("command {command_name} generated");
 }
 
-fn command_mod_file_generator(engine: &Engine, command_name: &str, mod_file_path: &str) {
+fn command_mod_file_generator(engine: &Engine, cmd: &str, mod_file_path: &str) {
     let tpl = engine.template(TEMPLATE_MOD_RS);
     let mod_rs_content = tpl
-        .render(upon::value!{command_name: command_name})
+        .render(upon::value!{command_name: normalize(cmd), git_command: cmd})
         .to_string()
         .expect("could not render template mod_rs");
 
@@ -89,9 +62,9 @@ fn command_mod_file_generator(engine: &Engine, command_name: &str, mod_file_path
 fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options_file_path: &str) {
     let mut options_content: Vec<String> = Vec::new();
 
-    options_content.push(String::from("// Code generated automatically"));
-    options_content.push(String::from("// This file must not be edited by hand"));
-    options_content.push(String::from("use crate::command_executor::{CommandExecutor, CommandOption};"));
+    options_content.push(String::from("// Warning!! Code generated automatically: this file must not be edited by hand"));
+    options_content.push(String::from("use std::process::Command;"));
+    options_content.push(String::from("use crate::wrap_command::FnOptionArg;"));
 
     for opt in options {
         let argument = opt.get("argument").unwrap().as_str().unwrap();
