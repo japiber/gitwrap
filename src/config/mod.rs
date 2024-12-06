@@ -2,7 +2,10 @@ use std::process::Command;
 use crate::wrap_command::{git, WrapCommand};
 
 mod options;
+mod custom;
+
 pub use options::*;
+pub use custom::*;
 
 pub fn config(current_dir: &str) -> WrapCommand {
     let mut command = git(current_dir);
