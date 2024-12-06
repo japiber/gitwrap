@@ -1,7 +1,3 @@
-// Code generated automatically
-
-// This file must not be edited by hand
-
 use crate::command_executor::{CommandExecutor, CommandOption};
 
 /// Don't actually add the file(s), just show if they exist and/or will be ignored.

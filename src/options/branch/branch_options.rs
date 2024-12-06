@@ -169,10 +169,6 @@ pub fn show_current() -> CommandOption<'static> {
     Box::new(|g: &mut CommandExecutor| g.add_option("--show-current"))
 }
 
-/// SetUpstream change upstream info
-/// --unset-upstream
-
-
 /// change the upstream info to upstream
 /// -u, --set-upstream-to <upstream>
 pub fn set_upstream_to(upstream_arg :&str) -> CommandOption {
