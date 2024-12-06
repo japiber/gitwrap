@@ -15,7 +15,7 @@ pub mod pull;
 pub mod push;
 pub mod rebase;
 pub mod reset;
-pub mod revparse;
+pub mod rev_parse;
 pub mod status;
 
 #[cfg(test)]

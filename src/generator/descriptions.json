@@ -1558,7 +1558,7 @@
     ]
   },
   {
-    "command_name": "revparse",
+    "command_name": "rev-parse",
     "enabled": true,
     "options": [
       {
