@@ -17,3 +17,6 @@ pub mod rebase;
 pub mod reset;
 pub mod revparse;
 pub mod status;
+
+#[cfg(test)]
+mod tests;
