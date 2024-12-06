@@ -2341,7 +2341,7 @@
         "description": "print the name of the current branch. In detached HEAD state, nothing is printed"
       },
       {
-        "argument": "--unset-upstream [<branchname>]",
+        "argument": "--unset-upstream [branchname]",
         "arguments": "--unset-upstream",
         "description": "SetUpstream change upstream info"
       },
