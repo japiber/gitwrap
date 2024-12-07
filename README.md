@@ -39,10 +39,9 @@ gitwrap = "0.4.0"
 
 Here are some examples of use (work in progress)
 
-### 1. cloning a remote repo
+### 1. Cloning a remote repo
 
 ```rust
-use std::fs;
 use crate::{clone};
 
 
@@ -56,7 +55,7 @@ fn initialize(repo_url: &str, repo_path: &str) {
 }
 ```
 
-### 2. setting repo configuration
+### 2. Setting repo configuration
 
 ```rust
 use crate::{config};
