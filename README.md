@@ -32,50 +32,53 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.3.6"
+gitwrap = "0.4.0"
 ```
 
 ## Usage
 
 Here are some examples of use (work in progress)
 
-### 1. cloning a remote repo
+### 1. Cloning a remote repo
 
 ```rust
-use gitwrap::{clone, CommandOption};
-use gitwrap::options::clone;
+use crate::{clone};
 
 
-fn initialize(repo_url: &str, repo_path: &str, insecure: bool) -> Result<(), RepoErr> {
-    let mut opt: Vec<CommandOption> = Vec::new();
-    opt.push(clone::repository(repo_url));
-    opt.push(clone::directory(repo_path));
-    if let Some(auth_header) = build_auth_header() {
-        opt.push(clone::config("http.extraHeader", &auth_header))
-    }
-    if insecure {
-        opt.push(clone::config("http.sslVerify", "false"))
-    }
+fn initialize(repo_url: &str, repo_path: &str) {
+    let mut cmd = clone::clone("");
+    cmd.option(clone::repository(repo_url));
+    cmd.option(clone::directory(repo_path));
+    cmd.option(clone::config("http.sslVerify", "false"));
 
-    match clone(opt) {
-        Ok(_) => Ok(()),
-        Err(e) => Err(RepoErr::InitializeError(Box::new(e))),
-    }
+    assert!(cmd.execute().is_ok());
 }
 ```
 
-### 2. setting repo configuration
+### 2. Setting repo configuration
 
 ```rust
-use gitwrap::{config, CommandOption, ExecResult};
-use gitwrap::options::config;
+use crate::{config};
 
-fn set_repo_config(commit_user: &str, commit_email: &str) -> Result<(), RepoStoreErr> {
-    match (config(config::entry("user.email", commit.commit_email)),
-           config(config::entry("user.name", commit.commit_user))) {
-        (Ok(_), Ok(_)) => Ok(()),
-        (Err(e), _) => Err(RepoStoreErr::InitializeError(Box::new(e))),
-        (_, Err(e)) => Err(RepoStoreErr::InitializeError(Box::new(e))),
-    }
+fn set_repo_config(commit_email: &str) {
+    let mut cmd = config::config(REPO_CLONE_PATH);
+    cmd.option(config::entry("user.email", commit_email));
+
+    assert!(cmd.execute().is_ok());
+}
+```
+
+### 3. Check if a directory is a valid git repo
+
+```rust
+use crate::{rev_parse};
+
+fn is_repo_valid(repo_path: &str) {
+    let mut cmd = rev_parse::rev_parse(repo_path);
+    cmd.option(rev_parse::is_inside_work_tree());
+    let r = cmd.execute();
+
+    assert!(r.is_ok());
+    assert!(r.ok().unwrap().contains("true"));
 }
 ```
