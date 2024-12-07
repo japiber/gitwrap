@@ -43,7 +43,7 @@ Here are some examples of use (work in progress)
 ### 1. Cloning a remote repo
 
 ```rust
-use crate::{clone};
+use gitwrap::clone;
 
 
 fn initialize(repo_url: &str, repo_path: &str) {
@@ -59,7 +59,7 @@ fn initialize(repo_url: &str, repo_path: &str) {
 ### 2. Setting repo configuration
 
 ```rust
-use crate::{config};
+use gitwrap::config;
 
 fn set_repo_config(commit_email: &str) {
     let mut cmd = config::config(REPO_CLONE_PATH);
@@ -72,7 +72,7 @@ fn set_repo_config(commit_email: &str) {
 ### 3. Check if a directory is a valid git repo
 
 ```rust
-use crate::{rev_parse};
+use gitwrap::rev_parse;
 
 fn is_repo_valid(repo_path: &str) {
     let mut cmd = rev_parse::rev_parse(repo_path);
