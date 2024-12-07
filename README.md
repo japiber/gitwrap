@@ -1,8 +1,9 @@
 
 # [GitWrap](https://crates.io/crates/gitwrap)
 
-[![Build Status](https://github.com/japiber/gitwrap/actions/workflows/rust.yml/badge.svg)](https://github.com/japiber/gitwrap/actions/workflows/rust.yml) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/xuri/rust-reportcard/blob/master/LICENSE)
+[![Rust Report Card](https://rust-reportcard.xuri.me/badge/github.com/japiber/gitwrap?style=flat)](https://rust-reportcard.xuri.me/badge/github.com/japiber/gitwrap?style=flat)[![Build Status](https://github.com/japiber/gitwrap/actions/workflows/rust.yml/badge.svg)](https://github.com/japiber/gitwrap/actions/workflows/rust.yml) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/xuri/rust-reportcard/blob/master/LICENSE)
 [![](https://img.shields.io/crates/v/gitwrap.svg)](https://crates.io/crates/gitwrap)  
+
 
 GitWrap is a simple wrapper around `git` command.
 
