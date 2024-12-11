@@ -15,7 +15,7 @@ const PHG_VERSION: &str = env!("CARGO_PKG_VERSION");
 const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 const DESCRIPTION_FILENAME: &str = "description.json";
 const MOD_RS_FILENAME: &str = "mod.rs";
-const GIT_COMMAND_FILENAME: &str = "git_commands.rs";
+const GIT_COMMAND_FILENAME: &str = "git_command.rs";
 
 
 pub fn main() {
@@ -31,6 +31,7 @@ pub fn main() {
     let now = SystemTime::now().duration_since(UNIX_EPOCH).expect("Time went backwards");
     let output_dir = format!("output_{:?}", now.as_millis());
     let engine = command_templates();
+    fs::create_dir_all(&output_dir).expect("could not create output dir");
     let git_command_file = format!("{output_dir}/{GIT_COMMAND_FILENAME}");
     git_command_file_create(&engine, &git_command_file);
     for desc in json.as_array().unwrap() {
@@ -65,18 +66,17 @@ fn command_mod_file_generator(engine: &Engine, cmd: &str, mod_file_path: &str) {
 
 fn git_command_file_create(engine: &Engine, file_path: &str) {
     let tpl = engine.template(TEMPLATE_GIT_COMMAND_FILE);
-    let mod_rs_content = tpl
+    let git_command_content = tpl
         .render(upon::value!{})
         .to_string()
         .expect("could not render template git_command_file");
 
-    fs::write(file_path, mod_rs_content.as_str()).expect("Unable to write git command file");
+    fs::write(file_path, &git_command_content).expect("Unable to write git command file");
 }
 
 fn git_command_file_append_command(engine: &Engine, cmd: &str, file_path: &str) {
-    let normalized_command_name = normalize(cmd);
     let tpl = engine.template(TEMPLATE_GIT_COMMAND_MACRO);
-    let mod_rs_content = tpl
+    let git_macro_content = tpl
         .render(upon::value!{command_name: normalize(cmd), git_command: cmd})
         .to_string()
         .expect("could not render template git_command_macro");
@@ -85,9 +85,9 @@ fn git_command_file_append_command(engine: &Engine, cmd: &str, file_path: &str) 
     let mut data_file = OpenOptions::new()
         .append(true)
         .open(file_path)
-        .expect("cannot open file");
+        .expect("cannot open git_command file");
 
-    data_file.write_fmt(format_args!("{mod_rs_content}\n")).unwrap();
+    data_file.write_fmt(format_args!("\n{git_macro_content}\n")).unwrap();
 }
 
 fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options_file_path: &str) {

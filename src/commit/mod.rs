@@ -1,12 +1,9 @@
-use std::process::Command;
-use crate::wrap_command::{git, FnOptionArg, WrapCommand};
+use crate::wrap_command::WrapCommand;
+use crate::git;
 
 mod options;
 pub use options::*;
 
-/*pub fn commitone(current_dir: &str) -> WrapCommand {
-    let mut command = git(current_dir);
-    command.option(Box::new(move |cmd: &mut Command| { cmd.arg(String::from("commit")); }));
-    command
-}*/
-
+pub fn commit(current_dir: &str) -> WrapCommand {
+    git(current_dir, "commit")
+}

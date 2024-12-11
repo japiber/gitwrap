@@ -1,7 +1,6 @@
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::process::Command;
-use vararg::vararg;
 
 pub type FnOptionArg = Box<dyn Fn(&mut Command)>;
 
@@ -81,8 +80,4 @@ impl WrapCommand {
     fn get_output_string(out: Vec<u8>) -> String {
         String::from_utf8(out).unwrap_or_else(|_| String::from(""))
     }
-}
-
-pub fn git(current_dir: &str) -> WrapCommand {
-    WrapCommand::new("git", current_dir)
 }

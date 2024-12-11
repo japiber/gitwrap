@@ -17,17 +17,16 @@ pub const TEMPLATE_GIT_COMMAND_MACRO: &str = "git_command_macro";
 static GIT_TEMPLATES_COMMON: &[(&str, &str)] = &[
     (
         TEMPLATE_MOD_RS,
-        r#"use std::process::Command;
-use crate::wrap_command::{git, WrapCommand};
+        r#"use crate::wrap_command::WrapCommand;
+use crate::git;
 
 mod options;
 pub use options::*;
 
 pub fn {{ command_name }}(current_dir: &str) -> WrapCommand {
-    let mut command = git(current_dir);
-    command.option(Box::new(move |cmd: &mut Command| { cmd.arg(String::from("{{ git_command }}")); }));
-    command
-}"#
+    git(current_dir, "{{ git_command }}")
+}
+"#
     ),
     (
         TEMPLATE_OPTION_DOC_COMMENTS,
@@ -105,7 +104,8 @@ pub fn git(current_dir: &str, cmd: &str) -> WrapCommand {
     let l_cmd = String::from(cmd);
     command.option(Box::new(move |c: &mut  std::process::Command| { c.arg(l_cmd.as_str()); }));
     command
-}"#
+}
+"#
     ),
     (
         TEMPLATE_GIT_COMMAND_MACRO,
@@ -121,9 +121,7 @@ macro_rules! {{ command_name }} {
             command
         }
      }
-}
-
-pub use {{ command_name }};"#
+}"#
     )
 ];
 

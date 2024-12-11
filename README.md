@@ -9,6 +9,8 @@ GitWrap is a simple wrapper around `git` command.
 
 The purpose of this library is to provide a controlled and reliable method of accessing the git commands in the simplest possible way.
 
+This project is in progress, not all git commands / options are implemented yet.
+
 ## Credits
 
 This project is inspired and based on [Go Git Cmd Wrapper](https://github.com/ldez/go-git-cmd-wrapper)
@@ -33,7 +35,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.4.0"
+gitwrap = "0.5.0"
 ```
 
 ## Usage
@@ -51,6 +53,19 @@ fn initialize(repo_url: &str, repo_path: &str) {
     cmd.option(clone::repository(repo_url));
     cmd.option(clone::directory(repo_path));
     cmd.option(clone::config("http.sslVerify", "false"));
+
+    assert!(cmd.execute().is_ok());
+}
+```
+
+### Clone a repo using macros
+
+```rust
+fn initialize(repo_url: &str, repo_path: &str) {
+    let cmd = clone!("",
+        clone::repository("https://github.com/japiber/gitwrap.git"),
+        clone::directory(path.as_str()),
+        clone::config("http.sslVerify", "false"));
 
     assert!(cmd.execute().is_ok());
 }

@@ -1,14 +1,12 @@
-use std::process::Command;
-use crate::wrap_command::{git, WrapCommand};
+use crate::wrap_command::WrapCommand;
+use crate::git;
 
 mod options;
-mod custom;
-
 pub use options::*;
+
+mod custom;
 pub use custom::*;
 
 pub fn config(current_dir: &str) -> WrapCommand {
-    let mut command = git(current_dir);
-    command.option(Box::new(move |cmd: &mut Command| { cmd.arg(String::from("config")); }));
-    command
+    git(current_dir, "config")
 }

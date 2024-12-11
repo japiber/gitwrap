@@ -1,9 +1,6 @@
-use std::process::Command;
-use crate::{clone, commit, config, rev_parse};
+use crate::{clone, config, rev_parse};
 use rand::Rng;
 use std::fs;
-
-
 
 
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
@@ -15,10 +12,10 @@ fn test_clone() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let cmd = clone!("",
-            clone::repository("https://github.com/japiber/gitwrap.git"),
-            clone::directory(path.as_str()),
-            clone::config("http.sslVerify", "false"));
+        let mut cmd = clone::clone("");
+        cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
+        cmd.option(clone::directory(path.as_str()));
+        cmd.option(clone::config("http.sslVerify", "false"));
 
         assert!(cmd.execute().is_ok());
     }
@@ -34,6 +31,34 @@ fn test_clone() {
 
     fs::remove_dir_all(path.as_str()).unwrap();
 }
+
+#[test]
+fn test_clone_macro() {
+    let mut rng = rand::rng();
+    let path = format!("repo_{:10x}!", rng.random_range(0..10000000));
+    fs::create_dir(path.as_str()).unwrap();
+
+    {
+        let cmd = clone!("",
+            clone::repository("https://github.com/japiber/gitwrap.git"),
+            clone::directory(path.as_str()),
+            clone::config("http.sslVerify", "false"));
+
+        assert!(cmd.execute().is_ok());
+    }
+
+    {
+        let cmd = rev_parse!(path.as_str(),
+            rev_parse::is_inside_work_tree());
+        let r = cmd.execute();
+
+        assert!(r.is_ok());
+        assert!(r.ok().unwrap().contains("true"));
+    }
+
+    fs::remove_dir_all(path.as_str()).unwrap();
+}
+
 
 #[test]
 fn test_config() {
