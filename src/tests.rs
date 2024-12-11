@@ -1,6 +1,9 @@
-use crate::{clone, config, rev_parse};
+use std::process::Command;
+use crate::{clone, commit, config, rev_parse};
 use rand::Rng;
 use std::fs;
+
+
 
 
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
@@ -12,10 +15,10 @@ fn test_clone() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let mut cmd = clone::clone("");
-        cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
-        cmd.option(clone::directory(path.as_str()));
-        cmd.option(clone::config("http.sslVerify", "false"));
+        let cmd = clone!("",
+            clone::repository("https://github.com/japiber/gitwrap.git"),
+            clone::directory(path.as_str()),
+            clone::config("http.sslVerify", "false"));
 
         assert!(cmd.execute().is_ok());
     }

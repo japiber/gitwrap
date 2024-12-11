@@ -20,3 +20,5 @@ pub mod status;
 
 #[cfg(test)]
 mod tests;
+mod git_command;
+pub use git_command::*;

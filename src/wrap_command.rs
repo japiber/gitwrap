@@ -1,6 +1,7 @@
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::process::Command;
+use vararg::vararg;
 
 pub type FnOptionArg = Box<dyn Fn(&mut Command)>;
 
