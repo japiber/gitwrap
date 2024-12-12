@@ -9,6 +9,8 @@ GitWrap is a simple wrapper around `git` command.
 
 The purpose of this library is to provide a controlled and reliable method of accessing the git commands in the simplest possible way.
 
+This project is in progress, not all git commands / options are implemented yet.
+
 ## Credits
 
 This project is inspired and based on [Go Git Cmd Wrapper](https://github.com/ldez/go-git-cmd-wrapper)
@@ -33,7 +35,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.4.0"
+gitwrap = "0.5.0"
 ```
 
 ## Usage
@@ -47,10 +49,23 @@ use gitwrap::clone;
 
 
 fn initialize(repo_url: &str, repo_path: &str) {
-    let mut cmd = clone::clone("");
+    let mut cmd = clone::clone(None);
     cmd.option(clone::repository(repo_url));
     cmd.option(clone::directory(repo_path));
     cmd.option(clone::config("http.sslVerify", "false"));
+
+    assert!(cmd.execute().is_ok());
+}
+```
+
+### Clone a repo using macros
+
+```rust
+fn initialize(repo_url: &str, repo_path: &str) {
+    let cmd = clone!(None,
+        clone::repository("https://github.com/japiber/gitwrap.git"),
+        clone::directory(path.as_str()),
+        clone::config("http.sslVerify", "false"));
 
     assert!(cmd.execute().is_ok());
 }
@@ -61,8 +76,8 @@ fn initialize(repo_url: &str, repo_path: &str) {
 ```rust
 use gitwrap::config;
 
-fn set_repo_config(commit_email: &str) {
-    let mut cmd = config::config(REPO_CLONE_PATH);
+fn set_repo_config(commit_email: &str, repo_path: &str) {
+    let mut cmd = config::config(Some(repo_path));
     cmd.option(config::entry("user.email", commit_email));
 
     assert!(cmd.execute().is_ok());
@@ -75,7 +90,7 @@ fn set_repo_config(commit_email: &str) {
 use gitwrap::rev_parse;
 
 fn is_repo_valid(repo_path: &str) {
-    let mut cmd = rev_parse::rev_parse(repo_path);
+    let mut cmd = rev_parse::rev_parse(Some(repo_path));
     cmd.option(rev_parse::is_inside_work_tree());
     let r = cmd.execute();
 
