@@ -114,7 +114,7 @@ macro_rules! {{ command_name }} {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("{{ git_command }}", $path);
+            let mut command = crate::git("{{ git_command }}", $path);
             $(
                 command.option($options);
             )*

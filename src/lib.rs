@@ -19,8 +19,11 @@ pub mod reset;
 pub mod rev_parse;
 pub mod status;
 
-#[cfg(test)]
-mod tests;
+mod error;
+pub use error::*;
 
 mod git_command;
 pub use git_command::*;
+
+#[cfg(test)]
+mod tests;

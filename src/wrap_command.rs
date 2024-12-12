@@ -1,37 +1,7 @@
-use std::error::Error;
-use std::fmt::{Debug, Display, Formatter};
 use std::process::Command;
+use crate::WrapError;
 
 pub type FnOptionArg = Box<dyn Fn(&mut Command)>;
-
-
-pub enum ExecError {
-    FailedExecuteProcess(String),
-    ExitStatus(String, i32),
-}
-
-impl Error for ExecError {}
-
-impl ExecError {
-    fn format(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ExecError::FailedExecuteProcess(s) => write!(f, "failed to execute process: {}", s),
-            ExecError::ExitStatus(o, x) => write!(f, "exit status: {}: {}", x, o),
-        }
-    }
-}
-
-impl Display for ExecError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.format(f)
-    }
-}
-
-impl Debug for ExecError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.format(f)
-    }
-}
 
 pub struct WrapCommand {
     cmd: String,
@@ -57,17 +27,17 @@ impl WrapCommand {
         self.args.push(arg);
     }
 
-    pub fn execute(&self) -> Result<String, ExecError> {
+    pub fn execute(&self) -> Result<String, WrapError> {
         let mut cmd = self.command();
         match cmd.output() {
             Ok(o) => {
                 if o.status.success() {
                     Ok(format!("{}{}", Self::get_output_string(o.stdout), Self::get_output_string(o.stderr)))
                 } else {
-                    Err(ExecError::ExitStatus(format!("{}{}", Self::get_output_string(o.stdout), Self::get_output_string(o.stderr)), o.status.code().unwrap_or(0)))
+                    Err(WrapError::ExitStatus(format!("{}{}", Self::get_output_string(o.stdout), Self::get_output_string(o.stderr)), o.status.code().unwrap_or(0)))
                 }
             }
-            Err(_) => Err(ExecError::FailedExecuteProcess(format!("{:?}", cmd))),
+            Err(_) => Err(WrapError::FailedExecuteProcess(format!("{:?}", cmd))),
         }
     }
 
