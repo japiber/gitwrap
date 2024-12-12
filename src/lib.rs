@@ -3,6 +3,7 @@ pub mod tag;
 pub mod add;
 pub mod branch;
 pub mod checkout;
+pub mod clean;
 pub mod clone;
 pub mod commit;
 pub mod config;
@@ -20,3 +21,6 @@ pub mod status;
 
 #[cfg(test)]
 mod tests;
+
+mod git_command;
+pub use git_command::*;

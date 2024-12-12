@@ -2368,6 +2368,61 @@
     ]
   },
   {
+    "command_name": "clean",
+    "enabled": true,
+    "options": [
+      {
+        "method_name": "recurse-directories",
+        "argument": "-d",
+        "arguments": "-d",
+        "description": "Normally, when no <pathspec> is specified, git clean will not recurse into untracked directories to avoid removing too much. Specify -d to have it recurse into such directories as well. If a <pathspec> is specified, -d is irrelevant; all untracked files matching the specified paths (with exceptions for nested git directories mentioned under --force) will be removed"
+      },
+      {
+        "argument": "--force",
+        "arguments": "-f, --force",
+        "description": "If the Git configuration variable clean.requireForce is not set to false, git clean will refuse to delete files or directories unless given -f. Git will refuse to modify untracked nested git repositories (directories with a .git subdirectory) unless a second -f is given"
+      },
+      {
+        "argument": "--interactive",
+        "arguments": "-i, --interactive",
+        "description": "Show what would be done and clean files interactively. See “Interactive mode” for details. Configuration variable clean.requireForce is ignored, as this mode gives its own safety protection by going interactive"
+      },
+      {
+        "argument": "--dry-run",
+        "arguments": "-n, --dry-run",
+        "description": "Don’t actually remove anything, just show what would be done. Configuration variable clean.requireForce is ignored, as nothing will be deleted anyway"
+      },
+      {
+        "argument": "--quiet",
+        "arguments": "-q, --quiet",
+        "description": "Be quiet, only report errors, but not the files that are successfully removed"
+      },
+      {
+        "argument": "--exclude=<pattern>",
+        "arguments": "-e=<pattern>, --exclude=<pattern>",
+        "description": "Use the given exclude pattern in addition to the standard ignore rules (see gitignore[5])"
+      },
+      {
+        "method_name": "no-gitignore",
+        "argument": "-x",
+        "arguments": "-x",
+        "description": "Don’t use the standard ignore rules (see gitignore[5]), but still use the ignore rules given with -e options from the command line. This allows removing all untracked files, including build products. This can be used (possibly in conjunction with git restore or git reset) to create a pristine working directory to test a clean build"
+      },
+      {
+        "method_name": "gitignore",
+        "argument": "-X",
+        "arguments": "-X",
+        "description": "Remove only files ignored by Git. This may be useful to rebuild everything from scratch, but keep manually created files"
+      },
+      {
+        "method_name": "pathspec",
+        "argument": "-- <pathspec>",
+        "arguments": "-- <pathspec>",
+        "description": "If any optional <pathspec>... arguments are given, only those paths that match the pathspec are affected"
+      }
+    ]
+  },
+  {
     "command_name": "",
     "enabled": false,
     "options": [

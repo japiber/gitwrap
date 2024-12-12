@@ -9,23 +9,24 @@ pub const TEMPLATE_OPTION_EQUAL_OPTIONAL: &str = "equal_optional";
 pub const TEMPLATE_OPTION_WITH_PARAMETER: &str = "with_parameter";
 pub const TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER: &str = "with_optional_parameter";
 pub const TEMPLATE_OPTION_VALUE_PARAMETER: &str = "value_parameter";
+pub const TEMPLATE_GIT_COMMAND_FILE: &str = "git_command_file";
+pub const TEMPLATE_GIT_COMMAND_MACRO: &str = "git_command_macro";
 
 
 
 static GIT_TEMPLATES_COMMON: &[(&str, &str)] = &[
     (
         TEMPLATE_MOD_RS,
-        r#"use std::process::Command;
-use crate::wrap_command::{git, WrapCommand};
+        r#"use crate::wrap_command::WrapCommand;
+use crate::git;
 
 mod options;
 pub use options::*;
 
-pub fn {{ command_name }}(current_dir: &str) -> WrapCommand {
-    let mut command = git(current_dir);
-    command.option(Box::new(move |cmd: &mut Command| { cmd.arg(String::from("{{ git_command }}")); }));
-    command
-}"#
+pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
+    git("{{ git_command }}", current_dir)
+}
+"#
     ),
     (
         TEMPLATE_OPTION_DOC_COMMENTS,
@@ -92,6 +93,34 @@ pub fn {{ command_name }}(current_dir: &str) -> WrapCommand {
     Box::new(move |cmd: &mut Command| {
         cmd.arg(l_value.as_str());
     })
+}"#
+    ),
+    (
+        TEMPLATE_GIT_COMMAND_FILE,
+        r#"use crate::wrap_command::WrapCommand;
+
+pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
+    let mut command = WrapCommand::new("git", current_dir);
+    let l_cmd = String::from(cmd);
+    command.option(Box::new(move |c: &mut  std::process::Command| { c.arg(l_cmd.as_str()); }));
+    command
+}
+"#
+    ),
+    (
+        TEMPLATE_GIT_COMMAND_MACRO,
+        r#"#[macro_export]
+macro_rules! {{ command_name }} {
+    ($path:expr,
+     $($options:expr), *) => {
+        {
+            let mut command = crate::git_command::git("{{ git_command }}", $path);
+            $(
+                command.option($options);
+            )*
+            command
+        }
+     }
 }"#
     )
 ];

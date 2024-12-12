@@ -2,17 +2,20 @@ mod template;
 mod options;
 
 use crate::options::{normalize, CmdOptionKind};
-use crate::template::{command_templates, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_VALUE_PARAMETER, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
+use crate::template::{command_templates, TEMPLATE_GIT_COMMAND_FILE, TEMPLATE_GIT_COMMAND_MACRO, TEMPLATE_MOD_RS, TEMPLATE_OPTION_DOC_COMMENTS, TEMPLATE_OPTION_EQUAL_NO_OPTIONAL, TEMPLATE_OPTION_EQUAL_OPTIONAL, TEMPLATE_OPTION_SIMPLE, TEMPLATE_OPTION_VALUE_PARAMETER, TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER, TEMPLATE_OPTION_WITH_PARAMETER};
 use serde_json::{from_str, Value};
 use std::string::String;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{env, fs};
+use std::fs::OpenOptions;
+use std::io::Write;
 use upon::Engine;
 
 const PHG_VERSION: &str = env!("CARGO_PKG_VERSION");
 const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 const DESCRIPTION_FILENAME: &str = "description.json";
 const MOD_RS_FILENAME: &str = "mod.rs";
+const GIT_COMMAND_FILENAME: &str = "git_command.rs";
 
 
 pub fn main() {
@@ -28,14 +31,16 @@ pub fn main() {
     let now = SystemTime::now().duration_since(UNIX_EPOCH).expect("Time went backwards");
     let output_dir = format!("output_{:?}", now.as_millis());
     let engine = command_templates();
-    let mut commands: Vec<&str> = Vec::new();
+    fs::create_dir_all(&output_dir).expect("could not create output dir");
+    let git_command_file = format!("{output_dir}/{GIT_COMMAND_FILENAME}");
+    git_command_file_create(&engine, &git_command_file);
     for desc in json.as_array().unwrap() {
         let command_name = desc.get("command_name").unwrap().as_str().unwrap();
         let enabled = desc.get("enabled").unwrap().as_bool().unwrap();
         let options = desc.get("options").unwrap().as_array().unwrap();
         if enabled {
-            commands.push(command_name);
             command_generator(output_dir.as_str(), &engine, command_name, options);
+            git_command_file_append_command(&engine, command_name, &git_command_file);
         }
     }
 }
@@ -57,6 +62,32 @@ fn command_mod_file_generator(engine: &Engine, cmd: &str, mod_file_path: &str) {
         .expect("could not render template mod_rs");
 
     fs::write(mod_file_path, mod_rs_content.as_str()).expect("Unable to write file module file");
+}
+
+fn git_command_file_create(engine: &Engine, file_path: &str) {
+    let tpl = engine.template(TEMPLATE_GIT_COMMAND_FILE);
+    let git_command_content = tpl
+        .render(upon::value!{})
+        .to_string()
+        .expect("could not render template git_command_file");
+
+    fs::write(file_path, &git_command_content).expect("Unable to write git command file");
+}
+
+fn git_command_file_append_command(engine: &Engine, cmd: &str, file_path: &str) {
+    let tpl = engine.template(TEMPLATE_GIT_COMMAND_MACRO);
+    let git_macro_content = tpl
+        .render(upon::value!{command_name: normalize(cmd), git_command: cmd})
+        .to_string()
+        .expect("could not render template git_command_macro");
+
+    // Open a file with append option
+    let mut data_file = OpenOptions::new()
+        .append(true)
+        .open(file_path)
+        .expect("cannot open git_command file");
+
+    data_file.write_fmt(format_args!("\n{git_macro_content}\n")).unwrap();
 }
 
 fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options_file_path: &str) {
