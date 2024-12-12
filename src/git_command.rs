@@ -258,3 +258,17 @@ macro_rules! branch {
         }
      }
 }
+
+#[macro_export]
+macro_rules! clean {
+    ($path:expr,
+     $($options:expr), *) => {
+        {
+            let mut command = crate::git_command::git("clean", $path);
+            $(
+                command.option($options);
+            )*
+            command
+        }
+     }
+}
