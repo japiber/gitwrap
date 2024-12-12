@@ -12,7 +12,7 @@ macro_rules! pull {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("pull", $path);
+            let mut command = crate::git("pull", $path);
             $(
                 command.option($options);
             )*
@@ -26,7 +26,7 @@ macro_rules! fetch {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("fetch", $path);
+            let mut command = crate::git("fetch", $path);
             $(
                 command.option($options);
             )*
@@ -40,7 +40,7 @@ macro_rules! init {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("init", $path);
+            let mut command = crate::git("init", $path);
             $(
                 command.option($options);
             )*
@@ -54,7 +54,7 @@ macro_rules! rebase {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("rebase", $path);
+            let mut command = crate::git("rebase", $path);
             $(
                 command.option($options);
             )*
@@ -68,7 +68,7 @@ macro_rules! push {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("push", $path);
+            let mut command = crate::git("push", $path);
             $(
                 command.option($options);
             )*
@@ -82,7 +82,7 @@ macro_rules! clone {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("clone", $path);
+            let mut command = crate::git("clone", $path);
             $(
                 command.option($options);
             )*
@@ -96,7 +96,7 @@ macro_rules! checkout {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("checkout", $path);
+            let mut command = crate::git("checkout", $path);
             $(
                 command.option($options);
             )*
@@ -110,7 +110,7 @@ macro_rules! config {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("config", $path);
+            let mut command = crate::git("config", $path);
             $(
                 command.option($options);
             )*
@@ -124,7 +124,7 @@ macro_rules! reset {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("reset", $path);
+            let mut command = crate::git("reset", $path);
             $(
                 command.option($options);
             )*
@@ -138,7 +138,7 @@ macro_rules! commit {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("commit", $path);
+            let mut command = crate::git("commit", $path);
             $(
                 command.option($options);
             )*
@@ -152,7 +152,7 @@ macro_rules! add {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("add", $path);
+            let mut command = crate::git("add", $path);
             $(
                 command.option($options);
             )*
@@ -166,7 +166,7 @@ macro_rules! merge {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("merge", $path);
+            let mut command = crate::git("merge", $path);
             $(
                 command.option($options);
             )*
@@ -180,7 +180,7 @@ macro_rules! rev_parse {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("rev-parse", $path);
+            let mut command = crate::git("rev-parse", $path);
             $(
                 command.option($options);
             )*
@@ -194,7 +194,7 @@ macro_rules! tag {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("tag", $path);
+            let mut command = crate::git("tag", $path);
             $(
                 command.option($options);
             )*
@@ -208,7 +208,7 @@ macro_rules! status {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("status", $path);
+            let mut command = crate::git("status", $path);
             $(
                 command.option($options);
             )*
@@ -222,7 +222,7 @@ macro_rules! notes {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("notes", $path);
+            let mut command = crate::git("notes", $path);
             $(
                 command.option($options);
             )*
@@ -236,7 +236,7 @@ macro_rules! ls_files {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("ls-files", $path);
+            let mut command = crate::git("ls-files", $path);
             $(
                 command.option($options);
             )*
@@ -250,7 +250,7 @@ macro_rules! branch {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("branch", $path);
+            let mut command = crate::git("branch", $path);
             $(
                 command.option($options);
             )*
@@ -264,7 +264,7 @@ macro_rules! clean {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git("clean", $path);
+            let mut command = crate::git("clean", $path);
             $(
                 command.option($options);
             )*

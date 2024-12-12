@@ -75,8 +75,9 @@ fn test_config() {
     }
 
     {
-        let mut cmd = config::config(Some(path.as_str()));
-        cmd.option(config::entry("user.email", REPO_CONFIG_EMAIL));
+        let cmd = config!(Some(path.as_str()),
+            config::entry("user.email", REPO_CONFIG_EMAIL)
+        );
 
         assert!(cmd.execute().is_ok());
     }
