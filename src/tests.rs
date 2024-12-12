@@ -12,7 +12,7 @@ fn test_clone() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let mut cmd = clone::clone("");
+        let mut cmd = clone::clone(None);
         cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
         cmd.option(clone::directory(path.as_str()));
         cmd.option(clone::config("http.sslVerify", "false"));
@@ -21,7 +21,7 @@ fn test_clone() {
     }
 
     {
-        let mut cmd = rev_parse::rev_parse(path.as_str());
+        let mut cmd = rev_parse::rev_parse(Some(path.as_str()));
         cmd.option(rev_parse::is_inside_work_tree());
         let r = cmd.execute();
 
@@ -39,7 +39,7 @@ fn test_clone_macro() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let cmd = clone!("",
+        let cmd = clone!(None,
             clone::repository("https://github.com/japiber/gitwrap.git"),
             clone::directory(path.as_str()),
             clone::config("http.sslVerify", "false"));
@@ -48,7 +48,7 @@ fn test_clone_macro() {
     }
 
     {
-        let cmd = rev_parse!(path.as_str(),
+        let cmd = rev_parse!(Some(path.as_str()),
             rev_parse::is_inside_work_tree());
         let r = cmd.execute();
 
@@ -67,7 +67,7 @@ fn test_config() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let mut cmd = clone::clone("");
+        let mut cmd = clone::clone(None);
         cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
         cmd.option(clone::directory(path.as_str()));
 
@@ -75,14 +75,14 @@ fn test_config() {
     }
 
     {
-        let mut cmd = config::config(path.as_str());
+        let mut cmd = config::config(Some(path.as_str()));
         cmd.option(config::entry("user.email", REPO_CONFIG_EMAIL));
 
         assert!(cmd.execute().is_ok());
     }
 
     {
-        let mut cmd = config::config(path.as_str());
+        let mut cmd = config::config(Some(path.as_str()));
         cmd.option(config::get("user.email", ""));
         let r = cmd.execute();
 

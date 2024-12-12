@@ -23,8 +23,8 @@ use crate::git;
 mod options;
 pub use options::*;
 
-pub fn {{ command_name }}(current_dir: &str) -> WrapCommand {
-    git(current_dir, "{{ git_command }}")
+pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
+    git("{{ git_command }}", current_dir)
 }
 "#
     ),
@@ -99,7 +99,7 @@ pub fn {{ command_name }}(current_dir: &str) -> WrapCommand {
         TEMPLATE_GIT_COMMAND_FILE,
         r#"use crate::wrap_command::WrapCommand;
 
-pub fn git(current_dir: &str, cmd: &str) -> WrapCommand {
+pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
     let mut command = WrapCommand::new("git", current_dir);
     let l_cmd = String::from(cmd);
     command.option(Box::new(move |c: &mut  std::process::Command| { c.arg(l_cmd.as_str()); }));
@@ -114,7 +114,7 @@ macro_rules! {{ command_name }} {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git_command::git($path, "{{ git_command }}");
+            let mut command = crate::git_command::git("{{ git_command }}", $path);
             $(
                 command.option($options);
             )*

@@ -4,6 +4,6 @@ use crate::git;
 mod options;
 pub use options::*;
 
-pub fn notes(current_dir: &str) -> WrapCommand {
-    git(current_dir, "notes")
+pub fn notes(current_dir: Option<&str>) -> WrapCommand {
+    git("notes", current_dir)
 }

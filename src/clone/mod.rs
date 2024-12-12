@@ -7,6 +7,6 @@ pub use options::*;
 mod custom;
 pub use custom::*;
 
-pub fn clone(current_dir: &str) -> WrapCommand {
-    git(current_dir, "clone")
+pub fn clone(current_dir: Option<&str>) -> WrapCommand {
+    git("clone", current_dir)
 }

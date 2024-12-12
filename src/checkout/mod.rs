@@ -4,6 +4,6 @@ use crate::git;
 mod options;
 pub use options::*;
 
-pub fn checkout(current_dir: &str) -> WrapCommand {
-    git(current_dir, "checkout")
+pub fn checkout(current_dir: Option<&str>) -> WrapCommand {
+    git("checkout", current_dir)
 }

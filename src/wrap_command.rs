@@ -40,11 +40,11 @@ pub struct WrapCommand {
 }
 
 impl WrapCommand {
-    pub fn new(cmd: &str, current_dir: &str) -> Self {
-        let cd = if current_dir.is_empty() {
-            None
+    pub fn new(cmd: &str, current_dir: Option<&str>) -> Self {
+        let cd = if let Some(d) = current_dir  {
+            Some(String::from(d))
         } else {
-            Some(String::from(current_dir))
+            None
         };
         Self {
             cmd: String::from(cmd),
@@ -57,15 +57,9 @@ impl WrapCommand {
         self.args.push(arg);
     }
 
-    pub fn execute (&self) -> Result<String, ExecError> {
-        let mut command = Command::new(self.cmd.as_str());
-        for arg in &self.args {
-            arg(&mut command);
-        }
-        if let Some(current_dir) = &self.current_dir {
-            command.current_dir(current_dir.as_str());
-        }
-        match command.output() {
+    pub fn execute(&self) -> Result<String, ExecError> {
+        let mut cmd = self.command();
+        match cmd.output() {
             Ok(o) => {
                 if o.status.success() {
                     Ok(format!("{}{}", Self::get_output_string(o.stdout), Self::get_output_string(o.stderr)))
@@ -73,8 +67,19 @@ impl WrapCommand {
                     Err(ExecError::ExitStatus(format!("{}{}", Self::get_output_string(o.stdout), Self::get_output_string(o.stderr)), o.status.code().unwrap_or(0)))
                 }
             }
-            Err(_) => Err(ExecError::FailedExecuteProcess(format!("{:?}", command))),
+            Err(_) => Err(ExecError::FailedExecuteProcess(format!("{:?}", cmd))),
         }
+    }
+
+    fn command(&self) -> Command {
+        let mut command = Command::new(self.cmd.as_str());
+        if let Some(cd) = self.current_dir.as_ref() {
+            command.current_dir(cd.as_str());
+        }
+        for fn_arg in &self.args {
+            fn_arg(&mut command);
+        }
+        command
     }
 
     fn get_output_string(out: Vec<u8>) -> String {

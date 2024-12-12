@@ -4,6 +4,6 @@ use crate::git;
 mod options;
 pub use options::*;
 
-pub fn reset(current_dir: &str) -> WrapCommand {
-    git(current_dir, "reset")
+pub fn reset(current_dir: Option<&str>) -> WrapCommand {
+    git("reset", current_dir)
 }
