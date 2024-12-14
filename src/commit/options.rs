@@ -1,6 +1,12 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
 use crate::optionarg;
 use crate::wrap_command::FnOptionArg;
+/// Use the given <msg> as the commit message. If multiple -m options are given, their values are concatenated as separate paragraphs.
+/// -m <msg>, --message=<msg>
+pub fn message(msg_arg: &str) -> FnOptionArg {
+    optionarg::equal_no_optional("--message", msg_arg)
+}
+
 /// Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.
 /// -a, --all
 pub fn all() -> FnOptionArg {
@@ -250,4 +256,16 @@ pub fn gpg_sign(keyid_arg: &str) -> FnOptionArg {
 /// --no-gpg-sign
 pub fn no_gpg_sign() -> FnOptionArg {
     optionarg::simple("--no-gpg-sign")
+}
+
+/// Should appear just before any pathspec option
+/// --
+pub fn hyphen_hyphen() -> FnOptionArg {
+    optionarg::simple("--")
+}
+
+/// When pathspec is given on the command line, commit the contents of the files that match the pathspec without recording the changes already added to the index. The contents of these files are also staged for the next commit on top of what have been staged before.
+/// <pathspec>
+pub fn pathspec(pathspec: &str) -> FnOptionArg {
+    optionarg::value_parameter(pathspec)
 }
