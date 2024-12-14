@@ -1,24 +1,17 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-
-use std::process::Command;
-
+use crate::optionarg;
 use crate::wrap_command::FnOptionArg;
-
 /// Push all branches (i.e. refs under refs/heads/); cannot be used with other <refspec>.
 /// --all
 pub fn all() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--all");
-    })
+    optionarg::simple("--all")
 }
 
 /// Remove remote branches that don’t have a local counterpart.
 /// For example a remote branch tmp will be removed if a local branch with the same name doesn’t exist any more. This also respects refspecs, e.g.  git push --prune remote refs/heads/*:refs/tmp/* would make sure that remote refs/tmp/foo will be removed if refs/heads/foo doesn’t exist.
 /// --prune
 pub fn prune() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--prune");
-    })
+    optionarg::simple("--prune")
 }
 
 /// Instead of naming each ref to push, specifies that all refs under refs/ (which includes but is not limited to refs/heads/, refs/remotes/, and refs/tags/) be mirrored to the remote repository.
@@ -26,17 +19,13 @@ pub fn prune() -> FnOptionArg {
 /// This is the default if the configuration option remote.<remote>.mirror is set.
 /// --mirror
 pub fn mirror() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--mirror");
-    })
+    optionarg::simple("--mirror")
 }
 
 /// Do everything except actually send the updates.
 /// -n, --dry-run
 pub fn dry_run() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--dry-run");
-    })
+    optionarg::simple("--dry-run")
 }
 
 /// Produce machine-readable output.
@@ -44,26 +33,20 @@ pub fn dry_run() -> FnOptionArg {
 /// The full symbolic names of the refs will be given.
 /// --porcelain
 pub fn porcelain() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--porcelain");
-    })
+    optionarg::simple("--porcelain")
 }
 
 /// All listed refs are deleted from the remote repository.
 /// This is the same as prefixing all refs with a colon.
 /// --delete
 pub fn delete() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--delete");
-    })
+    optionarg::simple("--delete")
 }
 
 /// All refs under refs/tags are pushed, in addition to refspecs explicitly listed on the command line.
 /// --tags
 pub fn tags() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--tags");
-    })
+    optionarg::simple("--tags")
 }
 
 /// Push all the refs that would be pushed without this option, and also push annotated tags in refs/tags that are missing from the remote but are pointing at commit-ish that are reachable from the refs being pushed.
@@ -71,9 +54,7 @@ pub fn tags() -> FnOptionArg {
 /// For more information, see push.followTags in git-config(1).
 /// --follow-tags
 pub fn follow_tags() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--follow-tags");
-    })
+    optionarg::simple("--follow-tags")
 }
 
 /// GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged.
@@ -84,9 +65,7 @@ pub fn follow_tags() -> FnOptionArg {
 /// See git-receive-pack(1) for the details on the receiving end.
 /// --signed
 pub fn signed() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--signed");
-    })
+    optionarg::simple("--signed")
 }
 
 /// GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged.
@@ -97,9 +76,7 @@ pub fn signed() -> FnOptionArg {
 /// See git-receive-pack(1) for the details on the receiving end.
 /// --no-signed
 pub fn no_signed() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-signed");
-    })
+    optionarg::simple("--no-signed")
 }
 
 /// GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged.
@@ -110,14 +87,7 @@ pub fn no_signed() -> FnOptionArg {
 /// See git-receive-pack(1) for the details on the receiving end.
 /// --sign=(true|false|if-asked)
 pub fn sign(value: &str) -> FnOptionArg {
-    let l_value = if value.is_empty() {
-        String::from("--sign")
-    } else {
-        format!("--sign={}", value)
-    };
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_value.as_str());
-    })
+    optionarg::equal_optional("--sign", value)
 }
 
 /// Use an atomic transaction on the remote side if available.
@@ -125,9 +95,7 @@ pub fn sign(value: &str) -> FnOptionArg {
 /// If the server does not support atomic pushes the push will fail.
 /// --atomic
 pub fn atomic() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--atomic");
-    })
+    optionarg::simple("--atomic")
 }
 
 /// Use an atomic transaction on the remote side if available.
@@ -135,66 +103,49 @@ pub fn atomic() -> FnOptionArg {
 /// If the server does not support atomic pushes the push will fail.
 /// --no-atomic
 pub fn no_atomic() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-atomic");
-    })
+    optionarg::simple("--no-atomic")
 }
 
 /// Transmit the given string to the server, which passes them to the pre-receive as well as the post-receive hook.
 /// The given string must not contain a NUL or LF character.
 /// -o, --push-option
 pub fn push_option() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--push-option");
-    })
+    optionarg::simple("--push-option")
 }
 
 /// Path to the git-receive-pack program on the remote end.
 /// Sometimes useful when pushing to a remote repository over ssh, and you do not have the program in a directory on the default $PATH.
 /// --receive-pack=<git-receive-pack>
 pub fn receive_pack(git_receive_pack_arg: &str) -> FnOptionArg {
-    let l_git_receive_pack_arg = format!("--receive-pack={}", git_receive_pack_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_git_receive_pack_arg.as_str());
-    })
+    optionarg::equal_no_optional("--receive-pack", git_receive_pack_arg)
 }
 
 /// Path to the git-receive-pack program on the remote end.
 /// Sometimes useful when pushing to a remote repository over ssh, and you do not have the program in a directory on the default $PATH.
 /// --exec=<git-receive-pack>
 pub fn exec(git_receive_pack_arg: &str) -> FnOptionArg {
-    let l_git_receive_pack_arg = format!("--exec={}", git_receive_pack_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_git_receive_pack_arg.as_str());
-    })
+    optionarg::equal_no_optional("--exec", git_receive_pack_arg)
 }
 
 /// Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it.
 /// Also, when --force-with-lease option is used, the command refuses to update a remote ref whose current value does not match what is expected.
 /// -f, --force
 pub fn force() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--force");
-    })
+    optionarg::simple("--force")
 }
 
 /// This option is equivalent to the <repository> argument.
 /// If both are specified, the command-line argument takes precedence.
 /// --repo=<repository>
 pub fn repo(repository_arg: &str) -> FnOptionArg {
-    let l_repository_arg = format!("--repo={}", repository_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_repository_arg.as_str());
-    })
+    optionarg::equal_no_optional("--repo", repository_arg)
 }
 
 /// For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands.
 /// For more information, see branch.<name>.merge in git-config(1).
 /// -u, --set-upstream
 pub fn set_upstream() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--set-upstream");
-    })
+    optionarg::simple("--set-upstream")
 }
 
 /// These options are passed to git-send-pack(1).
@@ -202,9 +153,7 @@ pub fn set_upstream() -> FnOptionArg {
 /// The default is --thin.
 /// --thin
 pub fn thin() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--thin");
-    })
+    optionarg::simple("--thin")
 }
 
 /// These options are passed to git-send-pack(1).
@@ -212,35 +161,27 @@ pub fn thin() -> FnOptionArg {
 /// The default is --thin.
 /// --no-thin
 pub fn no_thin() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-thin");
-    })
+    optionarg::simple("--no-thin")
 }
 
 /// Suppress all output, including the listing of updated refs, unless an error occurs.
 /// Progress is not reported to the standard error stream.
 /// -q, --quiet
 pub fn quiet() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--quiet");
-    })
+    optionarg::simple("--quiet")
 }
 
 /// Run verbosely.
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--verbose");
-    })
+    optionarg::simple("--verbose")
 }
 
 /// Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.
 /// This flag forces progress status even if the standard error stream is not directed to a terminal.
 /// --progress
 pub fn progress() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--progress");
-    })
+    optionarg::simple("--progress")
 }
 
 /// May be used to make sure all submodule commits used by the revisions to be pushed are available on a remote-tracking branch.
@@ -252,9 +193,7 @@ pub fn progress() -> FnOptionArg {
 /// A value of no or using --no-recurse-submodules can be used to override the push.recurseSubmodules configuration variable when no submodule recursion is required.
 /// --no-recurse-submodules
 pub fn no_recurse_submodules() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-recurse-submodules");
-    })
+    optionarg::simple("--no-recurse-submodules")
 }
 
 /// May be used to make sure all submodule commits used by the revisions to be pushed are available on a remote-tracking branch.
@@ -266,14 +205,7 @@ pub fn no_recurse_submodules() -> FnOptionArg {
 /// A value of no or using --no-recurse-submodules can be used to override the push.recurseSubmodules configuration variable when no submodule recursion is required.
 /// --recurse-submodules=(check|on-demand|only|no)
 pub fn recurse_submodules(value: &str) -> FnOptionArg {
-    let l_value = if value.is_empty() {
-        String::from("--recurse-submodules")
-    } else {
-        format!("--recurse-submodules={}", value)
-    };
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_value.as_str());
-    })
+    optionarg::equal_optional("--recurse-submodules", value)
 }
 
 /// Toggle the pre-push hook (see githooks(5)).
@@ -281,9 +213,7 @@ pub fn recurse_submodules(value: &str) -> FnOptionArg {
 /// With --no-verify, the hook is bypassed completely.
 /// --verify
 pub fn verify() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--verify");
-    })
+    optionarg::simple("--verify")
 }
 
 /// Toggle the pre-push hook (see githooks(5)).
@@ -291,23 +221,17 @@ pub fn verify() -> FnOptionArg {
 /// With --no-verify, the hook is bypassed completely.
 /// --no-verify
 pub fn no_verify() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-verify");
-    })
+    optionarg::simple("--no-verify")
 }
 
 /// Use IPv4 addresses only, ignoring IPv6 addresses.
 /// -4, --ipv4
 pub fn ipv4() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--ipv4");
-    })
+    optionarg::simple("--ipv4")
 }
 
 /// Use IPv6 addresses only, ignoring IPv4 addresses.
 /// -6, --ipv6
 pub fn ipv6() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--ipv6");
-    })
+    optionarg::simple("--ipv6")
 }

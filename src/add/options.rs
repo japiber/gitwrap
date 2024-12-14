@@ -1,31 +1,22 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-
-use std::process::Command;
-
+use crate::optionarg;
 use crate::wrap_command::FnOptionArg;
-
 /// Don't actually add the file(s), just show if they exist and/or will be ignored.
 /// -n, --dry-run
 pub fn dry_run() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--dry-run");
-    })
+    optionarg::simple("--dry-run")
 }
 
 /// Be verbose.
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--verbose");
-    })
+    optionarg::simple("--verbose")
 }
 
 /// Allow adding otherwise ignored files.
 /// -f, --force
 pub fn force() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--force");
-    })
+    optionarg::simple("--force")
 }
 
 /// Add modified contents in the working tree interactively to the index.
@@ -33,9 +24,7 @@ pub fn force() -> FnOptionArg {
 /// See 'Interactive mode' for details.
 /// -i, --interactive
 pub fn interactive() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--interactive");
-    })
+    optionarg::simple("--interactive")
 }
 
 /// Interactively choose hunks of patch between the index and the work tree and add them to the index.
@@ -44,9 +33,7 @@ pub fn interactive() -> FnOptionArg {
 /// See “Interactive mode” for details.
 /// -p, --patch
 pub fn patch() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--patch");
-    })
+    optionarg::simple("--patch")
 }
 
 /// Open the diff vs.
@@ -58,9 +45,7 @@ pub fn patch() -> FnOptionArg {
 /// See EDITING PATCHES below.
 /// -e, --edit
 pub fn edit() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--edit");
-    })
+    optionarg::simple("--edit")
 }
 
 /// Update the index just where it already has an entry matching <pathspec>.
@@ -68,9 +53,7 @@ pub fn edit() -> FnOptionArg {
 /// If no <pathspec> is given when -u option is used, all tracked files in the entire working tree are updated (old versions of Git used to limit the update to the current directory and its subdirectories).
 /// -u, --update
 pub fn update() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--update");
-    })
+    optionarg::simple("--update")
 }
 
 /// Update the index not only where the working tree has a file matching <pathspec> but also where the index already has an entry.
@@ -78,9 +61,7 @@ pub fn update() -> FnOptionArg {
 /// If no <pathspec> is given when -A option is used, all files in the entire working tree are updated (old versions of Git used to limit the update to the current directory and its subdirectories).
 /// -A, --all, --no-ignore-removal
 pub fn all() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--all");
-    })
+    optionarg::simple("--all")
 }
 
 /// Update the index by adding new files that are unknown to the index and files modified in the working tree, but ignore files that have been removed from the working tree.
@@ -88,9 +69,7 @@ pub fn all() -> FnOptionArg {
 /// This option is primarily to help users who are used to older versions of Git, whose 'git add <pathspec>...' was a synonym for 'git add --no-all <pathspec>...', i.e. ignored removed files.
 /// --no-all, --ignore-removal
 pub fn no_all() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-all");
-    })
+    optionarg::simple("--no-all")
 }
 
 /// Record only the fact that the path will be added later.
@@ -98,17 +77,13 @@ pub fn no_all() -> FnOptionArg {
 /// This is useful for, among other things, showing the unstaged content of such files with git diff and committing them with git commit -a.
 /// -N, --intent-to-add
 pub fn intent_to_add() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--intent-to-add");
-    })
+    optionarg::simple("--intent-to-add")
 }
 
 /// Don't add the file(s), but only refresh their stat() information in the index.
 /// --refresh
 pub fn refresh() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--refresh");
-    })
+    optionarg::simple("--refresh")
 }
 
 /// If some files could not be added because of errors indexing them, do not abort the operation, but continue adding the others.
@@ -116,16 +91,12 @@ pub fn refresh() -> FnOptionArg {
 /// The configuration variable add.ignoreErrors can be set to true to make this the default behaviour.
 /// --ignore-errors
 pub fn ignore_errors() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--ignore-errors");
-    })
+    optionarg::simple("--ignore-errors")
 }
 
 /// This option can only be used together with --dry-run.
 /// By using this option the user can check if any of the given files would be ignored, no matter if they are already present in the work tree or not.
 /// --ignore-missing
 pub fn ignore_missing() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--ignore-missing");
-    })
+    optionarg::simple("--ignore-missing")
 }

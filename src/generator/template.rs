@@ -36,63 +36,37 @@ pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
     (
         TEMPLATE_OPTION_SIMPLE,
         r#"pub fn {{ method_name }}() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("{{ git_option }}");
-    })
+    optionarg::simple("{{ git_option }}")
 }"#
     ),
     (
         TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    let l_{{ option_argument }} = format!("{{ git_option }}={}", {{ option_argument }});
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_{{ option_argument }}.as_str());
-    })
+    optionarg::equal_no_optional("{{ git_option }}", {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_EQUAL_OPTIONAL,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    let l_{{ option_argument }} = if {{ option_argument }}.is_empty() {
-        String::from("{{ git_option }}")
-    } else {
-        format!("{{ git_option }}={}", {{ option_argument }})
-    };
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_{{ option_argument }}.as_str());
-    })
+    optionarg::equal_optional("{{ git_option }}", {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_WITH_PARAMETER,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    let l_{{ option_argument }} = String::from({{ option_argument }});
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("{{ git_option }}");
-        cmd.arg(l_{{ option_argument }}.as_str());
-    })
+    optionarg::with_parameter("{{ git_option }}", {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    let l_{{ option_argument }} = if {{ option_argument }}.is_empty() {
-        String::from("{{ git_option }}")
-    } else {
-        format!("{{ git_option }} {}", {{ option_argument }})
-    };
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_{{ option_argument }}.as_str());
-    })
+    optionarg::with_optional_parameter("{{ git_option }}", {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_VALUE_PARAMETER,
-        r#"pub fn {{ method_name }}(value: &str) -> FnOptionArg {
-    let l_value = String::from(value);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_value.as_str());
-    })
+        r#"pub fn {{ method_name }}({{ value_parameter }}: &str) -> FnOptionArg {
+    optionarg::value_parameter({{ value_parameter }})
 }"#
     ),
     (
@@ -114,7 +88,7 @@ macro_rules! {{ command_name }} {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = crate::git("{{ git_command }}", $path);
+            let mut command = git("{{ git_command }}", $path);
             $(
                 command.option($options);
             )*
