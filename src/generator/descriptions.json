@@ -1165,6 +1165,11 @@
     "enabled": true,
     "options": [
       {
+        "argument": "--message=<msg>",
+        "arguments": "-m <msg>, --message=<msg>",
+        "description": "Use the given <msg> as the commit message. If multiple -m options are given, their values are concatenated as separate paragraphs."
+      },
+      {
         "argument": "--all",
         "arguments": "-a, --all",
         "description": "Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected."
@@ -1338,6 +1343,18 @@
         "argument": "--no-gpg-sign",
         "arguments": "--no-gpg-sign",
         "description": "Countermand commit.gpgSign configuration variable that is set to force each and every commit to be signed."
+      },
+      {
+        "method_name": "hyphen_hyphen",
+        "argument": "--",
+        "arguments": "--",
+        "description": "Should appear just before any pathspec option"
+      },
+      {
+        "method_name": "pathspec",
+        "argument": "<pathspec>",
+        "arguments": "<pathspec>",
+        "description": "When pathspec is given on the command line, commit the contents of the files that match the pathspec without recording the changes already added to the index. The contents of these files are also staged for the next commit on top of what have been staged before."
       }
     ]
   },
@@ -2427,9 +2444,15 @@
         "description": "Remove only files ignored by Git. This may be useful to rebuild everything from scratch, but keep manually created files"
       },
       {
+        "method_name": "hyphen_hyphen",
+        "argument": "--",
+        "arguments": "--",
+        "description": "Should appear just before any pathspec option"
+      },
+      {
         "method_name": "pathspec",
-        "argument": "-- <pathspec>",
-        "arguments": "-- <pathspec>",
+        "argument": "<pathspec>",
+        "arguments": "<pathspec>",
         "description": "If any optional <pathspec>... arguments are given, only those paths that match the pathspec are affected"
       }
     ]
