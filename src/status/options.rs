@@ -1,56 +1,40 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-
-use std::process::Command;
-
+use crate::optionarg;
 use crate::wrap_command::FnOptionArg;
-
 /// Give the output in the short-format.
 /// -s, --short
 pub fn short() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--short");
-    })
+    optionarg::simple("--short")
 }
 
 /// Show the branch and tracking info even in short-format.
 /// -b, --branch
 pub fn branch() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--branch");
-    })
+    optionarg::simple("--branch")
 }
 
 /// Show the number of entries currently stashed away.
 /// --show-stash
 pub fn show_stash() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--show-stash");
-    })
+    optionarg::simple("--show-stash")
 }
 
 /// Give the output in an easy-to-parse format for scripts. This is similar to the short output, but will remain stable across Git versions and regardless of user configuration. See below for details. The version parameter is used to specify the format version. This is optional and defaults to the original version v1 format.
 /// --porcelain[=<version>]
 pub fn porcelain(version_arg: &str) -> FnOptionArg {
-    let l_version_arg = format!("--porcelain={}", version_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_version_arg.as_str());
-    })
+    optionarg::equal_no_optional("--porcelain", version_arg)
 }
 
 /// Give the output in the long-format. This is the default.
 /// --long
 pub fn long() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--long");
-    })
+    optionarg::simple("--long")
 }
 
 /// In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of git diff --cached). If -v is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of git diff).
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--verbose");
-    })
+    optionarg::simple("--verbose")
 }
 
 /// Show untracked files.
@@ -70,19 +54,13 @@ pub fn verbose() -> FnOptionArg {
 /// The default can be changed using the status.showUntrackedFiles configuration variable documented in git-config(1).
 /// -u[<mode>], --untracked-files[=<mode>]
 pub fn untracked_files(mode_arg: &str) -> FnOptionArg {
-    let l_mode_arg = format!("--untracked-files={}", mode_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_mode_arg.as_str());
-    })
+    optionarg::equal_no_optional("--untracked-files", mode_arg)
 }
 
 /// Ignore changes to submodules when looking for changes. <when> can be either "none", "untracked", "dirty" or "all", which is the default. Using "none" will consider the submodule modified when it either contains untracked or modified files or its HEAD differs from the commit recorded in the superproject and can be used to override any settings of the ignore option in git- config(1) or gitmodules(5). When "untracked" is used submodules are not considered dirty when they only contain untracked content (but they are still scanned for modified content). Using "dirty" ignores all changes to the work tree of submodules, only changes to the commits stored in the superproject are shown (this was the behavior before 1.7.0). Using "all" hides all changes to submodules (and suppresses the output of submodule summaries when the config option status.submoduleSummary is set).
 /// --ignore-submodules[=<when>]
 pub fn ignore_submodules(when_arg: &str) -> FnOptionArg {
-    let l_when_arg = format!("--ignore-submodules={}", when_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_when_arg.as_str());
-    })
+    optionarg::equal_no_optional("--ignore-submodules", when_arg)
 }
 
 /// Show ignored files as well.
@@ -98,74 +76,53 @@ pub fn ignore_submodules(when_arg: &str) -> FnOptionArg {
 /// When matching mode is specified, paths that explicitly match an ignored pattern are shown. If a directory matches an ignore pattern, then it is shown, but not paths contained in the ignored directory. If a directory does not match an ignore pattern, but all contents are ignored, then the directory is not shown, but all contents are shown.
 /// --ignored[=<mode>]
 pub fn ignored(mode_arg: &str) -> FnOptionArg {
-    let l_mode_arg = format!("--ignored={}", mode_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_mode_arg.as_str());
-    })
+    optionarg::equal_no_optional("--ignored", mode_arg)
 }
 
 /// Terminate entries with NUL, instead of LF. This implies the --porcelain=v1 output format if no other format is given.
 /// -z, --null
 pub fn null() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--null");
-    })
+    optionarg::simple("--null")
 }
 
 /// Display untracked files in columns. See configuration variable column.status for option syntax. --column and --no-column without options are equivalent to always and never respectively.
 /// --column[=<options>], --no-column
 pub fn column(options_arg: &str) -> FnOptionArg {
-    let l_options_arg = format!("--column={}", options_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_options_arg.as_str());
-    })
+    optionarg::equal_no_optional("--column", options_arg)
 }
 
 /// Display untracked files in columns. See configuration variable column.status for option syntax. --column and --no-column without options are equivalent to always and never respectively.
 /// --column[=<options>], --no-column
 pub fn no_column() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-column");
-    })
+    optionarg::simple("--no-column")
 }
 
 /// Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch. Defaults to true.
 /// --ahead-behind, --no-ahead-behind
 pub fn ahead_behind() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--ahead-behind");
-    })
+    optionarg::simple("--ahead-behind")
 }
 
 /// Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch. Defaults to true.
 /// --ahead-behind, --no-ahead-behind
 pub fn no_ahead_behind() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-ahead-behind");
-    })
+    optionarg::simple("--no-ahead-behind")
 }
 
 /// Turn on/off rename detection regardless of user configuration. See also git-diff(1) --no-renames.
 /// --renames, --no-renames
 pub fn renames() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--renames");
-    })
+    optionarg::simple("--renames")
 }
 
 /// Turn on/off rename detection regardless of user configuration. See also git-diff(1) --no-renames.
 /// --renames, --no-renames
 pub fn no_renames() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-renames");
-    })
+    optionarg::simple("--no-renames")
 }
 
 /// Turn on rename detection, optionally setting the similarity threshold. See also git-diff(1) --find-renames.
 /// -M, --find-renames[=<n>]
 pub fn find_renames(n_arg: &str) -> FnOptionArg {
-    let l_n_arg = format!("--find-renames={}", n_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_n_arg.as_str());
-    })
+    optionarg::equal_no_optional("--find-renames", n_arg)
 }

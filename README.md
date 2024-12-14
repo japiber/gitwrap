@@ -35,7 +35,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.5.1"
+gitwrap = "0.5.2"
 ```
 
 ## Usage
@@ -52,7 +52,6 @@ fn initialize(repo_url: &str, repo_path: &str) {
     let mut cmd = clone::clone(None);
     cmd.option(clone::repository(repo_url));
     cmd.option(clone::directory(repo_path));
-    cmd.option(clone::config("http.sslVerify", "false"));
 
     assert!(cmd.execute().is_ok());
 }
@@ -65,7 +64,6 @@ fn initialize(repo_url: &str, repo_path: &str) {
     let cmd = clone!(None,
         clone::repository("https://github.com/japiber/gitwrap.git"),
         clone::directory(path.as_str()),
-        clone::config("http.sslVerify", "false"));
 
     assert!(cmd.execute().is_ok());
 }
