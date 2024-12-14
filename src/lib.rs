@@ -1,4 +1,14 @@
 pub mod wrap_command;
+mod error;
+pub use error::*;
+
+mod git_command;
+pub use git_command::*;
+
+#[cfg(test)]
+mod tests;
+mod optionarg;
+
 pub mod tag;
 pub mod add;
 pub mod branch;
@@ -19,11 +29,3 @@ pub mod reset;
 pub mod rev_parse;
 pub mod status;
 
-mod error;
-pub use error::*;
-
-mod git_command;
-pub use git_command::*;
-
-#[cfg(test)]
-mod tests;

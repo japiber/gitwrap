@@ -1,42 +1,29 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-
-use std::process::Command;
-
+use crate::optionarg;
 use crate::wrap_command::FnOptionArg;
-
 /// Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.
 /// -a, --all
 pub fn all() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--all");
-    })
+    optionarg::simple("--all")
 }
 
 /// Use the interactive patch selection interface to chose which changes to commit.
 /// See git-add(1) for details.
 /// -p, --patch
 pub fn patch() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--patch");
-    })
+    optionarg::simple("--patch")
 }
 
 /// Take an existing commit object, and reuse the log message and the authorship information (including the timestamp) when creating the commit.
 /// -C <commit>, --reuse-message=<commit>
 pub fn reuse_message(commit_arg: &str) -> FnOptionArg {
-    let l_commit_arg = format!("--reuse-message={}", commit_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_commit_arg.as_str());
-    })
+    optionarg::equal_no_optional("--reuse-message", commit_arg)
 }
 
 /// Like -C, but with -c the editor is invoked, so that the user can further edit the commit message.
 /// -c <commit>, --reedit-message=<commit>
 pub fn reedit_message(commit_arg: &str) -> FnOptionArg {
-    let l_commit_arg = format!("--reedit-message={}", commit_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_commit_arg.as_str());
-    })
+    optionarg::equal_no_optional("--reedit-message", commit_arg)
 }
 
 /// Construct a commit message for use with rebase --autosquash.
@@ -44,10 +31,7 @@ pub fn reedit_message(commit_arg: &str) -> FnOptionArg {
 /// See git-rebase(1) for details.
 /// --fixup=<commit>
 pub fn fixup(commit_arg: &str) -> FnOptionArg {
-    let l_commit_arg = format!("--fixup={}", commit_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_commit_arg.as_str());
-    })
+    optionarg::equal_no_optional("--fixup", commit_arg)
 }
 
 /// Construct a commit message for use with rebase --autosquash.
@@ -56,19 +40,14 @@ pub fn fixup(commit_arg: &str) -> FnOptionArg {
 /// See git-rebase(1) for details.
 /// --squash=<commit>
 pub fn squash(commit_arg: &str) -> FnOptionArg {
-    let l_commit_arg = format!("--squash={}", commit_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_commit_arg.as_str());
-    })
+    optionarg::equal_no_optional("--squash", commit_arg)
 }
 
 /// When used with -C/-c/--amend options, or when committing after a conflicting cherry-pick, declare that the authorship of the resulting commit now belongs to the committer.
 /// This also renews the author timestamp.
 /// --reset-author
 pub fn reset_author() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--reset-author");
-    })
+    optionarg::simple("--reset-author")
 }
 
 /// When doing a dry-run, give the output in the short-format.
@@ -76,17 +55,13 @@ pub fn reset_author() -> FnOptionArg {
 /// Implies --dry-run.
 /// --short
 pub fn short() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--short");
-    })
+    optionarg::simple("--short")
 }
 
 /// Show the branch and tracking info even in short-format.
 /// --branch
 pub fn branch() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--branch");
-    })
+    optionarg::simple("--branch")
 }
 
 /// When doing a dry-run, give the output in a porcelain-ready format.
@@ -94,18 +69,14 @@ pub fn branch() -> FnOptionArg {
 /// Implies --dry-run.
 /// --porcelain
 pub fn porcelain() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--porcelain");
-    })
+    optionarg::simple("--porcelain")
 }
 
 /// When doing a dry-run, give the output in the long-format.
 /// Implies --dry-run.
 /// --long
 pub fn long() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--long");
-    })
+    optionarg::simple("--long")
 }
 
 /// When showing short or porcelain status output, print the filename verbatim and terminate the entries with NUL, instead of LF.
@@ -113,19 +84,14 @@ pub fn long() -> FnOptionArg {
 /// Without the -z option, filenames with 'unusual' characters are quoted as explained for the configuration variable core.quotePath (see git-config(1)).
 /// -z, --null
 pub fn null() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--null");
-    })
+    optionarg::simple("--null")
 }
 
 /// Take the commit message from the given file.
 /// Use - to read the message from the standard input.
 /// -F <file>, --file=<file>
 pub fn file(file_arg: &str) -> FnOptionArg {
-    let l_file_arg = format!("--file={}", file_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_file_arg.as_str());
-    })
+    optionarg::equal_no_optional("--file", file_arg)
 }
 
 /// Override the commit author.
@@ -133,19 +99,13 @@ pub fn file(file_arg: &str) -> FnOptionArg {
 /// Otherwise <author> is assumed to be a pattern and is used to search for an existing commit by that author (i.e. rev-list --all -i --author=<author>); the commit author is then copied from the first such commit found.
 /// --author=<author>
 pub fn author(author_arg: &str) -> FnOptionArg {
-    let l_author_arg = format!("--author={}", author_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_author_arg.as_str());
-    })
+    optionarg::equal_no_optional("--author", author_arg)
 }
 
 /// Override the author date used in the commit.
 /// --date=<date>
 pub fn date(date_arg: &str) -> FnOptionArg {
-    let l_date_arg = format!("--date={}", date_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_date_arg.as_str());
-    })
+    optionarg::equal_no_optional("--date", date_arg)
 }
 
 /// When editing the commit message, start the editor with the contents in the given file.
@@ -155,74 +115,56 @@ pub fn date(date_arg: &str) -> FnOptionArg {
 /// This has no effect when a message is given by other means, e.g. with the -m or -F options.
 /// -t <file>, --template=<file>
 pub fn template(file_arg: &str) -> FnOptionArg {
-    let l_file_arg = format!("--template={}", file_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_file_arg.as_str());
-    })
+    optionarg::equal_no_optional("--template", file_arg)
 }
 
 /// Add Signed-off-by line by the committer at the end of the commit log message.
 /// The meaning of a signoff depends on the project, but it typically certifies that committer has the rights to submit this work under the same license and agrees to a Developer Certificate of Origin (see https://developercertificate.org/ for more information).
 /// -s, --signoff
 pub fn signoff() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--signoff");
-    })
+    optionarg::simple("--signoff")
 }
 
 /// This option bypasses the pre-commit and commit-msg hooks.
 /// See also githooks(5).
 /// -n, --no-verify
 pub fn no_verify() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-verify");
-    })
+    optionarg::simple("--no-verify")
 }
 
 /// Usually recording a commit that has the exact same tree as its sole parent commit is a mistake, and the command prevents you from making such a commit.
 /// This option bypasses the safety, and is primarily for use by foreign SCM interface scripts.
 /// --allow-empty
 pub fn allow_empty() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--allow-empty");
-    })
+    optionarg::simple("--allow-empty")
 }
 
 /// Like --allow-empty this command is primarily for use by foreign SCM interface scripts.
 /// It allows you to create a commit with an empty commit message without using plumbing commands like git-commit-tree(1).
 /// --allow-empty-message
 pub fn allow_empty_message() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--allow-empty-message");
-    })
+    optionarg::simple("--allow-empty-message")
 }
 
 /// This option determines how the supplied commit message should be cleaned up before committing.
 /// The <mode> can be strip, whitespace, verbatim, scissors or default.
 /// --cleanup=<mode>
 pub fn cleanup(mode_arg: &str) -> FnOptionArg {
-    let l_mode_arg = format!("--cleanup={}", mode_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_mode_arg.as_str());
-    })
+    optionarg::equal_no_optional("--cleanup", mode_arg)
 }
 
 /// The message taken from file with -F, command line with -m, and from commit object with -C are usually used as the commit log message unmodified.
 /// This option lets you further edit the message taken from these sources.
 /// -e, --edit
 pub fn edit() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--edit");
-    })
+    optionarg::simple("--edit")
 }
 
 /// Use the selected commit message without launching an editor.
 /// For example, git commit --amend --no-edit amends a commit without changing its commit message.
 /// --no-edit
 pub fn no_edit() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-edit");
-    })
+    optionarg::simple("--no-edit")
 }
 
 /// Replace the tip of the current branch by creating a new commit.
@@ -230,26 +172,20 @@ pub fn no_edit() -> FnOptionArg {
 /// The new commit has the same parents and author as the current one (the --reset-author option can countermand this).
 /// --amend
 pub fn amend() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--amend");
-    })
+    optionarg::simple("--amend")
 }
 
 /// Bypass the post-rewrite hook.
 /// --no-post-rewrite
 pub fn no_post_rewrite() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-post-rewrite");
-    })
+    optionarg::simple("--no-post-rewrite")
 }
 
 /// Before making a commit out of staged contents so far, stage the contents of paths given on the command line as well.
 /// This is usually not what you want unless you are concluding a conflicted merge.
 /// -i, --include
 pub fn include() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--include");
-    })
+    optionarg::simple("--include")
 }
 
 /// Make a commit by taking the updated working tree contents of the paths specified on the command line, disregarding any contents that have been staged for other paths.
@@ -258,19 +194,14 @@ pub fn include() -> FnOptionArg {
 /// If used together with --allow-empty paths are also not required, and an empty commit will be created.
 /// -o, --only
 pub fn only() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--only");
-    })
+    optionarg::simple("--only")
 }
 
 /// Show untracked files.
 /// The mode parameter is optional (defaults to all), and is used to specify the handling of untracked files; when -u is not used, the default is normal, i.e. show untracked files and directories.
 /// -u[<mode>], --untracked-files[=<mode>]
 pub fn untracked_files(mode_arg: &str) -> FnOptionArg {
-    let l_mode_arg = format!("--untracked-files={}", mode_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_mode_arg.as_str());
-    })
+    optionarg::equal_no_optional("--untracked-files", mode_arg)
 }
 
 /// Show unified diff between the HEAD commit and what would be committed at the bottom of the commit message template to help the user describe the commit by reminding what changes the commit has.
@@ -280,58 +211,43 @@ pub fn untracked_files(mode_arg: &str) -> FnOptionArg {
 /// If specified twice, show in addition the unified diff between what would be committed and the worktree files, i.e. the unstaged changes to tracked files.
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--verbose");
-    })
+    optionarg::simple("--verbose")
 }
 
 /// Suppress commit summary message.
 /// -q, --quiet
 pub fn quiet() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--quiet");
-    })
+    optionarg::simple("--quiet")
 }
 
 /// Do not create a commit, but show a list of paths that are to be committed, paths with local changes that will be left uncommitted and paths that are untracked.
 /// --dry-run
 pub fn dry_run() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--dry-run");
-    })
+    optionarg::simple("--dry-run")
 }
 
 /// Include the output of git-status(1) in the commit message template when using an editor to prepare the commit message.
 /// Defaults to on, but can be used to override configuration variable commit.status.
 /// --status
 pub fn status() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--status");
-    })
+    optionarg::simple("--status")
 }
 
 /// Do not include the output of git-status(1) in the commit message template when using an editor to prepare the default commit message.
 /// --no-status
 pub fn no_status() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-status");
-    })
+    optionarg::simple("--no-status")
 }
 
 /// GPG-sign commits.
 /// The keyid argument is optional and defaults to the committer identity; if specified, it must be stuck to the option without a space.
 /// -S[<keyid>], --gpg-sign[=<keyid>]
 pub fn gpg_sign(keyid_arg: &str) -> FnOptionArg {
-    let l_keyid_arg = format!("--gpg-sign={}", keyid_arg);
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg(l_keyid_arg.as_str());
-    })
+    optionarg::equal_no_optional("--gpg-sign", keyid_arg)
 }
 
 /// Countermand commit.gpgSign configuration variable that is set to force each and every commit to be signed.
 /// --no-gpg-sign
 pub fn no_gpg_sign() -> FnOptionArg {
-    Box::new(move |cmd: &mut Command| {
-        cmd.arg("--no-gpg-sign");
-    })
+    optionarg::simple("--no-gpg-sign")
 }

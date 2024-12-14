@@ -1,22 +1,17 @@
-use crate::{clone, config, rev_parse};
+use crate::{clone, config, rev_parse, git};
 use rand::Rng;
 use std::fs;
-
+use crate::wrap_command::WrapCommand;
 
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
 
 #[test]
 fn test_clone() {
-    let mut rng = rand::rng();
-    let path = format!("repo_{:10x}!", rng.random_range(0..10000000));
+    let path = gitwrap_test_path();
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let mut cmd = clone::clone(None);
-        cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
-        cmd.option(clone::directory(path.as_str()));
-        cmd.option(clone::config("http.sslVerify", "false"));
-
+        let cmd = cmd_clone(&path);
         assert!(cmd.execute().is_ok());
     }
 
@@ -34,15 +29,13 @@ fn test_clone() {
 
 #[test]
 fn test_clone_macro() {
-    let mut rng = rand::rng();
-    let path = format!("repo_{:10x}!", rng.random_range(0..10000000));
+    let path = gitwrap_test_path();
     fs::create_dir(path.as_str()).unwrap();
 
     {
         let cmd = clone!(None,
             clone::repository("https://github.com/japiber/gitwrap.git"),
-            clone::directory(path.as_str()),
-            clone::config("http.sslVerify", "false"));
+            clone::directory(path.as_str()));
 
         assert!(cmd.execute().is_ok());
     }
@@ -62,15 +55,11 @@ fn test_clone_macro() {
 
 #[test]
 fn test_config() {
-    let mut rng = rand::rng();
-    let path = format!("repo_{:10x}!", rng.random_range(0..10000000));
+    let path = gitwrap_test_path();
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let mut cmd = clone::clone(None);
-        cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
-        cmd.option(clone::directory(path.as_str()));
-
+        let cmd = cmd_clone(&path);
         assert!(cmd.execute().is_ok());
     }
 
@@ -92,5 +81,16 @@ fn test_config() {
     }
 
     fs::remove_dir_all(path.as_str()).unwrap();
+}
 
+fn cmd_clone(path: &str) -> WrapCommand {
+    let mut cmd = clone::clone(None);
+    cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
+    cmd.option(clone::directory(path));
+    cmd
+}
+
+fn gitwrap_test_path() -> String {
+    let mut rng = rand::rng();
+    format!("gitwrap_test_{:x}", rng.random_range(0..999999999))
 }

@@ -924,6 +924,18 @@
         "argument": "--jobs <n>",
         "arguments": "-j <n>, --jobs <n>",
         "description": "The number of submodules fetched at the same time. Defaults to the submodule.fetchJobs option."
+      },
+      {
+        "method_name": "repository",
+        "argument": "<url>",
+        "arguments": "<url>",
+        "description": "The (possibly remote) repository to clone from. See the URLS section below for more information on specifying repositories."
+      },
+      {
+        "method_name": "directory",
+        "argument": "<path>",
+        "arguments": "<path>",
+        "description": "The name of a new directory to clone into. The \"humanish\" part of the source repository is used if no directory is explicitly given (repo for /path/to/repo.git and foo for host.xz:foo/.git). Cloning into an existing directory is only allowed if the directory is empty."
       }
     ]
   },
