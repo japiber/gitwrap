@@ -145,8 +145,6 @@ pub fn jobs(n_arg: &str) -> FnOptionArg {
     optionarg::with_parameter("--jobs", n_arg)
 }
 
-
-
 /// The (possibly remote) repository to clone from. See the URLS section below for more information on specifying repositories.
 /// <url>
 pub fn repository(url: &str) -> FnOptionArg {

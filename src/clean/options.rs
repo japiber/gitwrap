@@ -49,8 +49,14 @@ pub fn gitignore() -> FnOptionArg {
     optionarg::simple("-X")
 }
 
+/// Should appear just before any pathspec option
+/// --
+pub fn hyphen_hyphen() -> FnOptionArg {
+    optionarg::simple("--")
+}
+
 /// If any optional <pathspec>... arguments are given, only those paths that match the pathspec are affected
-/// -- <pathspec>
-pub fn pathspec(pathspec_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter("--", pathspec_arg)
+/// <pathspec>
+pub fn pathspec(pathspec: &str) -> FnOptionArg {
+    optionarg::value_parameter(pathspec)
 }
