@@ -2,6 +2,8 @@
   {
     "command_name": "pull",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-pull",
+    "description": "Incorporates changes from a remote repository into the current branch.\nIf the current branch is behind the remote, then by default it will fast-forward the current branch to match the remote.\nIf the current branch and the remote have diverged, the user needs to specify how to reconcile the divergent branches with --rebase or --no-rebase",
     "options": [
       {
         "argument": "--quiet",
@@ -218,6 +220,8 @@
   {
     "command_name": "fetch",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-fetch",
+    "description": "Fetch branches and/or tags (collectively, \"refs\") from one or more other repositories, along with the objects necessary to complete their histories.\nRemote-tracking branches are updated.",
     "options": [
       {
         "argument": "--all",
@@ -364,6 +368,8 @@
   {
     "command_name": "init",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-init",
+    "description": "This command creates an empty Git repository - basically a .git directory with subdirectories for objects, refs/heads, refs/tags, and template files.\nAn initial branch without any commits will be created",
     "options": [
       {
         "argument": "--quiet",
@@ -395,6 +401,8 @@
   {
     "command_name": "rebase",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-rebase",
+    "description": "Reapply commits on top of another base tip",
     "options": [
       {
         "argument": "--onto <newbase>",
@@ -648,6 +656,8 @@
   {
     "command_name": "push",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-push",
+    "description": "Updates remote refs using local refs, while sending objects necessary to complete the given refs.",
     "options": [
       {
         "argument": "--all",
@@ -804,6 +814,8 @@
   {
     "command_name": "clone",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-clone",
+    "description": "Clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch",
     "options": [
       {
         "argument": "--local",
@@ -942,6 +954,8 @@
   {
     "command_name": "checkout",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-checkout",
+    "description": "Switch branches or restore working tree files",
     "options": [
       {
         "argument": "--quiet",
@@ -1045,12 +1059,32 @@
         "argument": "--no-recurse-submodules",
         "arguments": "--no-recurse-submodules",
         "description": "Using --recurse-submodules will update the content of all initialized submodules according to the commit recorded in the superproject.\nIf local modifications in a submodule would be overwritten the checkout will fail unless -f is used.\nIf nothing (or --no-recurse-submodules) is used, the work trees of submodules will not be updated."
+      },
+      {
+        "method_name": "hyphen_hyphen",
+        "argument": "--",
+        "arguments": "--",
+        "description": "Do not interpret any more arguments as options."
+      },
+      {
+        "method_name": "pathspec",
+        "argument": "<pathspec>",
+        "arguments": "<pathspec>",
+        "description": "Limits the paths affected by the operation."
+      },
+      {
+        "method_name": "branch",
+        "argument": "<branch>",
+        "arguments": "<branch>",
+        "description": "Branch to checkout; if it refers to a branch (i.e., a name that, when prepended with \"refs/heads/\", is a valid ref), then that branch is checked out. Otherwise, if it refers to a valid commit, your HEAD becomes \"detached\" and you are no longer on any branch (see below for details)."
       }
     ]
   },
   {
     "command_name": "config",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-config",
+    "description": "Get and set repository or global options. You can query/set/replace/unset options with this command.\nThe name is actually the section and the key separated by a dot, and the value will be escaped.",
     "options": [
       {
         "argument": "--global",
@@ -1127,6 +1161,8 @@
   {
     "command_name": "reset",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-reset",
+    "description": "Reset current HEAD to the specified state",
     "options": [
       {
         "argument": "--soft",
@@ -1157,12 +1193,26 @@
         "argument": "--quiet",
         "arguments": "-q, --quiet",
         "description": "Be quiet, only report errors."
+      },
+      {
+        "method_name": "hyphen_hyphen",
+        "argument": "--",
+        "arguments": "--",
+        "description": "Do not interpret any more arguments as options"
+      },
+      {
+        "method_name": "pathspec",
+        "argument": "<pathspec>",
+        "arguments": "<pathspec>",
+        "description": "Limits the paths affected by the operation."
       }
     ]
   },
   {
     "command_name": "commit",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-commit",
+    "description": "Record changes to the repository.\nCreate a new commit containing the current contents of the index and the given log message describing the changes.\nThe new commit is a direct child of HEAD, usually the tip of the current branch, and the branch is updated to point to it.",
     "options": [
       {
         "argument": "--message=<msg>",
@@ -1348,7 +1398,7 @@
         "method_name": "hyphen_hyphen",
         "argument": "--",
         "arguments": "--",
-        "description": "Should appear just before any pathspec option"
+        "description": "Do not interpret any more arguments as options"
       },
       {
         "method_name": "pathspec",
@@ -1361,6 +1411,8 @@
   {
     "command_name": "add",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-add",
+    "description": "Add file contents to the index.\nThis command updates the index using the current content found in the working tree, to prepare the content staged for the next commit.\nIt typically adds the current content of existing paths as a whole, but with some options it can also be used to add content with only part of the changes made to the working tree files applied, or remove paths that do not exist in the working tree anymore.",
     "options": [
       {
         "argument": "--dry-run",
@@ -1426,12 +1478,26 @@
         "argument": "--ignore-missing",
         "arguments": "--ignore-missing",
         "description": "This option can only be used together with --dry-run.\nBy using this option the user can check if any of the given files would be ignored, no matter if they are already present in the work tree or not."
+      },
+      {
+        "method_name": "hyphen_hyphen",
+        "argument": "--",
+        "arguments": "--",
+        "description": "This option can be used to separate command-line options from the list of files, (useful when filenames might be mistaken for command-line options)"
+      },
+      {
+        "method_name": "pathspec",
+        "argument": "<pathspec>",
+        "arguments": "<pathspec>",
+        "description": "Files to add content from. Fileglobs (e.g. *.c) can be given to add all matching files. Also a leading directory name (e.g. dir to add dir/file1 and dir/file2) can be given to update the index to match the current state of the directory as a whole (e.g. specifying dir will record not just a file dir/file1 modified in the working tree, a file dir/file2 added to the working tree, but also a file dir/file3 removed from the working tree). Note that older versions of Git used to ignore removed files; use --no-all option if you want to add modified or new files but ignore removed ones."
       }
     ]
   },
   {
     "command_name": "merge",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-merge",
+    "description": "Join two or more development histories together.\nIncorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.\nThis command is used by git pull to incorporate changes from another repository and can be used by hand to merge changes from one branch into another.",
     "options": [
       {
         "argument": "--commit",
@@ -1589,6 +1655,8 @@
   {
     "command_name": "rev-parse",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-rev-parse",
+    "description": "Pick out and massage parameters. ",
     "options": [
       {
         "argument": "--parseopt",
@@ -1815,6 +1883,8 @@
   {
     "command_name": "tag",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-tag",
+    "description": "Create, list, delete or verify a tag object signed with GPG",
     "options": [
       {
         "argument": "--annotate",
@@ -1931,6 +2001,8 @@
   {
     "command_name": "status",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-status",
+    "description": "Show the working tree status.\nDisplays paths that have differences between the index file and the current HEAD commit, paths that have differences between the working tree and the index file, and paths in the working tree that are not tracked by Git",
     "options": [
       {
         "argument": "--short",
@@ -2022,6 +2094,8 @@
   {
     "command_name": "notes",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-notes",
+    "description": "Add or inspect object notes.\nA typical use of notes is to supplement a commit message without changing the commit itself. Notes can be shown by git log along with the original commit message.",
     "options": [
       {
         "argument": "--force",
@@ -2104,6 +2178,8 @@
   {
     "command_name": "ls-files",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-ls-files",
+    "description": "Show information about files in the index and the working tree.\nThis command merges the file listing in the index with the actual working directory list, and shows different combinations of the two.",
     "options": [
       {
         "argument": "--cached",
@@ -2244,12 +2320,26 @@
         "argument": "--format=<format>",
         "arguments": "--format=<format>",
         "description": "A string that interpolates %(fieldname) from the result being shown. It also interpolates %% to %, and %xx where xx are hex digits interpolates to character with hex code xx; for example %00 interpolates to \\0 (NUL), %09 to \\t (TAB) and %0a to \\n (LF). --format cannot be combined with -s, -o, -k, -t, --resolve-undo and --eol."
+      },
+      {
+        "method_name": "hyphen_hyphen",
+        "argument": "--",
+        "arguments": "--",
+        "description": "Do not interpret any more arguments as options."
+      },
+      {
+        "method_name": "file",
+        "argument": "<file>",
+        "arguments": "<file>",
+        "description": "Files to show. If no files are given all files which match the other specified criteria are shown."
       }
     ]
   },
   {
     "command_name": "branch",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-branch",
+    "description": "List, create, or delete branches.",
     "options": [
       {
         "argument": "--abbrev[=<n>]",
@@ -2399,6 +2489,8 @@
   {
     "command_name": "clean",
     "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git-clean",
+    "description": "Remove untracked files from the working tree.\nCleans the working tree by recursively removing files that are not under version control, starting from the current directory.",
     "options": [
       {
         "method_name": "recurse-directories",

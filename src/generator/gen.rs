@@ -35,29 +35,32 @@ pub fn main() {
     let git_command_file = format!("{output_dir}/{GIT_COMMAND_FILENAME}");
     git_command_file_create(&engine, &git_command_file);
     for desc in json.as_array().unwrap() {
-        let command_name = desc.get("command_name").unwrap().as_str().unwrap();
         let enabled = desc.get("enabled").unwrap().as_bool().unwrap();
-        let options = desc.get("options").unwrap().as_array().unwrap();
         if enabled {
-            command_generator(output_dir.as_str(), &engine, command_name, options);
+            let command_name = desc.get("command_name").unwrap().as_str().unwrap();
+            let options = desc.get("options").unwrap().as_array().unwrap();
+            let description = desc.get("description").unwrap().as_str().unwrap();
+            let doc_url = desc.get("doc-url").unwrap().as_str().unwrap();
+            command_generator(output_dir.as_str(), &engine, command_name, options, description, doc_url);
             git_command_file_append_command(&engine, command_name, &git_command_file);
         }
     }
 }
 
-fn command_generator(output_dir: &str, engine: &Engine, command_name: &str, options: &Vec<Value>) {
+fn command_generator(output_dir: &str, engine: &Engine, command_name: &str, options: &Vec<Value>, description: &str, doc_url: &str) {
     let normalized_command_name = normalize(command_name);
     let command_path = format!("{output_dir}/{normalized_command_name}");
     fs::create_dir_all(command_path.as_str()).expect("could not create dir");
-    command_mod_file_generator(engine, command_name, format!("{command_path}/{MOD_RS_FILENAME}").as_str());
+    command_mod_file_generator(engine, command_name, format!("{command_path}/{MOD_RS_FILENAME}").as_str(), description, doc_url);
     command_options_file_generator(engine, options, format!("{command_path}/options.rs").as_str());
     println!("command {command_name} generated");
 }
 
-fn command_mod_file_generator(engine: &Engine, cmd: &str, mod_file_path: &str) {
+fn command_mod_file_generator(engine: &Engine, cmd: &str, mod_file_path: &str, description: &str, doc_url: &str) {
     let tpl = engine.template(TEMPLATE_MOD_RS);
+    let descriptions: Vec<&str> = description.lines().collect();
     let mod_rs_content = tpl
-        .render(upon::value!{command_name: normalize(cmd), git_command: cmd})
+        .render(upon::value!{command_name: normalize(cmd), git_command: cmd, descriptions: descriptions, doc_url: doc_url})
         .to_string()
         .expect("could not render template mod_rs");
 

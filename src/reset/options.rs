@@ -41,3 +41,15 @@ pub fn keep() -> FnOptionArg {
 pub fn quiet() -> FnOptionArg {
     optionarg::simple("--quiet")
 }
+
+/// Do not interpret any more arguments as options
+/// --
+pub fn hyphen_hyphen() -> FnOptionArg {
+    optionarg::simple("--")
+}
+
+/// Limits the paths affected by the operation.
+/// <pathspec>
+pub fn pathspec(pathspec: &str) -> FnOptionArg {
+    optionarg::value_parameter(pathspec)
+}

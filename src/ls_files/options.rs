@@ -170,3 +170,15 @@ pub fn sparse() -> FnOptionArg {
 pub fn format(format_arg: &str) -> FnOptionArg {
     optionarg::equal_no_optional("--format", format_arg)
 }
+
+/// Do not interpret any more arguments as options.
+/// --
+pub fn hyphen_hyphen() -> FnOptionArg {
+    optionarg::simple("--")
+}
+
+/// Files to show. If no files are given all files which match the other specified criteria are shown.
+/// <file>
+pub fn file(file: &str) -> FnOptionArg {
+    optionarg::value_parameter(file)
+}
