@@ -23,6 +23,8 @@ use crate::git;
 mod options;
 pub use options::*;
 
+{% for doc in descriptions %}/// {{ doc }}
+{% endfor %}/// [Git doc]({{ doc_url }})
 pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
     git("{{ git_command }}", current_dir)
 }
@@ -108,4 +110,5 @@ pub fn command_templates() -> Engine<'static> {
     
     engine
 }
+
 

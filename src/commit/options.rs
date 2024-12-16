@@ -258,7 +258,7 @@ pub fn no_gpg_sign() -> FnOptionArg {
     optionarg::simple("--no-gpg-sign")
 }
 
-/// Should appear just before any pathspec option
+/// Do not interpret any more arguments as options
 /// --
 pub fn hyphen_hyphen() -> FnOptionArg {
     optionarg::simple("--")

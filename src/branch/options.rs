@@ -15,8 +15,8 @@ pub fn all() -> FnOptionArg {
 
 /// specify a valid branch name
 /// <branch_name>
-pub fn branch_name(value: &str) -> FnOptionArg {
-    optionarg::value_parameter(value)
+pub fn branch_name(branch_name: &str) -> FnOptionArg {
+    optionarg::value_parameter(branch_name)
 }
 
 /// use colored output
