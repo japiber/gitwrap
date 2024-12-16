@@ -139,3 +139,21 @@ pub fn recurse_submodules() -> FnOptionArg {
 pub fn no_recurse_submodules() -> FnOptionArg {
     optionarg::simple("--no-recurse-submodules")
 }
+
+/// Do not interpret any more arguments as options.
+/// --
+pub fn hyphen_hyphen() -> FnOptionArg {
+    optionarg::simple("--")
+}
+
+/// Limits the paths affected by the operation.
+/// <pathspec>
+pub fn pathspec(pathspec: &str) -> FnOptionArg {
+    optionarg::value_parameter(pathspec)
+}
+
+/// Branch to checkout; if it refers to a branch (i.e., a name that, when prepended with "refs/heads/", is a valid ref), then that branch is checked out. Otherwise, if it refers to a valid commit, your HEAD becomes "detached" and you are no longer on any branch (see below for details).
+/// <branch>
+pub fn branch(branch: &str) -> FnOptionArg {
+    optionarg::value_parameter(branch)
+}
