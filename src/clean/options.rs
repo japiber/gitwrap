@@ -1,10 +1,13 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
 use crate::optionarg;
 use crate::wrap_command::FnOptionArg;
+
+pub const RECURSE_DIRECTORIES: &str = "-d";
+
 /// Normally, when no <pathspec> is specified, git clean will not recurse into untracked directories to avoid removing too much. Specify -d to have it recurse into such directories as well. If a <pathspec> is specified, -d is irrelevant; all untracked files matching the specified paths (with exceptions for nested git directories mentioned under --force) will be removed
 /// -d
 pub fn recurse_directories() -> FnOptionArg {
-    optionarg::simple("-d")
+    optionarg::simple(RECURSE_DIRECTORIES)
 }
 
 /// If the Git configuration variable clean.requireForce is not set to false, git clean will refuse to delete files or directories unless given -f. Git will refuse to modify untracked nested git repositories (directories with a .git subdirectory) unless a second -f is given

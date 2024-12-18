@@ -11,6 +11,7 @@ pub const TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER: &str = "with_optional_paramet
 pub const TEMPLATE_OPTION_VALUE_PARAMETER: &str = "value_parameter";
 pub const TEMPLATE_GIT_COMMAND_FILE: &str = "git_command_file";
 pub const TEMPLATE_GIT_COMMAND_MACRO: &str = "git_command_macro";
+pub const TEMPLATE_OPTION_NAME_CONSTANT: &str = "option_name_constant";
 
 
 
@@ -23,12 +24,18 @@ use crate::git;
 mod options;
 pub use options::*;
 
+pub const GIT_COMMAND: &str = "{{ git_command }}";
+
 {% for doc in descriptions %}/// {{ doc }}
 {% endfor %}/// [Git doc]({{ doc_url }})
 pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
-    git("{{ git_command }}", current_dir)
+    git(GIT_COMMAND, current_dir)
 }
 "#
+    ),
+    (
+        TEMPLATE_OPTION_NAME_CONSTANT,
+        r#"pub const {{ option_constant_name }}: &str = "{{ git_option }}";"#
     ),
     (
         TEMPLATE_OPTION_DOC_COMMENTS,

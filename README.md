@@ -63,7 +63,7 @@ fn initialize(repo_url: &str, repo_path: &str) {
 fn initialize(repo_url: &str, repo_path: &str) {
     let cmd = clone!(None,
         clone::repository("https://github.com/japiber/gitwrap.git"),
-        clone::directory(path.as_str()),
+        clone::directory(path.as_str()));
 
     assert!(cmd.execute().is_ok());
 }
