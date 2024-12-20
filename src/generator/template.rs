@@ -11,6 +11,7 @@ pub const TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER: &str = "with_optional_paramet
 pub const TEMPLATE_OPTION_VALUE_PARAMETER: &str = "value_parameter";
 pub const TEMPLATE_GIT_COMMAND_FILE: &str = "git_command_file";
 pub const TEMPLATE_GIT_COMMAND_MACRO: &str = "git_command_macro";
+pub const TEMPLATE_OPTION_NAME_CONSTANT: &str = "option_name_constant";
 
 
 
@@ -23,12 +24,18 @@ use crate::git;
 mod options;
 pub use options::*;
 
+pub const GIT_COMMAND: &str = "{{ git_command }}";
+
 {% for doc in descriptions %}/// {{ doc }}
 {% endfor %}/// [Git doc]({{ doc_url }})
 pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
-    git("{{ git_command }}", current_dir)
+    git(GIT_COMMAND, current_dir)
 }
 "#
+    ),
+    (
+        TEMPLATE_OPTION_NAME_CONSTANT,
+        r#"pub const {{ constant_name }}: &str = "{{ git_option }}";"#
     ),
     (
         TEMPLATE_OPTION_DOC_COMMENTS,
@@ -38,31 +45,31 @@ pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
     (
         TEMPLATE_OPTION_SIMPLE,
         r#"pub fn {{ method_name }}() -> FnOptionArg {
-    optionarg::simple("{{ git_option }}")
+    optionarg::simple({{ constant_name }})
 }"#
     ),
     (
         TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::equal_no_optional("{{ git_option }}", {{ option_argument }})
+    optionarg::equal_no_optional({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_EQUAL_OPTIONAL,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::equal_optional("{{ git_option }}", {{ option_argument }})
+    optionarg::equal_optional({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_WITH_PARAMETER,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::with_parameter("{{ git_option }}", {{ option_argument }})
+    optionarg::with_parameter({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::with_optional_parameter("{{ git_option }}", {{ option_argument }})
+    optionarg::with_optional_parameter({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
@@ -90,7 +97,7 @@ macro_rules! {{ command_name }} {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("{{ git_command }}", $path);
+            let mut command = git({{ command_name }}::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
