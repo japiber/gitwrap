@@ -1,9 +1,10 @@
 use crate::{clone, config, rev_parse, git};
-use rand::Rng;
 use std::fs;
+use std::time::{SystemTime, UNIX_EPOCH};
 use crate::wrap_command::WrapCommand;
 
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
+const REPO_URL: &str = "https://github.com/japiber/gitwrap.git";
 
 #[test]
 fn test_clone() {
@@ -11,15 +12,19 @@ fn test_clone() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
+        let cmd_set = format!("git clone {} {}", REPO_URL, path);
         let cmd = cmd_clone(&path);
+        assert!(cmd.dry_run().unwrap().eq(&cmd_set));
         assert!(cmd.execute().is_ok());
     }
 
     {
+        let cmd_set = String::from("git rev-parse --is-inside-work-tree");
         let mut cmd = rev_parse::rev_parse(Some(path.as_str()));
         cmd.option(rev_parse::is_inside_work_tree());
-        let r = cmd.execute();
+        assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
+        let r = cmd.execute();
         assert!(r.is_ok());
         assert!(r.ok().unwrap().contains("true"));
     }
@@ -64,18 +69,22 @@ fn test_config() {
     }
 
     {
+        let cmd_set = format!("git config user.email {}", REPO_CONFIG_EMAIL);
         let cmd = config!(Some(path.as_str()),
             config::entry("user.email", REPO_CONFIG_EMAIL)
         );
+        assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
         assert!(cmd.execute().is_ok());
     }
 
     {
+        let cmd_set = String::from("git config --get user.email");
         let mut cmd = config::config(Some(path.as_str()));
         cmd.option(config::get("user.email", ""));
-        let r = cmd.execute();
+        assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
+        let r = cmd.execute();
         assert!(r.is_ok());
         assert!(r.ok().unwrap().contains(REPO_CONFIG_EMAIL));
     }
@@ -91,6 +100,6 @@ fn cmd_clone(path: &str) -> WrapCommand {
 }
 
 fn gitwrap_test_path() -> String {
-    let mut rng = rand::rng();
-    format!("gitwrap_test_{:x}", rng.random_range(0..999999999))
+    let nanos = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().subsec_nanos();
+    format!("gitwrap_test_{:x}", nanos)
 }
