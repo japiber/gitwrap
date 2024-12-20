@@ -14,15 +14,10 @@ impl WrapCommand {
     /// Creates a new git [cmd] command.
     /// If [current_dir] is Some, the command working directory is set to it.
     pub fn new(cmd: &str, current_dir: Option<&str>) -> Self {
-        let cd = if let Some(d) = current_dir  {
-            Some(String::from(d))
-        } else {
-            None
-        };
         Self {
             cmd: String::from(cmd),
             args: Vec::new(),
-            current_dir: cd,
+            current_dir: current_dir.map(String::from),
         }
     }
 

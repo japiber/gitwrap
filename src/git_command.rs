@@ -12,7 +12,7 @@ macro_rules! pull {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("pull", $path);
+            let mut command = git(pull::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -26,7 +26,7 @@ macro_rules! fetch {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("fetch", $path);
+            let mut command = git(fetch::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -40,7 +40,7 @@ macro_rules! init {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("init", $path);
+            let mut command = git(init::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -54,7 +54,7 @@ macro_rules! rebase {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("rebase", $path);
+            let mut command = git(rebase::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -68,7 +68,7 @@ macro_rules! push {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("push", $path);
+            let mut command = git(push::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -82,7 +82,7 @@ macro_rules! clone {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("clone", $path);
+            let mut command = git(clone::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -96,7 +96,7 @@ macro_rules! checkout {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("checkout", $path);
+            let mut command = git(checkout::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -110,7 +110,7 @@ macro_rules! config {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("config", $path);
+            let mut command = git(config::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -124,7 +124,7 @@ macro_rules! reset {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("reset", $path);
+            let mut command = git(reset::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -138,7 +138,7 @@ macro_rules! commit {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("commit", $path);
+            let mut command = git(commit::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -152,7 +152,7 @@ macro_rules! add {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("add", $path);
+            let mut command = git(add::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -166,7 +166,7 @@ macro_rules! merge {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("merge", $path);
+            let mut command = git(merge::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -180,7 +180,7 @@ macro_rules! rev_parse {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("rev-parse", $path);
+            let mut command = git(rev_parse::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -194,7 +194,7 @@ macro_rules! tag {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("tag", $path);
+            let mut command = git(tag::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -208,7 +208,7 @@ macro_rules! status {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("status", $path);
+            let mut command = git(status::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -222,7 +222,7 @@ macro_rules! notes {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("notes", $path);
+            let mut command = git(notes::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -236,7 +236,7 @@ macro_rules! ls_files {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("ls-files", $path);
+            let mut command = git(ls_files::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -250,7 +250,7 @@ macro_rules! branch {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("branch", $path);
+            let mut command = git(branch::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -264,7 +264,7 @@ macro_rules! clean {
     ($path:expr,
      $($options:expr), *) => {
         {
-            let mut command = git("clean", $path);
+            let mut command = git(clean::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
