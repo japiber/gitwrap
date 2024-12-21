@@ -26,6 +26,17 @@ impl BatchCommand {
         }
         Ok(result)
     }
+
+    pub fn dry_run(&self) -> Result<Vec<String>, WrapError> {
+        let mut result: Vec<String> = vec![];
+        for command in &self.commands {
+            match command.dry_run() {
+                Ok(r) => result.push(r),
+                Err(e) => return Err(e)
+            }
+        }
+        Ok(result)
+    }
 }
 
 #[macro_export]
