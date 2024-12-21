@@ -94,16 +94,25 @@ pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
         TEMPLATE_GIT_COMMAND_MACRO,
         r#"#[macro_export]
 macro_rules! {{ command_name }} {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git({{ command_name }}::GIT_COMMAND, None).ececute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git({{ command_name }}::GIT_COMMAND, Some($path)).ececute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git({{ command_name }}::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.ececute()
         }
-     }
+     );
 }"#
     )
 ];

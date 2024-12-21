@@ -79,16 +79,25 @@ macro_rules! push {
 
 #[macro_export]
 macro_rules! clone {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(clone::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(clone::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(clone::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]

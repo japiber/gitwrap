@@ -38,11 +38,11 @@ fn test_clone_macro() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let cmd = clone!(None,
-            clone::repository("https://github.com/japiber/gitwrap.git"),
-            clone::directory(path.as_str()));
-
-        assert!(cmd.execute().is_ok());
+        assert!(
+            clone!(None,
+                clone::repository("https://github.com/japiber/gitwrap.git"),
+                clone::directory(path.as_str())
+            ).is_ok());
     }
 
     {
