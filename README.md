@@ -49,50 +49,46 @@ use gitwrap::clone;
 
 
 fn initialize(repo_url: &str, repo_path: &str) {
-    let mut cmd = clone::clone(None);
-    cmd.option(clone::repository(repo_url));
-    cmd.option(clone::directory(repo_path));
+    let cmd = clone::clone(None, vec![clone::repository(repo_url), clone::directory(repo_path)]);
 
     assert!(cmd.execute().is_ok());
 }
 ```
 
-### Clone a repo using macros
+### Clone a repo using macros. Macros allow to specify all command options and execute it in a single step
 
 ```rust
 fn initialize(repo_url: &str, repo_path: &str) {
-    let cmd = clone!(None,
+    assert!(clone!(None,
         clone::repository("https://github.com/japiber/gitwrap.git"),
-        clone::directory(path.as_str()));
-
-    assert!(cmd.execute().is_ok());
+        clone::directory(path.as_str()))
+        .is_ok());
 }
 ```
 
-### 2. Setting repo configuration
+### If a more fine-grained control over the options is needed the command functions must be used
 
 ```rust
-use gitwrap::config;
-
 fn set_repo_config(commit_email: &str, repo_path: &str) {
-    let mut cmd = config::config(Some(repo_path));
-    cmd.option(config::entry("user.email", commit_email));
+    let mut cmd = config::config(Some(repo_path), vec![]);
+    if (!commit_email.is_empty()) {
+        cmd.option(config::entry("user.email", commit_email));
+    }
 
     assert!(cmd.execute().is_ok());
 }
 ```
 
-### 3. Check if a directory is a valid git repo
+### Execute a series of git commands at once
 
 ```rust
-use gitwrap::rev_parse;
-
-fn is_repo_valid(repo_path: &str) {
-    let mut cmd = rev_parse::rev_parse(Some(repo_path));
-    cmd.option(rev_parse::is_inside_work_tree());
-    let r = cmd.execute();
-
-    assert!(r.is_ok());
-    assert!(r.ok().unwrap().contains("true"));
+fn clean_repo(path: &str) {
+    assert!(
+        batch!(
+            reset::reset(Some(path.as_str()), vec![]),
+            checkout::checkout(Some(path.as_str()), vec![checkout::pathspec(".")]),
+            reset::reset(Some(path.as_str()), vec![reset::hard()]),
+            clean::clean(Some(path.as_str()), vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
+        ).is_ok());
 }
 ```

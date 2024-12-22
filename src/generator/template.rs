@@ -18,7 +18,7 @@ pub const TEMPLATE_OPTION_NAME_CONSTANT: &str = "option_name_constant";
 static GIT_TEMPLATES_COMMON: &[(&str, &str)] = &[
     (
         TEMPLATE_MOD_RS,
-        r#"use crate::wrap_command::WrapCommand;
+        r#"use crate::wrap_command::{WrapCommand, FnOptionArg};
 use crate::git;
 
 mod options;
@@ -28,8 +28,12 @@ pub const GIT_COMMAND: &str = "{{ git_command }}";
 
 {% for doc in descriptions %}/// {{ doc }}
 {% endfor %}/// [Git doc]({{ doc_url }})
-pub fn {{ command_name }}(current_dir: Option<&str>) -> WrapCommand {
-    git(GIT_COMMAND, current_dir)
+pub fn {{ command_name }}(current_dir: Option<&str>, options: Vec<FnOptionArg>) -> WrapCommand {
+    let mut gc = git(GIT_COMMAND, current_dir);
+    for opt in options {
+        gc.option(opt);
+    }
+    gc
 }
 "#
     ),
@@ -96,12 +100,12 @@ pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
 macro_rules! {{ command_name }} {
     () => (
         {
-            git({{ command_name }}::GIT_COMMAND, None).ececute()
+            git({{ command_name }}::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git({{ command_name }}::GIT_COMMAND, Some($path)).ececute()
+            git({{ command_name }}::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
@@ -110,7 +114,7 @@ macro_rules! {{ command_name }} {
             $(
                 command.option($options);
             )*
-            command.ececute()
+            command.execute()
         }
      );
 }"#

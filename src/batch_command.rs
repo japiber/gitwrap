@@ -41,9 +41,9 @@ impl BatchCommand {
 
 #[macro_export]
 macro_rules! batch {
-    ($($command:expr), +) => (
+    ($($command:expr), *) => (
         {
-            let mut cb = BatchCommand::new()
+            let mut cb = BatchCommand::new();
             $(
                 cb.add_command($command);
             )*
