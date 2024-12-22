@@ -9,266 +9,437 @@ pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
 
 #[macro_export]
 macro_rules! pull {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(pull::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(pull::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(pull::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! fetch {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(fetch::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(fetch::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(fetch::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! init {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(init::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(init::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(init::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! rebase {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(rebase::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(rebase::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(rebase::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! push {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(push::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(push::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(push::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! clone {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(clone::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(clone::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(clone::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! checkout {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(checkout::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(checkout::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(checkout::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! config {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(config::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(config::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(config::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! reset {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(reset::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(reset::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(reset::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! commit {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(commit::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(commit::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(commit::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! add {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(add::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(add::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(add::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! merge {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(merge::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(merge::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(merge::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! rev_parse {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(rev_parse::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(rev_parse::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(rev_parse::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! tag {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(tag::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(tag::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(tag::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! status {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(status::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(status::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(status::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! notes {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(notes::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(notes::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(notes::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! ls_files {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(ls_files::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(ls_files::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(ls_files::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! branch {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(branch::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(branch::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(branch::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
 
 #[macro_export]
 macro_rules! clean {
-    ($path:expr,
-     $($options:expr), *) => {
+    () => (
+        {
+            git(clean::GIT_COMMAND, None).execute()
+        }
+    );
+    ($path:expr) => (
+        {
+            git(clean::GIT_COMMAND, Some($path)).execute()
+        }
+    );
+    ($path:expr, $($options:expr), *) => (
         {
             let mut command = git(clean::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
-            command
+            command.execute()
         }
-     }
+     );
 }
