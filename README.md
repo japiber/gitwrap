@@ -35,7 +35,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.8.0"
+gitwrap = "0.9.0"
 ```
 
 ## Usage
