@@ -1,6 +1,7 @@
-use crate::{clone, config, rev_parse, git};
+use crate::{clone, config, rev_parse, git, reset, checkout, clean, batch};
 use std::fs;
 use std::time::{SystemTime, UNIX_EPOCH};
+use crate::batch_command::BatchCommand;
 use crate::wrap_command::WrapCommand;
 
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
@@ -20,8 +21,7 @@ fn test_clone() {
 
     {
         let cmd_set = String::from("git rev-parse --is-inside-work-tree");
-        let mut cmd = rev_parse::rev_parse(Some(path.as_str()));
-        cmd.option(rev_parse::is_inside_work_tree());
+        let cmd = rev_parse::rev_parse(Some(path.as_str()), vec![rev_parse::is_inside_work_tree()]);
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
         let r = cmd.execute();
@@ -38,20 +38,18 @@ fn test_clone_macro() {
     fs::create_dir(path.as_str()).unwrap();
 
     {
-        let cmd = clone!(None,
-            clone::repository("https://github.com/japiber/gitwrap.git"),
-            clone::directory(path.as_str()));
-
-        assert!(cmd.execute().is_ok());
+        assert!(
+            clone!(None,
+                clone::repository("https://github.com/japiber/gitwrap.git"),
+                clone::directory(path.as_str())
+            ).is_ok());
     }
 
     {
-        let cmd = rev_parse!(Some(path.as_str()),
-            rev_parse::is_inside_work_tree());
-        let r = cmd.execute();
-
-        assert!(r.is_ok());
-        assert!(r.ok().unwrap().contains("true"));
+       assert!(
+           rev_parse!(Some(path.as_str()),
+                rev_parse::is_inside_work_tree()
+           ).ok().unwrap().contains("true"));
     }
 
     fs::remove_dir_all(path.as_str()).unwrap();
@@ -69,10 +67,10 @@ fn test_config() {
     }
 
     {
-        let cmd_set = format!("git config user.email {}", REPO_CONFIG_EMAIL);
-        let cmd = config!(Some(path.as_str()),
-            config::entry("user.email", REPO_CONFIG_EMAIL)
-        );
+        let config_key = "user.email";
+        let cmd_set = format!("git {} {} {}", config::GIT_COMMAND, config_key, REPO_CONFIG_EMAIL);
+        let cmd = config::config(Some(path.as_str()), vec![config::entry(config_key, REPO_CONFIG_EMAIL)]);
+
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
         assert!(cmd.execute().is_ok());
@@ -80,8 +78,7 @@ fn test_config() {
 
     {
         let cmd_set = String::from("git config --get user.email");
-        let mut cmd = config::config(Some(path.as_str()));
-        cmd.option(config::get("user.email", ""));
+        let cmd = config::config(Some(path.as_str()), vec![config::get("user.email", "")]);
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
         let r = cmd.execute();
@@ -92,11 +89,39 @@ fn test_config() {
     fs::remove_dir_all(path.as_str()).unwrap();
 }
 
+#[test]
+fn test_batch() {
+    let path = gitwrap_test_path();
+    fs::create_dir(path.as_str()).unwrap();
+
+    {
+        let cmd = cmd_clone(&path);
+        assert!(cmd.execute().is_ok());
+    }
+
+    {
+        assert!(fs::remove_file(format!("{}/{}", path, "README.md")).is_ok());
+        assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| !x));
+
+        assert!(
+            batch!(
+                reset::reset(Some(path.as_str()), vec![]),
+                checkout::checkout(Some(path.as_str()), vec![checkout::pathspec(".")]),
+                reset::reset(Some(path.as_str()), vec![reset::hard()]),
+                clean::clean(Some(path.as_str()), vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
+            ).is_ok());
+
+        assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| x));
+    }
+
+    fs::remove_dir_all(path.as_str()).unwrap();
+}
+
 fn cmd_clone(path: &str) -> WrapCommand {
-    let mut cmd = clone::clone(None);
-    cmd.option(clone::repository("https://github.com/japiber/gitwrap.git"));
-    cmd.option(clone::directory(path));
-    cmd
+    clone::clone(None, vec![
+        clone::repository("https://github.com/japiber/gitwrap.git"),
+        clone::directory(path)
+    ])
 }
 
 fn gitwrap_test_path() -> String {

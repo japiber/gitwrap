@@ -1,7 +1,7 @@
 use std::process::Command;
 use crate::WrapError;
 
-pub type FnOptionArg = Box<dyn Fn(&mut Command)>;
+pub type FnOptionArg = Box<(dyn for<'a> Fn(&'a mut Command) + 'static)>;
 
 /// A git command wrapper and manager
 pub struct WrapCommand {

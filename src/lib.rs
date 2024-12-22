@@ -1,4 +1,5 @@
 pub mod wrap_command;
+pub mod batch_command;
 mod error;
 pub use error::*;
 
@@ -28,4 +29,5 @@ pub mod rebase;
 pub mod reset;
 pub mod rev_parse;
 pub mod status;
+
 
