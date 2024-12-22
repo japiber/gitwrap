@@ -13,7 +13,10 @@ pub const GIT_COMMAND: &str = "clone";
 /// creates remote-tracking branches for each branch in the cloned repository,
 /// and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch
 /// [Git doc](https://git-scm.com/docs/git-clone)
-pub fn clone(current_dir: Option<&str>, options: Vec<FnOptionArg>) -> WrapCommand {
+pub fn clone<I>(current_dir: Option<&str>, options: I) -> WrapCommand
+where
+    I: IntoIterator<Item = FnOptionArg>
+{
     let mut gc = git(GIT_COMMAND, current_dir);
     for opt in options {
         gc.option(opt);

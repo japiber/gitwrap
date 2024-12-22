@@ -28,7 +28,10 @@ pub const GIT_COMMAND: &str = "{{ git_command }}";
 
 {% for doc in descriptions %}/// {{ doc }}
 {% endfor %}/// [Git doc]({{ doc_url }})
-pub fn {{ command_name }}(current_dir: Option<&str>, options: Vec<FnOptionArg>) -> WrapCommand {
+pub fn {{ command_name }}<I>(current_dir: Option<&str>, options: I) -> WrapCommand
+where
+    I: IntoIterator<Item = FnOptionArg>
+{
     let mut gc = git(GIT_COMMAND, current_dir);
     for opt in options {
         gc.option(opt);

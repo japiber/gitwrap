@@ -8,7 +8,10 @@ pub const GIT_COMMAND: &str = "tag";
 
 /// Create, list, delete or verify a tag object signed with GPG
 /// [Git doc](https://git-scm.com/docs/git-tag)
-pub fn tag(current_dir: Option<&str>, options: Vec<FnOptionArg>) -> WrapCommand {
+pub fn tag<I>(current_dir: Option<&str>, options: I) -> WrapCommand
+where
+    I: IntoIterator<Item = FnOptionArg>
+{
     let mut gc = git(GIT_COMMAND, current_dir);
     for opt in options {
         gc.option(opt);

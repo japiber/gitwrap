@@ -91,7 +91,6 @@ fn test_config() {
 
 #[test]
 fn test_batch() {
-
     let path = gitwrap_test_path();
     fs::create_dir(path.as_str()).unwrap();
 

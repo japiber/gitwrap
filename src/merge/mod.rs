@@ -10,7 +10,10 @@ pub const GIT_COMMAND: &str = "merge";
 /// Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.
 /// This command is used by git pull to incorporate changes from another repository and can be used by hand to merge changes from one branch into another.
 /// [Git doc](https://git-scm.com/docs/git-merge)
-pub fn merge(current_dir: Option<&str>, options: Vec<FnOptionArg>) -> WrapCommand {
+pub fn merge<I>(current_dir: Option<&str>, options: I) -> WrapCommand
+where
+    I: IntoIterator<Item = FnOptionArg>
+{
     let mut gc = git(GIT_COMMAND, current_dir);
     for opt in options {
         gc.option(opt);

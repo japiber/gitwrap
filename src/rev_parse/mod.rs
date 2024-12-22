@@ -8,7 +8,10 @@ pub const GIT_COMMAND: &str = "rev-parse";
 
 /// Pick out and massage parameters.
 /// [Git doc](https://git-scm.com/docs/git-rev-parse)
-pub fn rev_parse(current_dir: Option<&str>, options: Vec<FnOptionArg>) -> WrapCommand {
+pub fn rev_parse<I>(current_dir: Option<&str>, options: I) -> WrapCommand
+where
+    I: IntoIterator<Item = FnOptionArg>
+{
     let mut gc = git(GIT_COMMAND, current_dir);
     for opt in options {
         gc.option(opt);
