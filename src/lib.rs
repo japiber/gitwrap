@@ -1,10 +1,12 @@
 pub mod wrap_command;
-pub mod batch_command;
 mod error;
 pub use error::*;
 
 mod git_command;
 pub use git_command::*;
+
+pub mod batch_command;
+
 
 #[cfg(test)]
 mod tests;
