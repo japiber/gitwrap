@@ -6,9 +6,11 @@ pub struct BatchCommand {
 }
 
 impl BatchCommand {
-    pub fn new() -> BatchCommand {
+    pub fn new<C>(commands: C) -> BatchCommand
+    where C: IntoIterator<Item=WrapCommand>
+    {
         Self {
-            commands: vec![]
+            commands: commands.into_iter().collect::<Vec<WrapCommand>>()
         }
     }
 
@@ -43,11 +45,12 @@ impl BatchCommand {
 macro_rules! batch {
     ($($command:expr), *) => (
         {
-            let mut cb = BatchCommand::new();
+            let mut commands: Vec<$crate::wrap_command::WrapCommand> = vec![];
             $(
-                cb.add_command($command);
+                commands.push($command);
             )*
-            cb.execute()
+
+            $crate::batch_command::BatchCommand::new(commands).execute()
         }
      );
 }

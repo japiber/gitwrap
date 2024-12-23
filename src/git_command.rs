@@ -11,17 +11,17 @@ pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
 macro_rules! pull {
     () => (
         {
-            git(pull::GIT_COMMAND, None).execute()
+            $crate::git(pull::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(pull::GIT_COMMAND, Some($path)).execute()
+            $crate::git(pull::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(pull::GIT_COMMAND, $path);
+            let mut command = $crate::git(pull::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -34,17 +34,17 @@ macro_rules! pull {
 macro_rules! fetch {
     () => (
         {
-            git(fetch::GIT_COMMAND, None).execute()
+            $crate::git(fetch::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(fetch::GIT_COMMAND, Some($path)).execute()
+            $crate::git(fetch::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(fetch::GIT_COMMAND, $path);
+            let mut command = $crate::git(fetch::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -57,17 +57,17 @@ macro_rules! fetch {
 macro_rules! init {
     () => (
         {
-            git(init::GIT_COMMAND, None).execute()
+            $crate::git(init::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(init::GIT_COMMAND, Some($path)).execute()
+            $crate::git(init::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(init::GIT_COMMAND, $path);
+            let mut command = $crate::git(init::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -80,17 +80,17 @@ macro_rules! init {
 macro_rules! rebase {
     () => (
         {
-            git(rebase::GIT_COMMAND, None).execute()
+            $crate::git(rebase::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(rebase::GIT_COMMAND, Some($path)).execute()
+            $crate::git(rebase::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(rebase::GIT_COMMAND, $path);
+            let mut command = $crate::git(rebase::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -103,17 +103,17 @@ macro_rules! rebase {
 macro_rules! push {
     () => (
         {
-            git(push::GIT_COMMAND, None).execute()
+            $crate::git(push::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(push::GIT_COMMAND, Some($path)).execute()
+            $crate::git(push::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(push::GIT_COMMAND, $path);
+            let mut command = $crate::git(push::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -126,17 +126,17 @@ macro_rules! push {
 macro_rules! clone {
     () => (
         {
-            git(clone::GIT_COMMAND, None).execute()
+            $crate::git(clone::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(clone::GIT_COMMAND, Some($path)).execute()
+            $crate::git(clone::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(clone::GIT_COMMAND, $path);
+            let mut command = $crate::git(clone::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -149,17 +149,17 @@ macro_rules! clone {
 macro_rules! checkout {
     () => (
         {
-            git(checkout::GIT_COMMAND, None).execute()
+            $crate::git(checkout::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(checkout::GIT_COMMAND, Some($path)).execute()
+            $crate::git(checkout::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(checkout::GIT_COMMAND, $path);
+            let mut command = $crate::git(checkout::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -172,17 +172,17 @@ macro_rules! checkout {
 macro_rules! config {
     () => (
         {
-            git(config::GIT_COMMAND, None).execute()
+            $crate::git(config::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(config::GIT_COMMAND, Some($path)).execute()
+            $crate::git(config::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(config::GIT_COMMAND, $path);
+            let mut command = $crate::git(config::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -195,17 +195,17 @@ macro_rules! config {
 macro_rules! reset {
     () => (
         {
-            git(reset::GIT_COMMAND, None).execute()
+            $crate::git(reset::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(reset::GIT_COMMAND, Some($path)).execute()
+            $crate::git(reset::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(reset::GIT_COMMAND, $path);
+            let mut command = $crate::git(reset::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -218,17 +218,17 @@ macro_rules! reset {
 macro_rules! commit {
     () => (
         {
-            git(commit::GIT_COMMAND, None).execute()
+            $crate::git(commit::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(commit::GIT_COMMAND, Some($path)).execute()
+            $crate::git(commit::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(commit::GIT_COMMAND, $path);
+            let mut command = $crate::git(commit::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -241,17 +241,17 @@ macro_rules! commit {
 macro_rules! add {
     () => (
         {
-            git(add::GIT_COMMAND, None).execute()
+            $crate::git(add::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(add::GIT_COMMAND, Some($path)).execute()
+            $crate::git(add::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(add::GIT_COMMAND, $path);
+            let mut command = $crate::git(add::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -264,17 +264,17 @@ macro_rules! add {
 macro_rules! merge {
     () => (
         {
-            git(merge::GIT_COMMAND, None).execute()
+            $crate::git(merge::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(merge::GIT_COMMAND, Some($path)).execute()
+            $crate::git(merge::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(merge::GIT_COMMAND, $path);
+            let mut command = $crate::git(merge::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -287,17 +287,17 @@ macro_rules! merge {
 macro_rules! rev_parse {
     () => (
         {
-            git(rev_parse::GIT_COMMAND, None).execute()
+            $crate::git(rev_parse::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(rev_parse::GIT_COMMAND, Some($path)).execute()
+            $crate::git(rev_parse::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(rev_parse::GIT_COMMAND, $path);
+            let mut command = $crate::git(rev_parse::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -310,17 +310,17 @@ macro_rules! rev_parse {
 macro_rules! tag {
     () => (
         {
-            git(tag::GIT_COMMAND, None).execute()
+            $crate::git(tag::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(tag::GIT_COMMAND, Some($path)).execute()
+            $crate::git(tag::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(tag::GIT_COMMAND, $path);
+            let mut command = $crate::git(tag::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -333,17 +333,17 @@ macro_rules! tag {
 macro_rules! status {
     () => (
         {
-            git(status::GIT_COMMAND, None).execute()
+            $crate::git(status::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(status::GIT_COMMAND, Some($path)).execute()
+            $crate::git(status::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(status::GIT_COMMAND, $path);
+            let mut command = $crate::git(status::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -356,17 +356,17 @@ macro_rules! status {
 macro_rules! notes {
     () => (
         {
-            git(notes::GIT_COMMAND, None).execute()
+            $crate::git(notes::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(notes::GIT_COMMAND, Some($path)).execute()
+            $crate::git(notes::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(notes::GIT_COMMAND, $path);
+            let mut command = $crate::git(notes::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -379,17 +379,17 @@ macro_rules! notes {
 macro_rules! ls_files {
     () => (
         {
-            git(ls_files::GIT_COMMAND, None).execute()
+            $crate::git(ls_files::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(ls_files::GIT_COMMAND, Some($path)).execute()
+            $crate::git(ls_files::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(ls_files::GIT_COMMAND, $path);
+            let mut command = $crate::git(ls_files::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -402,17 +402,17 @@ macro_rules! ls_files {
 macro_rules! branch {
     () => (
         {
-            git(branch::GIT_COMMAND, None).execute()
+            $crate::git(branch::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(branch::GIT_COMMAND, Some($path)).execute()
+            $crate::git(branch::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(branch::GIT_COMMAND, $path);
+            let mut command = $crate::git(branch::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
@@ -425,17 +425,17 @@ macro_rules! branch {
 macro_rules! clean {
     () => (
         {
-            git(clean::GIT_COMMAND, None).execute()
+            $crate::git(clean::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git(clean::GIT_COMMAND, Some($path)).execute()
+            $crate::git(clean::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git(clean::GIT_COMMAND, $path);
+            let mut command = $crate::git(clean::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*

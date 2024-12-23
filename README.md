@@ -35,7 +35,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.9.0"
+gitwrap = "0.9.1"
 ```
 
 ## Usage
@@ -49,7 +49,10 @@ use gitwrap::clone;
 
 
 fn initialize(repo_url: &str, repo_path: &str) {
-    let cmd = clone::clone(None, vec![clone::repository(repo_url), clone::directory(repo_path)]);
+    let cmd = clone::clone(None, vec![
+        clone::repository(repo_url), 
+        clone::directory(repo_path)
+    ]);
 
     assert!(cmd.execute().is_ok());
 }
@@ -66,7 +69,7 @@ fn initialize(repo_url: &str, repo_path: &str) {
 }
 ```
 
-### If a more fine-grained control over the options is needed the command functions must be used
+### For a fine-grained control over the options command functions must be used
 
 ```rust
 fn set_repo_config(commit_email: &str, repo_path: &str) {
@@ -83,12 +86,13 @@ fn set_repo_config(commit_email: &str, repo_path: &str) {
 
 ```rust
 fn clean_repo(path: &str) {
+    let s_path = Some(path);
     assert!(
         batch!(
-            reset::reset(Some(path.as_str()), vec![]),
-            checkout::checkout(Some(path.as_str()), vec![checkout::pathspec(".")]),
-            reset::reset(Some(path.as_str()), vec![reset::hard()]),
-            clean::clean(Some(path.as_str()), vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
-        ).is_ok());
+            reset::reset(s_path, vec![]),
+            checkout::checkout(s_path, vec![checkout::pathspec(".")]),
+            clean::clean(s_path, vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
+        ).is_ok()
+    );
 }
 ```

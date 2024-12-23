@@ -103,17 +103,17 @@ pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
 macro_rules! {{ command_name }} {
     () => (
         {
-            git({{ command_name }}::GIT_COMMAND, None).execute()
+            $crate::git({{ command_name }}::GIT_COMMAND, None).execute()
         }
     );
     ($path:expr) => (
         {
-            git({{ command_name }}::GIT_COMMAND, Some($path)).execute()
+            $crate::git({{ command_name }}::GIT_COMMAND, Some($path)).execute()
         }
     );
     ($path:expr, $($options:expr), *) => (
         {
-            let mut command = git({{ command_name }}::GIT_COMMAND, $path);
+            let mut command = $crate::git({{ command_name }}::GIT_COMMAND, $path);
             $(
                 command.option($options);
             )*
