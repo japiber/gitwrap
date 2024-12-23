@@ -1,7 +1,6 @@
-use crate::{clone, config, rev_parse, git, reset, checkout, clean, batch};
+use crate::{clone, config, rev_parse, reset, checkout, clean, batch};
 use std::fs;
 use std::time::{SystemTime, UNIX_EPOCH};
-use crate::batch_command::BatchCommand;
 use crate::wrap_command::WrapCommand;
 
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
@@ -103,12 +102,13 @@ fn test_batch() {
         assert!(fs::remove_file(format!("{}/{}", path, "README.md")).is_ok());
         assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| !x));
 
+        let s_path = Some(path.as_str());
         assert!(
             batch!(
-                reset::reset(Some(path.as_str()), vec![]),
-                checkout::checkout(Some(path.as_str()), vec![checkout::pathspec(".")]),
-                reset::reset(Some(path.as_str()), vec![reset::hard()]),
-                clean::clean(Some(path.as_str()), vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
+                reset::reset(s_path, vec![]),
+                checkout::checkout(s_path, vec![checkout::pathspec(".")]),
+                reset::reset(s_path, vec![reset::hard()]),
+                clean::clean(s_path, vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
             ).is_ok());
 
         assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| x));
