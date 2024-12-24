@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const ONTO: &str = "--onto";
@@ -59,7 +59,7 @@ pub const NO_RESCHEDULE_FAILED_EXEC: &str = "--no-reschedule-failed-exec";
 /// You can leave out at most one of A and B, in which case it defaults to HEAD.
 /// --onto <newbase>
 pub fn onto(newbase_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(ONTO, newbase_arg)
+    option_arg::with_parameter(ONTO, newbase_arg)
 }
 
 /// Set the starting point at which to create the new commits to the merge base of <upstream> <branch>.
@@ -70,13 +70,13 @@ pub fn onto(newbase_arg: &str) -> FnOptionArg {
 /// Although both this option and --fork-point find the merge base between <upstream> and <branch>, this option uses the merge base as the starting point on which new commits will be created, whereas --fork-point uses the merge base to determine the set of commits which will be rebased.
 /// --keep-base
 pub fn keep_base() -> FnOptionArg {
-    optionarg::simple(KEEP_BASE)
+    option_arg::simple(KEEP_BASE)
 }
 
 /// Restart the rebasing process after having resolved a merge conflict.
 /// --continue
 pub fn continue_rebase() -> FnOptionArg {
-    optionarg::simple(CONTINUE_REBASE)
+    option_arg::simple(CONTINUE_REBASE)
 }
 
 /// Abort the rebase operation and reset HEAD to the original branch.
@@ -84,7 +84,7 @@ pub fn continue_rebase() -> FnOptionArg {
 /// Otherwise HEAD will be reset to where it was when the rebase operation was started.
 /// --abort
 pub fn abort() -> FnOptionArg {
-    optionarg::simple(ABORT)
+    option_arg::simple(ABORT)
 }
 
 /// Abort the rebase operation but HEAD is not reset back to the original branch.
@@ -92,14 +92,14 @@ pub fn abort() -> FnOptionArg {
 /// If a temporary stash entry was created using --autostash, it will be saved to the stash list.
 /// --quit
 pub fn quit() -> FnOptionArg {
-    optionarg::simple(QUIT)
+    option_arg::simple(QUIT)
 }
 
 /// Use applying strategies to rebase (calling git-am internally).
 /// This option may become a no-op in the future once the merge backend handles everything the apply one does.
 /// --apply
 pub fn apply() -> FnOptionArg {
-    optionarg::simple(APPLY)
+    option_arg::simple(APPLY)
 }
 
 /// How to handle commits that are not empty to start and are not clean cherry-picks of any upstream commit,
@@ -111,7 +111,7 @@ pub fn apply() -> FnOptionArg {
 /// Note that commits which start empty are kept (unless --no-keep-empty is specified), and commits which are clean cherry-picks (as determined by git log --cherry-mark ...) are detected and dropped as a preliminary step (unless --reapply-cherry-picks is passed).
 /// --empty={drop,keep,ask}
 pub fn empty(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(EMPTY, value)
+    option_arg::equal_optional(EMPTY, value)
 }
 
 /// Do not keep commits that start empty before the rebase (i.e.
@@ -123,7 +123,7 @@ pub fn empty(value: &str) -> FnOptionArg {
 /// For commits which do not start empty but become empty after rebasing, see the --empty flag.
 /// --no-keep-empty, --keep-empty
 pub fn no_keep_empty() -> FnOptionArg {
-    optionarg::simple(NO_KEEP_EMPTY)
+    option_arg::simple(NO_KEEP_EMPTY)
 }
 
 /// Do not keep commits that start empty before the rebase (i.e.
@@ -135,7 +135,7 @@ pub fn no_keep_empty() -> FnOptionArg {
 /// For commits which do not start empty but become empty after rebasing, see the --empty flag.
 /// --no-keep-empty, --keep-empty
 pub fn keep_empty() -> FnOptionArg {
-    optionarg::simple(KEEP_EMPTY)
+    option_arg::simple(KEEP_EMPTY)
 }
 
 /// Reapply all clean cherry-picks of any upstream commit instead of preemptively dropping them.
@@ -147,7 +147,7 @@ pub fn keep_empty() -> FnOptionArg {
 /// --reapply-cherry-picks allows rebase to forgo reading all upstream commits, potentially improving performance.
 /// --reapply-cherry-picks, --no-reapply-cherry-picks
 pub fn reapply_cherry_picks() -> FnOptionArg {
-    optionarg::simple(REAPPLY_CHERRY_PICKS)
+    option_arg::simple(REAPPLY_CHERRY_PICKS)
 }
 
 /// Reapply all clean cherry-picks of any upstream commit instead of preemptively dropping them.
@@ -159,7 +159,7 @@ pub fn reapply_cherry_picks() -> FnOptionArg {
 /// --reapply-cherry-picks allows rebase to forgo reading all upstream commits, potentially improving performance.
 /// --reapply-cherry-picks, --no-reapply-cherry-picks
 pub fn no_reapply_cherry_picks() -> FnOptionArg {
-    optionarg::simple(NO_REAPPLY_CHERRY_PICKS)
+    option_arg::simple(NO_REAPPLY_CHERRY_PICKS)
 }
 
 /// No-op.
@@ -168,26 +168,26 @@ pub fn no_reapply_cherry_picks() -> FnOptionArg {
 /// Now commits with an empty message do not cause rebasing to halt.
 /// --allow-empty-message
 pub fn allow_empty_message() -> FnOptionArg {
-    optionarg::simple(ALLOW_EMPTY_MESSAGE)
+    option_arg::simple(ALLOW_EMPTY_MESSAGE)
 }
 
 /// Restart the rebasing process by skipping the current patch.
 /// --skip
 pub fn skip() -> FnOptionArg {
-    optionarg::simple(SKIP)
+    option_arg::simple(SKIP)
 }
 
 /// Edit the todo list during an interactive rebase.
 /// --edit-todo
 pub fn edit_todo() -> FnOptionArg {
-    optionarg::simple(EDIT_TODO)
+    option_arg::simple(EDIT_TODO)
 }
 
 /// Show the current patch in an interactive rebase or when rebase is stopped because of conflicts.
 /// This is the equivalent of git show REBASE_HEAD.
 /// --show-current-patch
 pub fn show_current_patch() -> FnOptionArg {
-    optionarg::simple(SHOW_CURRENT_PATCH)
+    option_arg::simple(SHOW_CURRENT_PATCH)
 }
 
 /// Using merging strategies to rebase (default).
@@ -196,7 +196,7 @@ pub fn show_current_patch() -> FnOptionArg {
 /// In other words, the sides are swapped.
 /// -m, --merge
 pub fn merge() -> FnOptionArg {
-    optionarg::simple(MERGE)
+    option_arg::simple(MERGE)
 }
 
 /// Use the given merge strategy, instead of the default ort.
@@ -204,7 +204,7 @@ pub fn merge() -> FnOptionArg {
 /// Because git rebase replays each commit from the working branch on top of the <upstream> branch using the given strategy, using the ours strategy simply empties all patches from the <branch>, which makes little sense.
 /// -s <strategy>, --strategy=<strategy>
 pub fn strategy(strategy_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(STRATEGY, strategy_arg)
+    option_arg::equal_no_optional(STRATEGY, strategy_arg)
 }
 
 /// Pass the <strategy-option> through to the merge strategy.
@@ -212,19 +212,19 @@ pub fn strategy(strategy_arg: &str) -> FnOptionArg {
 /// Note the reversal of ours and theirs as noted above for the -m option.
 /// -X <strategy-option>, --strategy-option=<strategy-option>
 pub fn strategy_option(strategy_option_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(STRATEGY_OPTION, strategy_option_arg)
+    option_arg::equal_no_optional(STRATEGY_OPTION, strategy_option_arg)
 }
 
 /// Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.
 /// --rerere-autoupdate, --no-rerere-autoupdate
 pub fn rerere_autoupdate() -> FnOptionArg {
-    optionarg::simple(RERERE_AUTOUPDATE)
+    option_arg::simple(RERERE_AUTOUPDATE)
 }
 
 /// Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.
 /// --rerere-autoupdate, --no-rerere-autoupdate
 pub fn no_rerere_autoupdate() -> FnOptionArg {
-    optionarg::simple(NO_RERERE_AUTOUPDATE)
+    option_arg::simple(NO_RERERE_AUTOUPDATE)
 }
 
 /// GPG-sign commits.
@@ -232,7 +232,7 @@ pub fn no_rerere_autoupdate() -> FnOptionArg {
 /// --no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier --gpg-sign.
 /// -S[<keyid>], --gpg-sign[=<keyid>], --no-gpg-sign
 pub fn gpg_sign(keyid_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(GPG_SIGN, keyid_arg)
+    option_arg::equal_no_optional(GPG_SIGN, keyid_arg)
 }
 
 /// GPG-sign commits.
@@ -240,41 +240,41 @@ pub fn gpg_sign(keyid_arg: &str) -> FnOptionArg {
 /// --no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier --gpg-sign.
 /// -S[<keyid>], --gpg-sign[=<keyid>], --no-gpg-sign
 pub fn no_gpg_sign() -> FnOptionArg {
-    optionarg::simple(NO_GPG_SIGN)
+    option_arg::simple(NO_GPG_SIGN)
 }
 
 /// Be quiet.
 /// Implies --no-stat.
 /// -q, --quiet
 pub fn quiet() -> FnOptionArg {
-    optionarg::simple(QUIET)
+    option_arg::simple(QUIET)
 }
 
 /// Be verbose.
 /// Implies --stat.
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    optionarg::simple(VERBOSE)
+    option_arg::simple(VERBOSE)
 }
 
 /// Show a diffstat of what changed upstream since the last rebase.
 /// The diffstat is also controlled by the configuration option rebase.stat.
 /// --stat
 pub fn stat() -> FnOptionArg {
-    optionarg::simple(STAT)
+    option_arg::simple(STAT)
 }
 
 /// Do not show a diffstat as part of the rebase process.
 /// -n, --no-stat
 pub fn no_stat() -> FnOptionArg {
-    optionarg::simple(NO_STAT)
+    option_arg::simple(NO_STAT)
 }
 
 /// This option bypasses the pre-rebase hook.
 /// See also githooks(5).
 /// --no-verify
 pub fn no_verify() -> FnOptionArg {
-    optionarg::simple(NO_VERIFY)
+    option_arg::simple(NO_VERIFY)
 }
 
 /// Allows the pre-rebase hook to run, which is the default.
@@ -282,7 +282,7 @@ pub fn no_verify() -> FnOptionArg {
 /// See also githooks(5).
 /// --verify
 pub fn verify() -> FnOptionArg {
-    optionarg::simple(VERIFY)
+    option_arg::simple(VERIFY)
 }
 
 /// Ensure at least <n> lines of surrounding context match before and after each change.
@@ -291,7 +291,7 @@ pub fn verify() -> FnOptionArg {
 /// Implies --apply.
 /// -C<n>
 pub fn ensure_context(n_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(ENSURE_CONTEXT, n_arg)
+    option_arg::with_parameter(ENSURE_CONTEXT, n_arg)
 }
 
 /// Individually replay all rebased commits instead of fast-forwarding over the unchanged ones.
@@ -299,7 +299,7 @@ pub fn ensure_context(n_arg: &str) -> FnOptionArg {
 /// You may find this helpful after reverting a topic branch merge, as this option recreates the topic branch with fresh commits so it can be remerged successfully without needing to "revert the reversion" (see the revert-a-faulty-merge How-To[1] for details).
 /// --no-ff, --force-rebase, -f
 pub fn no_ff() -> FnOptionArg {
-    optionarg::simple(NO_FF)
+    option_arg::simple(NO_FF)
 }
 
 /// Individually replay all rebased commits instead of fast-forwarding over the unchanged ones.
@@ -307,7 +307,7 @@ pub fn no_ff() -> FnOptionArg {
 /// You may find this helpful after reverting a topic branch merge, as this option recreates the topic branch with fresh commits so it can be remerged successfully without needing to "revert the reversion" (see the revert-a-faulty-merge How-To[1] for details).
 /// --no-ff, --force-rebase, -f
 pub fn force_rebase() -> FnOptionArg {
-    optionarg::simple(FORCE_REBASE)
+    option_arg::simple(FORCE_REBASE)
 }
 
 /// Use reflog to find a better common ancestor between <upstream> and <branch> when calculating which commits have been introduced by <branch>.
@@ -318,7 +318,7 @@ pub fn force_rebase() -> FnOptionArg {
 /// If your branch was based on <upstream> but <upstream> was rewound and your branch contains commits which were dropped, this option can be used with --keep-base in order to drop those commits from your branch.
 /// --fork-point, --no-fork-point
 pub fn fork_point() -> FnOptionArg {
-    optionarg::simple(FORK_POINT)
+    option_arg::simple(FORK_POINT)
 }
 
 /// Use reflog to find a better common ancestor between <upstream> and <branch> when calculating which commits have been introduced by <branch>.
@@ -329,7 +329,7 @@ pub fn fork_point() -> FnOptionArg {
 /// If your branch was based on <upstream> but <upstream> was rewound and your branch contains commits which were dropped, this option can be used with --keep-base in order to drop those commits from your branch.
 /// --fork-point, --no-fork-point
 pub fn no_fork_point() -> FnOptionArg {
-    optionarg::simple(NO_FORK_POINT)
+    option_arg::simple(NO_FORK_POINT)
 }
 
 /// Ignore whitespace differences when trying to reconcile differences.
@@ -340,42 +340,42 @@ pub fn no_fork_point() -> FnOptionArg {
 /// Unfortunately, this means that any patch hunks that were intended to modify whitespace and nothing else will be dropped, even if the other side had no changes that conflicted.
 /// --ignore-whitespace
 pub fn ignore_whitespace() -> FnOptionArg {
-    optionarg::simple(IGNORE_WHITESPACE)
+    option_arg::simple(IGNORE_WHITESPACE)
 }
 
 /// This flag is passed to the git apply program (see git-apply(1)) that applies the patch.
 /// Implies --apply.
 /// --whitespace=<option>
 pub fn whitespace(option_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(WHITESPACE, option_arg)
+    option_arg::equal_no_optional(WHITESPACE, option_arg)
 }
 
 /// Instead of using the current time as the committer date, use the author date of the commit being rebased as the committer date.
 /// This option implies --force-rebase.
 /// --committer-date-is-author-date
 pub fn committer_date_is_author_date() -> FnOptionArg {
-    optionarg::simple(COMMITTER_DATE_IS_AUTHOR_DATE)
+    option_arg::simple(COMMITTER_DATE_IS_AUTHOR_DATE)
 }
 
 /// Instead of using the author date of the original commit, use the current time as the author date of the rebased commit.
 /// This option implies --force-rebase.
 /// --ignore-date, --reset-author-date
 pub fn ignore_date() -> FnOptionArg {
-    optionarg::simple(IGNORE_DATE)
+    option_arg::simple(IGNORE_DATE)
 }
 
 /// Instead of using the author date of the original commit, use the current time as the author date of the rebased commit.
 /// This option implies --force-rebase.
 /// --ignore-date, --reset-author-date
 pub fn reset_author_date() -> FnOptionArg {
-    optionarg::simple(RESET_AUTHOR_DATE)
+    option_arg::simple(RESET_AUTHOR_DATE)
 }
 
 /// Add a Signed-off-by trailer to all the rebased commits.
 /// Note that if --interactive is given then only commits marked to be picked, edited or reworded will have the trailer added.
 /// --signoff
 pub fn signoff() -> FnOptionArg {
-    optionarg::simple(SIGNOFF)
+    option_arg::simple(SIGNOFF)
 }
 
 /// Make a list of the commits which are about to be rebased.
@@ -385,7 +385,7 @@ pub fn signoff() -> FnOptionArg {
 /// A customized instruction format will automatically have the long commit hash prepended to the format.
 /// -i, --interactive
 pub fn interactive() -> FnOptionArg {
-    optionarg::simple(INTERACTIVE)
+    option_arg::simple(INTERACTIVE)
 }
 
 /// By default, a rebase will simply drop merge commits from the todo list, and put the rebased commits into a single, linear branch.
@@ -397,7 +397,7 @@ pub fn interactive() -> FnOptionArg {
 /// It is currently only possible to recreate the merge commits using the ort merge strategy; different merge strategies can be used only via explicit exec git merge -s <strategy> [...]  commands.
 /// -r, --rebase-merges[=(rebase-cousins|no-rebase-cousins)]
 pub fn rebase_merges(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(REBASE_MERGES, value)
+    option_arg::equal_optional(REBASE_MERGES, value)
 }
 
 /// Append "exec <cmd>" after each line creating a commit in the final history.
@@ -405,7 +405,7 @@ pub fn rebase_merges(value: &str) -> FnOptionArg {
 /// Any command that fails will interrupt the rebase, with exit code 1.
 /// -x <cmd>, --exec <cmd>
 pub fn exec(cmd_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(EXEC, cmd_arg)
+    option_arg::with_parameter(EXEC, cmd_arg)
 }
 
 /// Rebase all commits reachable from <branch>, instead of limiting them with an <upstream>.
@@ -414,7 +414,7 @@ pub fn exec(cmd_arg: &str) -> FnOptionArg {
 /// --onto it will operate on every change.
 /// --root
 pub fn root() -> FnOptionArg {
-    optionarg::simple(ROOT)
+    option_arg::simple(ROOT)
 }
 
 /// When the commit log message begins with "squash! ..." or "fixup! ..." or "amend! ...", and there is already a commit in the todo list that matches the same ..., automatically modify the todo list of rebase -i, so that the commit marked for squashing comes right after the commit to be modified, and change the action of the moved commit from pick to squash or fixup or fixup -C respectively.
@@ -426,7 +426,7 @@ pub fn root() -> FnOptionArg {
 /// If the --autosquash option is enabled by default using the configuration variable rebase.autoSquash, this option can be used to override and disable this setting.
 /// --autosquash, --no-autosquash
 pub fn autosquash() -> FnOptionArg {
-    optionarg::simple(AUTOSQUASH)
+    option_arg::simple(AUTOSQUASH)
 }
 
 /// When the commit log message begins with "squash! ..." or "fixup! ..." or "amend! ...", and there is already a commit in the todo list that matches the same ..., automatically modify the todo list of rebase -i, so that the commit marked for squashing comes right after the commit to be modified, and change the action of the moved commit from pick to squash or fixup or fixup -C respectively.
@@ -438,7 +438,7 @@ pub fn autosquash() -> FnOptionArg {
 /// If the --autosquash option is enabled by default using the configuration variable rebase.autoSquash, this option can be used to override and disable this setting.
 /// --autosquash, --no-autosquash
 pub fn no_autosquash() -> FnOptionArg {
-    optionarg::simple(NO_AUTOSQUASH)
+    option_arg::simple(NO_AUTOSQUASH)
 }
 
 /// Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends.
@@ -446,7 +446,7 @@ pub fn no_autosquash() -> FnOptionArg {
 /// However, use with care: the final stash application after a successful rebase might result in non-trivial conflicts.
 /// --autostash, --no-autostash
 pub fn autostash() -> FnOptionArg {
-    optionarg::simple(AUTOSTASH)
+    option_arg::simple(AUTOSTASH)
 }
 
 /// Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends.
@@ -454,7 +454,7 @@ pub fn autostash() -> FnOptionArg {
 /// However, use with care: the final stash application after a successful rebase might result in non-trivial conflicts.
 /// --autostash, --no-autostash
 pub fn no_autostash() -> FnOptionArg {
-    optionarg::simple(NO_AUTOSTASH)
+    option_arg::simple(NO_AUTOSTASH)
 }
 
 /// Automatically reschedule exec commands that failed.
@@ -463,7 +463,7 @@ pub fn no_autostash() -> FnOptionArg {
 /// Otherwise an explicit --no-reschedule-failed-exec at the start would be overridden by the presence of rebase.rescheduleFailedExec=true configuration.
 /// --reschedule-failed-exec, --no-reschedule-failed-exec
 pub fn reschedule_failed_exec() -> FnOptionArg {
-    optionarg::simple(RESCHEDULE_FAILED_EXEC)
+    option_arg::simple(RESCHEDULE_FAILED_EXEC)
 }
 
 /// Automatically reschedule exec commands that failed.
@@ -472,5 +472,5 @@ pub fn reschedule_failed_exec() -> FnOptionArg {
 /// Otherwise an explicit --no-reschedule-failed-exec at the start would be overridden by the presence of rebase.rescheduleFailedExec=true configuration.
 /// --reschedule-failed-exec, --no-reschedule-failed-exec
 pub fn no_reschedule_failed_exec() -> FnOptionArg {
-    optionarg::simple(NO_RESCHEDULE_FAILED_EXEC)
+    option_arg::simple(NO_RESCHEDULE_FAILED_EXEC)
 }

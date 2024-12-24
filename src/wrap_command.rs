@@ -1,35 +1,61 @@
 use std::process::Command;
+use std::sync::Arc;
 use crate::WrapError;
 
-pub type FnOptionArg = Box<(dyn for<'a> Fn(&'a mut Command) + 'static)>;
+pub struct FnOptionArg(pub Arc<(dyn Fn() -> Vec<String>)>);
+
+impl Clone for FnOptionArg {
+    fn clone(&self) -> Self {
+        Self(Arc::clone(&self.0))
+    }
+}
+
 
 /// A git command wrapper and manager
+#[derive(Clone)]
 pub struct WrapCommand {
     cmd: String,
-    args: Vec<FnOptionArg>,
-    current_dir: Option<String>,
+    args: Vec<FnOptionArg>
 }
 
 impl WrapCommand {
     /// Creates a new git [cmd] command.
     /// If [current_dir] is Some, the command working directory is set to it.
-    pub fn new(cmd: &str, current_dir: Option<&str>) -> Self {
+    pub fn new(cmd: &str) -> Self {
         Self {
             cmd: String::from(cmd),
-            args: Vec::new(),
-            current_dir: current_dir.map(String::from),
+            args: vec![],
         }
     }
 
     /// Includes a new git command option
-    pub fn option(&mut self, arg: FnOptionArg) {
-        self.args.push(arg);
+    pub fn add_option(&self, arg: FnOptionArg) -> Self {
+        let mut v1 = self.args.clone();
+        v1.push(arg);
+        Self {
+            cmd: self.cmd.to_string(),
+            args: v1,
+        }
+    }
+
+    pub fn add_options<I>(&self, args: I) -> Self
+    where
+        I: IntoIterator<Item = FnOptionArg>
+    {
+        let mut v1 = self.args.clone();
+        let mut v2 = args.into_iter().collect::<Vec<FnOptionArg>>();
+        v1.append(&mut v2);
+        Self {
+            cmd: self.cmd.to_string(),
+            args: v1,
+        }
+
     }
 
     /// Executes the git command as a child process, waiting for it to finish and collecting all of its output.
     /// By default, stdout and stderr are captured (and used to provide the result string).
-    pub fn execute(&self) -> Result<String, WrapError> {
-        let mut cmd = self.command();
+    pub fn run(&self, current_dir: Option<&str>) -> Result<String, WrapError> {
+        let mut cmd = self.command(current_dir);
         match cmd.output() {
             Ok(o) => {
                 if o.status.success() {
@@ -44,7 +70,7 @@ impl WrapCommand {
 
     /// Dry-runs the git command returning the full command specification provided
     pub fn dry_run(&self) -> Result<String, WrapError> {
-        let cmd = self.command();
+        let cmd = self.command(None);
         let mut con : Vec<String> = Vec::new();
         con.push(String::from(cmd.get_program().to_str().unwrap_or("")));
         for arg in cmd.get_args() {
@@ -53,13 +79,14 @@ impl WrapCommand {
         Ok(con.join(" "))
     }
 
-    fn command(&self) -> Command {
+    fn command(&self, current_dir: Option<&str>) -> Command {
         let mut command = Command::new(self.cmd.as_str());
-        if let Some(cd) = self.current_dir.as_ref() {
-            command.current_dir(cd.as_str());
+        if let Some(cd) = current_dir.as_ref() {
+            command.current_dir(cd);
         }
         for fn_arg in &self.args {
-            fn_arg(&mut command);
+            let v = fn_arg.0();
+            command.args(v);
         }
         command
     }

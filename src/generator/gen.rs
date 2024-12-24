@@ -135,7 +135,7 @@ fn git_command_file_append_command(engine: &Engine, cmd: &str, file_path: &str) 
 fn command_options_file_generator(engine: &Engine, options: &Vec<Value>, options_file_path: &str) {
     let mut options_content: Vec<String> = vec![
         String::from("// Warning!! Code generated automatically: this file must not be edited by hand"),
-        String::from("use crate::optionarg;"),
+        String::from("use crate::option_arg;"),
         String::from("use crate::wrap_command::FnOptionArg;"),
         String::from("")
     ];

@@ -14,14 +14,30 @@ impl BatchCommand {
         }
     }
 
-    pub fn add_command(&mut self, command: WrapCommand) {
-        self.commands.push(command);
+    pub fn add_command(self, command: WrapCommand) -> Self {
+        let mut v1 = self.commands.clone();
+        v1.push(command);
+        Self {
+            commands: v1,
+        }
     }
 
-    pub fn execute(&self)-> Result<Vec<String>, WrapError> {
+    pub fn add_commands<I>(&self, args: I) -> Self
+    where
+        I: IntoIterator<Item = WrapCommand>
+    {
+        let mut v1 = self.commands.clone();
+        let mut v2 = args.into_iter().collect::<Vec<WrapCommand>>();
+        v1.append(&mut v2);
+        Self {
+            commands: v1,
+        }
+    }
+
+    pub fn run(&self, current_dir: Option<&str>) -> Result<Vec<String>, WrapError> {
         let mut result: Vec<String> = vec![];
         for command in &self.commands {
-            match command.execute() {
+            match command.run(current_dir) {
                 Ok(r) => result.push(r),
                 Err(e) => return Err(e)
             }
@@ -43,14 +59,24 @@ impl BatchCommand {
 
 #[macro_export]
 macro_rules! batch {
-    ($($command:expr), *) => (
+    (path: $path:expr, commands: $($command:expr), *) => (
         {
             let mut commands: Vec<$crate::wrap_command::WrapCommand> = vec![];
             $(
                 commands.push($command);
             )*
 
-            $crate::batch_command::BatchCommand::new(commands).execute()
+            $crate::batch_command::BatchCommand::new(commands).run(Some($path))
+        }
+     );
+    (options: $($command:expr), *) => (
+        {
+            let mut commands: Vec<$crate::wrap_command::WrapCommand> = vec![];
+            $(
+                commands.push($command);
+            )*
+
+            $crate::batch_command::BatchCommand::new(commands).run(None)
         }
      );
 }

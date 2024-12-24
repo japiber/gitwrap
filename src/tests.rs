@@ -6,6 +6,7 @@ use crate::wrap_command::WrapCommand;
 const REPO_CONFIG_EMAIL: &str = "test@email.com";
 const REPO_URL: &str = "https://github.com/japiber/gitwrap.git";
 
+
 #[test]
 fn test_clone() {
     let path = gitwrap_test_path();
@@ -15,15 +16,15 @@ fn test_clone() {
         let cmd_set = format!("git clone {} {}", REPO_URL, path);
         let cmd = cmd_clone(&path);
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
-        assert!(cmd.execute().is_ok());
+        assert!(cmd.run(None).is_ok());
     }
 
     {
         let cmd_set = String::from("git rev-parse --is-inside-work-tree");
-        let cmd = rev_parse::rev_parse(Some(path.as_str()), vec![rev_parse::is_inside_work_tree()]);
+        let cmd = rev_parse::rev_parse().add_option(rev_parse::is_inside_work_tree());
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
-        let r = cmd.execute();
+        let r = cmd.run(Some(path.as_str()));
         assert!(r.is_ok());
         assert!(r.ok().unwrap().contains("true"));
     }
@@ -38,16 +39,19 @@ fn test_clone_macro() {
 
     {
         assert!(
-            clone!(None,
-                clone::repository("https://github.com/japiber/gitwrap.git"),
-                clone::directory(path.as_str())
+            clone!(
+                options:
+                    clone::repository("https://github.com/japiber/gitwrap.git"),
+                    clone::directory(path.as_str()
+                )
             ).is_ok());
     }
 
     {
        assert!(
-           rev_parse!(Some(path.as_str()),
-                rev_parse::is_inside_work_tree()
+           rev_parse!(
+               path: path.as_str(),
+               options: rev_parse::is_inside_work_tree()
            ).ok().unwrap().contains("true"));
     }
 
@@ -62,25 +66,25 @@ fn test_config() {
 
     {
         let cmd = cmd_clone(&path);
-        assert!(cmd.execute().is_ok());
+        assert!(cmd.run(None).is_ok());
     }
 
     {
         let config_key = "user.email";
         let cmd_set = format!("git {} {} {}", config::GIT_COMMAND, config_key, REPO_CONFIG_EMAIL);
-        let cmd = config::config(Some(path.as_str()), vec![config::entry(config_key, REPO_CONFIG_EMAIL)]);
+        let cmd = config::config().add_option(config::entry(config_key, REPO_CONFIG_EMAIL));
 
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
-        assert!(cmd.execute().is_ok());
+        assert!(cmd.run(Some(path.as_str())).is_ok());
     }
 
     {
         let cmd_set = String::from("git config --get user.email");
-        let cmd = config::config(Some(path.as_str()), vec![config::get("user.email", "")]);
+        let cmd = config::config().add_option(config::get("user.email", ""));
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
-        let r = cmd.execute();
+        let r = cmd.run(Some(path.as_str()));
         assert!(r.is_ok());
         assert!(r.ok().unwrap().contains(REPO_CONFIG_EMAIL));
     }
@@ -95,21 +99,22 @@ fn test_batch() {
 
     {
         let cmd = cmd_clone(&path);
-        assert!(cmd.execute().is_ok());
+        assert!(cmd.run(None).is_ok());
     }
 
     {
         assert!(fs::remove_file(format!("{}/{}", path, "README.md")).is_ok());
         assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| !x));
 
-        let s_path = Some(path.as_str());
-        assert!(
-            batch!(
-                reset::reset(s_path, vec![]),
-                checkout::checkout(s_path, vec![checkout::pathspec(".")]),
-                reset::reset(s_path, vec![reset::hard()]),
-                clean::clean(s_path, vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
-            ).is_ok());
+        assert!(batch!(
+            path:
+                path.as_str(),
+            commands:
+                reset::reset(),
+                checkout::checkout().add_option(checkout::pathspec(".")),
+                reset::reset().add_option(reset::hard()),
+                clean::clean().add_option(clean::force()).add_option(clean::recurse_directories()).add_option(clean::no_gitignore())
+        ).is_ok());
 
         assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| x));
     }
@@ -117,11 +122,12 @@ fn test_batch() {
     fs::remove_dir_all(path.as_str()).unwrap();
 }
 
+
+
 fn cmd_clone(path: &str) -> WrapCommand {
-    clone::clone(None, vec![
-        clone::repository("https://github.com/japiber/gitwrap.git"),
-        clone::directory(path)
-    ])
+    clone::clone()
+        .add_option(clone::repository("https://github.com/japiber/gitwrap.git"))
+        .add_option(clone::directory(path))
 }
 
 fn gitwrap_test_path() -> String {

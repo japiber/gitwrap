@@ -1,3 +1,4 @@
+mod option_arg;
 pub mod wrap_command;
 mod error;
 pub use error::*;
@@ -10,7 +11,6 @@ pub mod batch_command;
 
 #[cfg(test)]
 mod tests;
-mod optionarg;
 
 pub mod tag;
 pub mod add;
@@ -31,5 +31,3 @@ pub mod rebase;
 pub mod reset;
 pub mod rev_parse;
 pub mod status;
-
-

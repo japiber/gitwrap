@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const CACHED: &str = "--cached";
@@ -35,26 +35,26 @@ pub const HYPHEN_HYPHEN: &str = "--";
 /// Show cached files in the output (default)
 /// -c, --cached
 pub fn cached() -> FnOptionArg {
-    optionarg::simple(CACHED)
+    option_arg::simple(CACHED)
 }
 
 /// Show deleted files in the output
 /// -d, --deleted
 pub fn deleted() -> FnOptionArg {
-    optionarg::simple(DELETED)
+    option_arg::simple(DELETED)
 }
 
 /// Show modified files in the output
 /// -m, --modified
 pub fn modified() -> FnOptionArg {
-    optionarg::simple(MODIFIED)
+    option_arg::simple(MODIFIED)
 }
 
 /// Show other (i.e.
 /// untracked) files in the output
 /// -o, --others
 pub fn others() -> FnOptionArg {
-    optionarg::simple(OTHERS)
+    option_arg::simple(OTHERS)
 }
 
 /// Show only ignored files in the output.
@@ -63,45 +63,45 @@ pub fn others() -> FnOptionArg {
 /// Standard ignore rules are not automatically activated, therefore at least one of the --exclude* options is required.
 /// -i, --ignored
 pub fn ignored() -> FnOptionArg {
-    optionarg::simple(IGNORED)
+    option_arg::simple(IGNORED)
 }
 
 /// Show staged contents' mode bits, object name and stage number in the output.
 /// -s, --stage
 pub fn stage() -> FnOptionArg {
-    optionarg::simple(STAGE)
+    option_arg::simple(STAGE)
 }
 
 /// If a whole directory is classified as "other", show just its name (with a trailing slash) and not its whole contents.
 /// --directory
 pub fn directory() -> FnOptionArg {
-    optionarg::simple(DIRECTORY)
+    option_arg::simple(DIRECTORY)
 }
 
 /// Do not list empty directories.
 /// Has no effect without --directory.
 /// --no-empty-directory
 pub fn no_empty_directory() -> FnOptionArg {
-    optionarg::simple(NO_EMPTY_DIRECTORY)
+    option_arg::simple(NO_EMPTY_DIRECTORY)
 }
 
 /// Show unmerged files in the output (forces --stage)
 /// -u, --unmerged
 pub fn unmerged() -> FnOptionArg {
-    optionarg::simple(UNMERGED)
+    option_arg::simple(UNMERGED)
 }
 
 /// Show files on the filesystem that need to be removed due to file/directory conflicts for checkout-index to succeed.
 /// -k, --killed
 pub fn killed() -> FnOptionArg {
-    optionarg::simple(KILLED)
+    option_arg::simple(KILLED)
 }
 
 /// \0 line termination on output and do not quote filenames.
 /// See OUTPUT below for more information.
 /// -z
 pub fn z() -> FnOptionArg {
-    optionarg::simple(Z)
+    option_arg::simple(Z)
 }
 
 /// When only filenames are shown, suppress duplicates that may come from having multiple stages during a merge,
@@ -109,7 +109,7 @@ pub fn z() -> FnOptionArg {
 /// When any of the -t, --unmerged, or --stage option is in use, this option has no effect.
 /// --deduplicate
 pub fn deduplicate() -> FnOptionArg {
-    optionarg::simple(DEDUPLICATE)
+    option_arg::simple(DEDUPLICATE)
 }
 
 /// Skip untracked files matching pattern.
@@ -117,31 +117,31 @@ pub fn deduplicate() -> FnOptionArg {
 /// See EXCLUDE PATTERNS below for more information.
 /// -x <pattern>, --exclude=<pattern>
 pub fn exclude(pattern_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(EXCLUDE, pattern_arg)
+    option_arg::equal_no_optional(EXCLUDE, pattern_arg)
 }
 
 /// Read exclude patterns from <file>; 1 per line.
 /// -X <file>, --exclude-from=<file>
 pub fn exclude_from(file_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(EXCLUDE_FROM, file_arg)
+    option_arg::equal_no_optional(EXCLUDE_FROM, file_arg)
 }
 
 /// Read additional exclude patterns that apply only to the directory and its subdirectories in <file>.
 /// --exclude-per-directory=<file>
 pub fn exclude_per_directory(file_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(EXCLUDE_PER_DIRECTORY, file_arg)
+    option_arg::equal_no_optional(EXCLUDE_PER_DIRECTORY, file_arg)
 }
 
 /// Add the standard Git exclusions: .git/info/exclude, .gitignore in each directory, and the user’s global exclusion file.
 /// --exclude-standard
 pub fn exclude_standard() -> FnOptionArg {
-    optionarg::simple(EXCLUDE_STANDARD)
+    option_arg::simple(EXCLUDE_STANDARD)
 }
 
 /// If any <file> does not appear in the index, treat this as an error (return 1).
 /// --error-unmatch
 pub fn error_unmatch() -> FnOptionArg {
-    optionarg::simple(ERROR_UNMATCH)
+    option_arg::simple(ERROR_UNMATCH)
 }
 
 /// When using --error-unmatch to expand the user supplied <file> (i.e.
@@ -150,7 +150,7 @@ pub fn error_unmatch() -> FnOptionArg {
 /// Using this option with -s or -u options does not make any sense.
 /// --with-tree=<tree-ish>
 pub fn with_tree(tree_ish_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(WITH_TREE, tree_ish_arg)
+    option_arg::equal_no_optional(WITH_TREE, tree_ish_arg)
 }
 
 /// This feature is semi-deprecated.
@@ -158,33 +158,33 @@ pub fn with_tree(tree_ish_arg: &str) -> FnOptionArg {
 /// and users should look at git-status(1) --short or git-diff(1) --name-status for more user-friendly alternatives.
 /// -t
 pub fn t() -> FnOptionArg {
-    optionarg::simple(T)
+    option_arg::simple(T)
 }
 
 /// Similar to -t, but use lowercase letters for files that are marked as assume unchanged (see git-update-index(1)).
 /// -v
 pub fn v() -> FnOptionArg {
-    optionarg::simple(V)
+    option_arg::simple(V)
 }
 
 /// Similar to -t, but use lowercase letters for files that are marked as fsmonitor valid (see git-update-index(1)).
 /// -f
 pub fn f() -> FnOptionArg {
-    optionarg::simple(F)
+    option_arg::simple(F)
 }
 
 /// When run from a subdirectory, the command usually outputs paths relative to the current directory.
 /// This option forces paths to be output relative to the project top directory.
 /// --full-name
 pub fn full_name() -> FnOptionArg {
-    optionarg::simple(FULL_NAME)
+    option_arg::simple(FULL_NAME)
 }
 
 /// Recursively calls ls-files on each active submodule in the repository.
 /// Currently there is only support for the --cached and --stage modes.
 /// --recurse-submodules
 pub fn recurse_submodules() -> FnOptionArg {
-    optionarg::simple(RECURSE_SUBMODULES)
+    option_arg::simple(RECURSE_SUBMODULES)
 }
 
 /// Instead of showing the full 40-byte hexadecimal object lines,
@@ -192,14 +192,14 @@ pub fn recurse_submodules() -> FnOptionArg {
 /// Non default number of digits can be specified with --abbrev=<n>.
 /// --abbrev[=<n>]
 pub fn abbrev(n_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(ABBREV, n_arg)
+    option_arg::equal_no_optional(ABBREV, n_arg)
 }
 
 /// After each line that describes a file, add more data about its cache entry.
 /// This is intended to show as much information as possible for manual inspection; the exact format may change at any time.
 /// --debug
 pub fn debug() -> FnOptionArg {
-    optionarg::simple(DEBUG)
+    option_arg::simple(DEBUG)
 }
 
 /// Show <eolinfo> and <eolattr> of files.
@@ -211,14 +211,14 @@ pub fn debug() -> FnOptionArg {
 /// Both the <eolinfo> in the index ("i/<eolinfo>") and in the working tree ("w/<eolinfo>") are shown for regular files, followed by the ("attr/<eolattr>").
 /// --eol
 pub fn eol() -> FnOptionArg {
-    optionarg::simple(EOL)
+    option_arg::simple(EOL)
 }
 
 /// If the index is sparse, show the sparse directories without expanding to the contained files.
 /// Sparse directories will be shown with a trailing slash, such as "x/" for a sparse directory •"x•".
 /// --sparse
 pub fn sparse() -> FnOptionArg {
-    optionarg::simple(SPARSE)
+    option_arg::simple(SPARSE)
 }
 
 /// A string that interpolates %(fieldname) from the result being shown.
@@ -226,18 +226,18 @@ pub fn sparse() -> FnOptionArg {
 /// --format cannot be combined with -s, -o, -k, -t, --resolve-undo and --eol.
 /// --format=<format>
 pub fn format(format_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(FORMAT, format_arg)
+    option_arg::equal_no_optional(FORMAT, format_arg)
 }
 
 /// Do not interpret any more arguments as options.
 /// --
 pub fn hyphen_hyphen() -> FnOptionArg {
-    optionarg::simple(HYPHEN_HYPHEN)
+    option_arg::simple(HYPHEN_HYPHEN)
 }
 
 /// Files to show.
 /// If no files are given all files which match the other specified criteria are shown.
 /// <file>
 pub fn file(file: &str) -> FnOptionArg {
-    optionarg::value_parameter(file)
+    option_arg::value_parameter(file)
 }

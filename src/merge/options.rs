@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const COMMIT: &str = "--commit";
@@ -37,14 +37,14 @@ pub const CONTINUE_MERGE: &str = "--continue";
 /// This option can be used to override --no-commit.
 /// --commit, --no-commit
 pub fn commit() -> FnOptionArg {
-    optionarg::simple(COMMIT)
+    option_arg::simple(COMMIT)
 }
 
 /// With --no-commit perform the merge but pretend the merge failed and do not autocommit,
 /// to give the user a chance to inspect and further tweak the merge result before committing.
 /// --commit, --no-commit
 pub fn no_commit() -> FnOptionArg {
-    optionarg::simple(NO_COMMIT)
+    option_arg::simple(NO_COMMIT)
 }
 
 /// Invoke an editor before committing successful mechanical merge to further edit the auto-generated merge message,
@@ -56,7 +56,7 @@ pub fn no_commit() -> FnOptionArg {
 /// To make it easier to adjust such scripts to the updated behaviour, the environment variable GIT_MERGE_AUTOEDIT can be set to no at the beginning of them.
 /// --edit, -e, --no-edit
 pub fn edit() -> FnOptionArg {
-    optionarg::simple(EDIT)
+    option_arg::simple(EDIT)
 }
 
 /// Invoke an editor before committing successful mechanical merge to further edit the auto-generated merge message,
@@ -68,27 +68,27 @@ pub fn edit() -> FnOptionArg {
 /// To make it easier to adjust such scripts to the updated behaviour, the environment variable GIT_MERGE_AUTOEDIT can be set to no at the beginning of them.
 /// --edit, -e, --no-edit
 pub fn no_edit() -> FnOptionArg {
-    optionarg::simple(NO_EDIT)
+    option_arg::simple(NO_EDIT)
 }
 
 /// When the merge resolves as a fast-forward, only update the branch pointer, without creating a merge commit.
 /// This is the default behavior.
 /// --ff
 pub fn ff() -> FnOptionArg {
-    optionarg::simple(FF)
+    option_arg::simple(FF)
 }
 
 /// Create a merge commit even when the merge resolves as a fast-forward.
 /// This is the default behaviour when merging an annotated (and possibly signed) tag.
 /// --no-ff
 pub fn no_ff() -> FnOptionArg {
-    optionarg::simple(NO_FF)
+    option_arg::simple(NO_FF)
 }
 
 /// Refuse to merge and exit with a non-zero status unless the current HEAD is already up-to-date or the merge can be resolved as a fast-forward.
 /// --ff-only
 pub fn ff_only() -> FnOptionArg {
-    optionarg::simple(FF_ONLY)
+    option_arg::simple(FF_ONLY)
 }
 
 /// In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged.
@@ -96,7 +96,7 @@ pub fn ff_only() -> FnOptionArg {
 /// With --no-log do not list one-line descriptions from the actual commits being merged.
 /// --log[=<n>], --no-log
 pub fn log(n_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(LOG, n_arg)
+    option_arg::equal_no_optional(LOG, n_arg)
 }
 
 /// In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged.
@@ -104,7 +104,7 @@ pub fn log(n_arg: &str) -> FnOptionArg {
 /// With --no-log do not list one-line descriptions from the actual commits being merged.
 /// --log[=<n>], --no-log
 pub fn no_log() -> FnOptionArg {
-    optionarg::simple(NO_LOG)
+    option_arg::simple(NO_LOG)
 }
 
 /// Show a diffstat at the end of the merge.
@@ -112,7 +112,7 @@ pub fn no_log() -> FnOptionArg {
 /// With -n or --no-stat do not show a diffstat at the end of the merge.
 /// --stat, -n, --no-stat
 pub fn stat() -> FnOptionArg {
-    optionarg::simple(STAT)
+    option_arg::simple(STAT)
 }
 
 /// Show a diffstat at the end of the merge.
@@ -120,7 +120,7 @@ pub fn stat() -> FnOptionArg {
 /// With -n or --no-stat do not show a diffstat at the end of the merge.
 /// --stat, -n, --no-stat
 pub fn no_stat() -> FnOptionArg {
-    optionarg::simple(NO_STAT)
+    option_arg::simple(NO_STAT)
 }
 
 /// Produce the working tree and index state as if a real merge happened (except for the merge information),
@@ -130,7 +130,7 @@ pub fn no_stat() -> FnOptionArg {
 /// This option can be used to override --squash.
 /// --squash, --no-squash
 pub fn squash() -> FnOptionArg {
-    optionarg::simple(SQUASH)
+    option_arg::simple(SQUASH)
 }
 
 /// Produce the working tree and index state as if a real merge happened (except for the merge information),
@@ -140,20 +140,20 @@ pub fn squash() -> FnOptionArg {
 /// This option can be used to override --squash.
 /// --squash, --no-squash
 pub fn no_squash() -> FnOptionArg {
-    optionarg::simple(NO_SQUASH)
+    option_arg::simple(NO_SQUASH)
 }
 
 /// Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried.
 /// If there is no -s option, a built-in list of strategies is used instead (git merge-recursive when merging a single head, git merge-octopus otherwise).
 /// -s <strategy>, --strategy=<strategy>
 pub fn strategy(strategy_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(STRATEGY, strategy_arg)
+    option_arg::equal_no_optional(STRATEGY, strategy_arg)
 }
 
 /// Pass merge strategy specific option through to the merge strategy.
 /// -X <option>, --strategy-option=<option>
 pub fn strategy_option(option_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(STRATEGY_OPTION, option_arg)
+    option_arg::equal_no_optional(STRATEGY_OPTION, option_arg)
 }
 
 /// Verify that the tip commit of the side branch being merged is signed with a valid key, i.e.
@@ -162,7 +162,7 @@ pub fn strategy_option(option_arg: &str) -> FnOptionArg {
 /// If the tip commit of the side branch is not signed with a valid key, the merge is aborted.
 /// --verify-signatures, --no-verify-signatures
 pub fn verify_signatures() -> FnOptionArg {
-    optionarg::simple(VERIFY_SIGNATURES)
+    option_arg::simple(VERIFY_SIGNATURES)
 }
 
 /// Verify that the tip commit of the side branch being merged is signed with a valid key, i.e.
@@ -171,32 +171,32 @@ pub fn verify_signatures() -> FnOptionArg {
 /// If the tip commit of the side branch is not signed with a valid key, the merge is aborted.
 /// --verify-signatures, --no-verify-signatures
 pub fn no_verify_signatures() -> FnOptionArg {
-    optionarg::simple(NO_VERIFY_SIGNATURES)
+    option_arg::simple(NO_VERIFY_SIGNATURES)
 }
 
 /// Synonyms to --stat and --no-stat; these are deprecated and will be removed in the future.
 /// --summary, --no-summary
 pub fn summary() -> FnOptionArg {
-    optionarg::simple(SUMMARY)
+    option_arg::simple(SUMMARY)
 }
 
 /// Synonyms to --stat and --no-stat; these are deprecated and will be removed in the future.
 /// --summary, --no-summary
 pub fn no_summary() -> FnOptionArg {
-    optionarg::simple(NO_SUMMARY)
+    option_arg::simple(NO_SUMMARY)
 }
 
 /// Operate quietly.
 /// Implies --no-progress.
 /// -q, --quiet
 pub fn quiet() -> FnOptionArg {
-    optionarg::simple(QUIET)
+    option_arg::simple(QUIET)
 }
 
 /// Be verbose.
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    optionarg::simple(VERBOSE)
+    option_arg::simple(VERBOSE)
 }
 
 /// Turn progress on/off explicitly.
@@ -204,7 +204,7 @@ pub fn verbose() -> FnOptionArg {
 /// Note that not all merge strategies may support progress reporting.
 /// --progress, --no-progress
 pub fn progress() -> FnOptionArg {
-    optionarg::simple(PROGRESS)
+    option_arg::simple(PROGRESS)
 }
 
 /// Turn progress on/off explicitly.
@@ -212,7 +212,7 @@ pub fn progress() -> FnOptionArg {
 /// Note that not all merge strategies may support progress reporting.
 /// --progress, --no-progress
 pub fn no_progress() -> FnOptionArg {
-    optionarg::simple(NO_PROGRESS)
+    option_arg::simple(NO_PROGRESS)
 }
 
 /// By default, git merge command refuses to merge histories that do not share a common ancestor.
@@ -220,14 +220,14 @@ pub fn no_progress() -> FnOptionArg {
 /// As that is a very rare occasion, no configuration variable to enable this by default exists and will not be added.
 /// --allow-unrelated-histories
 pub fn allow_unrelated_histories() -> FnOptionArg {
-    optionarg::simple(ALLOW_UNRELATED_HISTORIES)
+    option_arg::simple(ALLOW_UNRELATED_HISTORIES)
 }
 
 /// GPG-sign the resulting merge commit.
 /// The keyid argument is optional and defaults to the committer identity; if specified, it must be stuck to the option without a space.
 /// -S[<keyid>], --gpg-sign[=<keyid>]
 pub fn gpg_sign(keyid_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(GPG_SIGN, keyid_arg)
+    option_arg::equal_no_optional(GPG_SIGN, keyid_arg)
 }
 
 /// Set the commit message to be used for the merge commit (in case one is created).
@@ -236,19 +236,19 @@ pub fn gpg_sign(keyid_arg: &str) -> FnOptionArg {
 /// The automated message can include the branch description.
 /// -m <msg>
 pub fn m(msg_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(M, msg_arg)
+    option_arg::with_parameter(M, msg_arg)
 }
 
 /// Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.
 /// --[no-]rerere-autoupdate
 pub fn rerere_autoupdate() -> FnOptionArg {
-    optionarg::simple(RERERE_AUTOUPDATE)
+    option_arg::simple(RERERE_AUTOUPDATE)
 }
 
 /// Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.
 /// --[no-]rerere-autoupdate
 pub fn no_rerere_autoupdate() -> FnOptionArg {
-    optionarg::simple(NO_RERERE_AUTOUPDATE)
+    option_arg::simple(NO_RERERE_AUTOUPDATE)
 }
 
 /// Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
@@ -257,11 +257,11 @@ pub fn no_rerere_autoupdate() -> FnOptionArg {
 /// git merge --abort is equivalent to git reset --merge when MERGE_HEAD is present.
 /// --abort
 pub fn abort() -> FnOptionArg {
-    optionarg::simple(ABORT)
+    option_arg::simple(ABORT)
 }
 
 /// After a git merge stops due to conflicts you can conclude the merge by running git merge --continue (see 'HOW TO RESOLVE CONFLICTS' section below).
 /// --continue
 pub fn continue_merge() -> FnOptionArg {
-    optionarg::simple(CONTINUE_MERGE)
+    option_arg::simple(CONTINUE_MERGE)
 }
