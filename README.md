@@ -35,7 +35,7 @@ cargo add gitwrap
 
 Or add the following line to your Cargo.toml:
 ```
-gitwrap = "0.9.1"
+gitwrap = "0.10.0"
 ```
 
 ## Usage
@@ -53,7 +53,7 @@ fn initialize(repo_url: &str, repo_path: &str) {
         .add_option(clone::repository(repo_url))
         .add_option(clone::directory(repo_path));
 
-    assert!(cmd.execute().is_ok());
+    assert!(cmd.run().is_ok());
 }
 ```
 
@@ -64,8 +64,8 @@ fn initialize(repo_url: &str, repo_path: &str) {
     assert!(
         clone!(
             options:
-            clone::repository("https://github.com/japiber/gitwrap.git"),
-            clone::directory(path.as_str())
+                clone::repository("https://github.com/japiber/gitwrap.git"),
+                clone::directory(path.as_str())
         ).is_ok()
     );
 }
@@ -80,7 +80,7 @@ fn set_repo_config(commit_email: &str, repo_path: &str) {
         cmd.add_option(config::entry("user.email", commit_email));
     }
 
-    assert!(cmd.execute().is_ok());
+    assert!(cmd.run().is_ok());
 }
 ```
 
