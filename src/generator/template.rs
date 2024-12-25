@@ -96,26 +96,26 @@ pub fn git(cmd: &str) -> WrapCommand {
 macro_rules! {{ command_name }} {
     () => (
         {
-            $crate::git({{ command_name }}::GIT_COMMAND).run(None)
+            $crate::git({{ command_name }}::GIT_COMMAND).run()
         }
     );
     (path: $path:expr) => (
         {
-            $crate::git({{ command_name }}::GIT_COMMAND).run(Some($path))
+            $crate::git({{ command_name }}::GIT_COMMAND).current_dir($path).run()
         }
     );
     (path: $path:expr, options: $($option:expr), *) => (
         {
             let command = $crate::git({{ command_name }}::GIT_COMMAND)
             $(.add_option($option))*;
-            command.run(Some($path))
+            command.current_dir($path).run()
         }
      );
     (options: $($option:expr), *) => (
         {
             let command = $crate::git({{ command_name }}::GIT_COMMAND)
             $(.add_option($option))*;
-            command.run(None)
+            command.run()
         }
      );
 }"#

@@ -16,7 +16,7 @@ fn test_clone() {
         let cmd_set = format!("git clone {} {}", REPO_URL, path);
         let cmd = cmd_clone(&path);
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
-        assert!(cmd.run(None).is_ok());
+        assert!(cmd.run().is_ok());
     }
 
     {
@@ -24,7 +24,7 @@ fn test_clone() {
         let cmd = rev_parse::rev_parse().add_option(rev_parse::is_inside_work_tree());
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
-        let r = cmd.run(Some(path.as_str()));
+        let r = cmd.current_dir(path.as_str()).run();
         assert!(r.is_ok());
         assert!(r.ok().unwrap().contains("true"));
     }
@@ -66,7 +66,7 @@ fn test_config() {
 
     {
         let cmd = cmd_clone(&path);
-        assert!(cmd.run(None).is_ok());
+        assert!(cmd.run().is_ok());
     }
 
     {
@@ -76,7 +76,7 @@ fn test_config() {
 
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
-        assert!(cmd.run(Some(path.as_str())).is_ok());
+        assert!(cmd.current_dir(path.as_str()).run().is_ok());
     }
 
     {
@@ -84,7 +84,7 @@ fn test_config() {
         let cmd = config::config().add_option(config::get("user.email", ""));
         assert!(cmd.dry_run().unwrap().eq(&cmd_set));
 
-        let r = cmd.run(Some(path.as_str()));
+        let r = cmd.current_dir(path.as_str()).run();
         assert!(r.is_ok());
         assert!(r.ok().unwrap().contains(REPO_CONFIG_EMAIL));
     }
@@ -99,7 +99,7 @@ fn test_batch() {
 
     {
         let cmd = cmd_clone(&path);
-        assert!(cmd.run(None).is_ok());
+        assert!(cmd.run().is_ok());
     }
 
     {
