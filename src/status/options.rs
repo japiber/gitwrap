@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const SHORT: &str = "--short";
@@ -23,19 +23,19 @@ pub const FIND_RENAMES: &str = "--find-renames";
 /// Give the output in the short-format.
 /// -s, --short
 pub fn short() -> FnOptionArg {
-    optionarg::simple(SHORT)
+    option_arg::simple(SHORT)
 }
 
 /// Show the branch and tracking info even in short-format.
 /// -b, --branch
 pub fn branch() -> FnOptionArg {
-    optionarg::simple(BRANCH)
+    option_arg::simple(BRANCH)
 }
 
 /// Show the number of entries currently stashed away.
 /// --show-stash
 pub fn show_stash() -> FnOptionArg {
-    optionarg::simple(SHOW_STASH)
+    option_arg::simple(SHOW_STASH)
 }
 
 /// Give the output in an easy-to-parse format for scripts.
@@ -45,14 +45,14 @@ pub fn show_stash() -> FnOptionArg {
 /// This is optional and defaults to the original version v1 format.
 /// --porcelain[=<version>]
 pub fn porcelain(version_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(PORCELAIN, version_arg)
+    option_arg::equal_no_optional(PORCELAIN, version_arg)
 }
 
 /// Give the output in the long-format.
 /// This is the default.
 /// --long
 pub fn long() -> FnOptionArg {
-    optionarg::simple(LONG)
+    option_arg::simple(LONG)
 }
 
 /// In addition to the names of files that have been changed,
@@ -60,7 +60,7 @@ pub fn long() -> FnOptionArg {
 /// If -v is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of git diff).
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    optionarg::simple(VERBOSE)
+    option_arg::simple(VERBOSE)
 }
 
 /// Show untracked files.
@@ -80,7 +80,7 @@ pub fn verbose() -> FnOptionArg {
 /// The default can be changed using the status.showUntrackedFiles configuration variable documented in git-config(1).
 /// -u[<mode>], --untracked-files[=<mode>]
 pub fn untracked_files(mode_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(UNTRACKED_FILES, mode_arg)
+    option_arg::equal_no_optional(UNTRACKED_FILES, mode_arg)
 }
 
 /// Ignore changes to submodules when looking for changes.
@@ -91,7 +91,7 @@ pub fn untracked_files(mode_arg: &str) -> FnOptionArg {
 /// Using "all" hides all changes to submodules (and suppresses the output of submodule summaries when the config option status.submoduleSummary is set).
 /// --ignore-submodules[=<when>]
 pub fn ignore_submodules(when_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(IGNORE_SUBMODULES, when_arg)
+    option_arg::equal_no_optional(IGNORE_SUBMODULES, when_arg)
 }
 
 /// Show ignored files as well.
@@ -106,14 +106,14 @@ pub fn ignore_submodules(when_arg: &str) -> FnOptionArg {
 /// If a directory does not match an ignore pattern, but all contents are ignored, then the directory is not shown, but all contents are shown.
 /// --ignored[=<mode>]
 pub fn ignored(mode_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(IGNORED, mode_arg)
+    option_arg::equal_no_optional(IGNORED, mode_arg)
 }
 
 /// Terminate entries with NUL, instead of LF.
 /// This implies the --porcelain=v1 output format if no other format is given.
 /// -z, --null
 pub fn null() -> FnOptionArg {
-    optionarg::simple(NULL)
+    option_arg::simple(NULL)
 }
 
 /// Display untracked files in columns.
@@ -121,7 +121,7 @@ pub fn null() -> FnOptionArg {
 /// --column and --no-column without options are equivalent to always and never respectively.
 /// --column[=<options>], --no-column
 pub fn column(options_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(COLUMN, options_arg)
+    option_arg::equal_no_optional(COLUMN, options_arg)
 }
 
 /// Display untracked files in columns.
@@ -129,40 +129,40 @@ pub fn column(options_arg: &str) -> FnOptionArg {
 /// --column and --no-column without options are equivalent to always and never respectively.
 /// --column[=<options>], --no-column
 pub fn no_column() -> FnOptionArg {
-    optionarg::simple(NO_COLUMN)
+    option_arg::simple(NO_COLUMN)
 }
 
 /// Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch.
 /// Defaults to true.
 /// --ahead-behind, --no-ahead-behind
 pub fn ahead_behind() -> FnOptionArg {
-    optionarg::simple(AHEAD_BEHIND)
+    option_arg::simple(AHEAD_BEHIND)
 }
 
 /// Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch.
 /// Defaults to true.
 /// --ahead-behind, --no-ahead-behind
 pub fn no_ahead_behind() -> FnOptionArg {
-    optionarg::simple(NO_AHEAD_BEHIND)
+    option_arg::simple(NO_AHEAD_BEHIND)
 }
 
 /// Turn on/off rename detection regardless of user configuration.
 /// See also git-diff(1) --no-renames.
 /// --renames, --no-renames
 pub fn renames() -> FnOptionArg {
-    optionarg::simple(RENAMES)
+    option_arg::simple(RENAMES)
 }
 
 /// Turn on/off rename detection regardless of user configuration.
 /// See also git-diff(1) --no-renames.
 /// --renames, --no-renames
 pub fn no_renames() -> FnOptionArg {
-    optionarg::simple(NO_RENAMES)
+    option_arg::simple(NO_RENAMES)
 }
 
 /// Turn on rename detection, optionally setting the similarity threshold.
 /// See also git-diff(1) --find-renames.
 /// -M, --find-renames[=<n>]
 pub fn find_renames(n_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(FIND_RENAMES, n_arg)
+    option_arg::equal_no_optional(FIND_RENAMES, n_arg)
 }

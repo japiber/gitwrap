@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const DRY_RUN: &str = "--dry-run";
@@ -20,19 +20,19 @@ pub const HYPHEN_HYPHEN: &str = "--";
 /// Don't actually add the file(s), just show if they exist and/or will be ignored.
 /// -n, --dry-run
 pub fn dry_run() -> FnOptionArg {
-    optionarg::simple(DRY_RUN)
+    option_arg::simple(DRY_RUN)
 }
 
 /// Be verbose.
 /// -v, --verbose
 pub fn verbose() -> FnOptionArg {
-    optionarg::simple(VERBOSE)
+    option_arg::simple(VERBOSE)
 }
 
 /// Allow adding otherwise ignored files.
 /// -f, --force
 pub fn force() -> FnOptionArg {
-    optionarg::simple(FORCE)
+    option_arg::simple(FORCE)
 }
 
 /// Add modified contents in the working tree interactively to the index.
@@ -40,7 +40,7 @@ pub fn force() -> FnOptionArg {
 /// See 'Interactive mode' for details.
 /// -i, --interactive
 pub fn interactive() -> FnOptionArg {
-    optionarg::simple(INTERACTIVE)
+    option_arg::simple(INTERACTIVE)
 }
 
 /// Interactively choose hunks of patch between the index and the work tree and add them to the index.
@@ -49,7 +49,7 @@ pub fn interactive() -> FnOptionArg {
 /// See “Interactive mode” for details.
 /// -p, --patch
 pub fn patch() -> FnOptionArg {
-    optionarg::simple(PATCH)
+    option_arg::simple(PATCH)
 }
 
 /// Open the diff vs.
@@ -61,7 +61,7 @@ pub fn patch() -> FnOptionArg {
 /// See EDITING PATCHES below.
 /// -e, --edit
 pub fn edit() -> FnOptionArg {
-    optionarg::simple(EDIT)
+    option_arg::simple(EDIT)
 }
 
 /// Update the index just where it already has an entry matching <pathspec>.
@@ -69,7 +69,7 @@ pub fn edit() -> FnOptionArg {
 /// If no <pathspec> is given when -u option is used, all tracked files in the entire working tree are updated (old versions of Git used to limit the update to the current directory and its subdirectories).
 /// -u, --update
 pub fn update() -> FnOptionArg {
-    optionarg::simple(UPDATE)
+    option_arg::simple(UPDATE)
 }
 
 /// Update the index not only where the working tree has a file matching <pathspec> but also where the index already has an entry.
@@ -77,7 +77,7 @@ pub fn update() -> FnOptionArg {
 /// If no <pathspec> is given when -A option is used, all files in the entire working tree are updated (old versions of Git used to limit the update to the current directory and its subdirectories).
 /// -A, --all, --no-ignore-removal
 pub fn all() -> FnOptionArg {
-    optionarg::simple(ALL)
+    option_arg::simple(ALL)
 }
 
 /// Update the index by adding new files that are unknown to the index and files modified in the working tree, but ignore files that have been removed from the working tree.
@@ -86,7 +86,7 @@ pub fn all() -> FnOptionArg {
 /// ignored removed files.
 /// --no-all, --ignore-removal
 pub fn no_all() -> FnOptionArg {
-    optionarg::simple(NO_ALL)
+    option_arg::simple(NO_ALL)
 }
 
 /// Record only the fact that the path will be added later.
@@ -94,13 +94,13 @@ pub fn no_all() -> FnOptionArg {
 /// This is useful for, among other things, showing the unstaged content of such files with git diff and committing them with git commit -a.
 /// -N, --intent-to-add
 pub fn intent_to_add() -> FnOptionArg {
-    optionarg::simple(INTENT_TO_ADD)
+    option_arg::simple(INTENT_TO_ADD)
 }
 
 /// Don't add the file(s), but only refresh their stat() information in the index.
 /// --refresh
 pub fn refresh() -> FnOptionArg {
-    optionarg::simple(REFRESH)
+    option_arg::simple(REFRESH)
 }
 
 /// If some files could not be added because of errors indexing them, do not abort the operation, but continue adding the others.
@@ -108,20 +108,20 @@ pub fn refresh() -> FnOptionArg {
 /// The configuration variable add.ignoreErrors can be set to true to make this the default behaviour.
 /// --ignore-errors
 pub fn ignore_errors() -> FnOptionArg {
-    optionarg::simple(IGNORE_ERRORS)
+    option_arg::simple(IGNORE_ERRORS)
 }
 
 /// This option can only be used together with --dry-run.
 /// By using this option the user can check if any of the given files would be ignored, no matter if they are already present in the work tree or not.
 /// --ignore-missing
 pub fn ignore_missing() -> FnOptionArg {
-    optionarg::simple(IGNORE_MISSING)
+    option_arg::simple(IGNORE_MISSING)
 }
 
 /// This option can be used to separate command-line options from the list of files, (useful when filenames might be mistaken for command-line options)
 /// --
 pub fn hyphen_hyphen() -> FnOptionArg {
-    optionarg::simple(HYPHEN_HYPHEN)
+    option_arg::simple(HYPHEN_HYPHEN)
 }
 
 /// Files to add content from.
@@ -133,5 +133,5 @@ pub fn hyphen_hyphen() -> FnOptionArg {
 /// Note that older versions of Git used to ignore removed files; use --no-all option if you want to add modified or new files but ignore removed ones.
 /// <pathspec>
 pub fn pathspec(pathspec: &str) -> FnOptionArg {
-    optionarg::value_parameter(pathspec)
+    option_arg::value_parameter(pathspec)
 }

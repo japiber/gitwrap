@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const LOCAL: &str = "--local";
@@ -31,21 +31,21 @@ pub const JOBS: &str = "--jobs";
 /// The files under .git/objects/ directory are hardlinked to save space when possible.
 /// --local, -l
 pub fn local() -> FnOptionArg {
-    optionarg::simple(LOCAL)
+    option_arg::simple(LOCAL)
 }
 
 /// Force the cloning process from a repository on a local filesystem to copy the files under the .git/objects directory instead of using hardlinks.
 /// This may be desirable if you are trying to make a back-up of your repository.
 /// --no-hardlinks
 pub fn no_hardlinks() -> FnOptionArg {
-    optionarg::simple(NO_HARDLINKS)
+    option_arg::simple(NO_HARDLINKS)
 }
 
 /// When the repository to clone is on the local machine, instead of using hard links, automatically setup .git/objects/info/alternates to share the objects with the source repository.
 /// The resulting repository starts out without any object of its own.
 /// --shared, -s
 pub fn shared() -> FnOptionArg {
-    optionarg::simple(SHARED)
+    option_arg::simple(SHARED)
 }
 
 /// Borrow the objects from reference repositories specified with the --reference options only to reduce network transfer,
@@ -54,34 +54,34 @@ pub fn shared() -> FnOptionArg {
 /// and this option can be used to stop the borrowing.
 /// --dissociate
 pub fn dissociate() -> FnOptionArg {
-    optionarg::simple(DISSOCIATE)
+    option_arg::simple(DISSOCIATE)
 }
 
 /// Operate quietly.
 /// Progress is not reported to the standard error stream.
 /// --quiet, -q
 pub fn quiet() -> FnOptionArg {
-    optionarg::simple(QUIET)
+    option_arg::simple(QUIET)
 }
 
 /// Run verbosely.
 /// Does not affect the reporting of progress status to the standard error stream.
 /// --verbose, -v
 pub fn verbose() -> FnOptionArg {
-    optionarg::simple(VERBOSE)
+    option_arg::simple(VERBOSE)
 }
 
 /// Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.
 /// This flag forces progress status even if the standard error stream is not directed to a terminal.
 /// --progress
 pub fn progress() -> FnOptionArg {
-    optionarg::simple(PROGRESS)
+    option_arg::simple(PROGRESS)
 }
 
 /// No checkout of HEAD is performed after the clone is complete.
 /// --no-checkout, -n
 pub fn no_checkout() -> FnOptionArg {
-    optionarg::simple(NO_CHECKOUT)
+    option_arg::simple(NO_CHECKOUT)
 }
 
 /// Make a bare Git repository.
@@ -91,7 +91,7 @@ pub fn no_checkout() -> FnOptionArg {
 /// When this option is used, neither remote-tracking branches nor the related configuration variables are created.
 /// --bare
 pub fn bare() -> FnOptionArg {
-    optionarg::simple(BARE)
+    option_arg::simple(BARE)
 }
 
 /// Set up a mirror of the source repository.
@@ -100,13 +100,13 @@ pub fn bare() -> FnOptionArg {
 /// it maps all refs (including remote-tracking branches, notes etc.) and sets up a refspec configuration such that all these refs are overwritten by a git remote update in the target repository.
 /// --mirror
 pub fn mirror() -> FnOptionArg {
-    optionarg::simple(MIRROR)
+    option_arg::simple(MIRROR)
 }
 
 /// Instead of using the remote name origin to keep track of the upstream repository, use <name>.
 /// --origin <name>, -o <name>
 pub fn origin(name_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(ORIGIN, name_arg)
+    option_arg::with_parameter(ORIGIN, name_arg)
 }
 
 /// Instead of pointing the newly created HEAD to the branch pointed to by the cloned repository’s HEAD, point to <name> branch instead.
@@ -114,19 +114,19 @@ pub fn origin(name_arg: &str) -> FnOptionArg {
 /// --branch can also take tags and detaches the HEAD at that commit in the resulting repository.
 /// --branch <name>, -b <name>
 pub fn branch(name_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(BRANCH, name_arg)
+    option_arg::with_parameter(BRANCH, name_arg)
 }
 
 /// When given, and the repository to clone from is accessed via ssh, this specifies a non-default path for the command run on the other end.
 /// --upload-pack <upload-pack>, -u <upload-pack>
 pub fn upload_pack(upload_pack_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(UPLOAD_PACK, upload_pack_arg)
+    option_arg::with_parameter(UPLOAD_PACK, upload_pack_arg)
 }
 
 /// Specify the directory from which templates will be used; (See the 'TEMPLATE DIRECTORY' section of git-init(1).)
 /// --template=<template_directory>
 pub fn template(template_directory_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(TEMPLATE, template_directory_arg)
+    option_arg::equal_no_optional(TEMPLATE, template_directory_arg)
 }
 
 /// Create a shallow clone with a history truncated to the specified number of commits.
@@ -134,20 +134,20 @@ pub fn template(template_directory_arg: &str) -> FnOptionArg {
 /// If you want to clone submodules shallowly, also pass --shallow-submodules.
 /// --depth <depth>
 pub fn depth(depth_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(DEPTH, depth_arg)
+    option_arg::with_parameter(DEPTH, depth_arg)
 }
 
 /// Create a shallow clone with a history after the specified time.
 /// --shallow-since=<date>
 pub fn shallow_since(date_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(SHALLOW_SINCE, date_arg)
+    option_arg::equal_no_optional(SHALLOW_SINCE, date_arg)
 }
 
 /// Create a shallow clone with a history, excluding commits reachable from a specified remote branch or tag.
 /// This option can be specified multiple times.
 /// --shallow-exclude=<revision>
 pub fn shallow_exclude(revision_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(SHALLOW_EXCLUDE, revision_arg)
+    option_arg::equal_no_optional(SHALLOW_EXCLUDE, revision_arg)
 }
 
 /// Clone only the history leading to the tip of a single branch, either specified by the --branch option or the primary branch remote’s HEAD points at.
@@ -155,7 +155,7 @@ pub fn shallow_exclude(revision_arg: &str) -> FnOptionArg {
 /// If the HEAD at the remote did not point at any branch when --single-branch clone was made, no remote-tracking branch is created.
 /// --single-branch
 pub fn single_branch() -> FnOptionArg {
-    optionarg::simple(SINGLE_BRANCH)
+    option_arg::simple(SINGLE_BRANCH)
 }
 
 /// Clone only the history leading to the tip of a single branch, either specified by the --branch option or the primary branch remote’s HEAD points at.
@@ -163,7 +163,7 @@ pub fn single_branch() -> FnOptionArg {
 /// If the HEAD at the remote did not point at any branch when --single-branch clone was made, no remote-tracking branch is created.
 /// --no-single-branch
 pub fn no_single_branch() -> FnOptionArg {
-    optionarg::simple(NO_SINGLE_BRANCH)
+    option_arg::simple(NO_SINGLE_BRANCH)
 }
 
 /// After the clone is created, initialize and clone submodules within based on the provided pathspec.
@@ -175,19 +175,19 @@ pub fn no_single_branch() -> FnOptionArg {
 /// if any of --no-checkout/-n, --bare, or --mirror is given)
 /// --recurse-submodules[=<pathspec>]
 pub fn recurse_submodules(pathspec_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(RECURSE_SUBMODULES, pathspec_arg)
+    option_arg::equal_no_optional(RECURSE_SUBMODULES, pathspec_arg)
 }
 
 /// All submodules which are cloned will be shallow with a depth of 1.
 /// --shallow-submodules
 pub fn shallow_submodules() -> FnOptionArg {
-    optionarg::simple(SHALLOW_SUBMODULES)
+    option_arg::simple(SHALLOW_SUBMODULES)
 }
 
 /// All submodules which are cloned will be shallow with a depth of 1.
 /// --no-shallow-submodules
 pub fn no_shallow_submodules() -> FnOptionArg {
-    optionarg::simple(NO_SHALLOW_SUBMODULES)
+    option_arg::simple(NO_SHALLOW_SUBMODULES)
 }
 
 /// Instead of placing the cloned repository where it is supposed to be, place the cloned repository at the specified directory,
@@ -195,20 +195,20 @@ pub fn no_shallow_submodules() -> FnOptionArg {
 /// The result is Git repository can be separated from working tree.
 /// --separate-git-dir=<git-dir>
 pub fn separate_git_dir(git_dir_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(SEPARATE_GIT_DIR, git_dir_arg)
+    option_arg::equal_no_optional(SEPARATE_GIT_DIR, git_dir_arg)
 }
 
 /// The number of submodules fetched at the same time.
 /// Defaults to the submodule.fetchJobs option.
 /// -j <n>, --jobs <n>
 pub fn jobs(n_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(JOBS, n_arg)
+    option_arg::with_parameter(JOBS, n_arg)
 }
 
 /// The (possibly remote) repository to clone from.
 /// <url>
 pub fn repository(url: &str) -> FnOptionArg {
-    optionarg::value_parameter(url)
+    option_arg::value_parameter(url)
 }
 
 /// The name of a new directory to clone into.
@@ -216,5 +216,5 @@ pub fn repository(url: &str) -> FnOptionArg {
 /// Cloning into an existing directory is only allowed if the directory is empty.
 /// <path>
 pub fn directory(path: &str) -> FnOptionArg {
-    optionarg::value_parameter(path)
+    option_arg::value_parameter(path)
 }

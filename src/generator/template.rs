@@ -18,7 +18,7 @@ pub const TEMPLATE_OPTION_NAME_CONSTANT: &str = "option_name_constant";
 static GIT_TEMPLATES_COMMON: &[(&str, &str)] = &[
     (
         TEMPLATE_MOD_RS,
-        r#"use crate::wrap_command::{WrapCommand, FnOptionArg};
+        r#"use crate::wrap_command::WrapCommand;
 use crate::git;
 
 mod options;
@@ -28,15 +28,8 @@ pub const GIT_COMMAND: &str = "{{ git_command }}";
 
 {% for doc in descriptions %}/// {{ doc }}
 {% endfor %}/// [Git doc]({{ doc_url }})
-pub fn {{ command_name }}<I>(current_dir: Option<&str>, options: I) -> WrapCommand
-where
-    I: IntoIterator<Item = FnOptionArg>
-{
-    let mut gc = git(GIT_COMMAND, current_dir);
-    for opt in options {
-        gc.option(opt);
-    }
-    gc
+pub fn {{ command_name }}() -> WrapCommand {
+    git(GIT_COMMAND)
 }
 "#
     ),
@@ -52,48 +45,48 @@ where
     (
         TEMPLATE_OPTION_SIMPLE,
         r#"pub fn {{ method_name }}() -> FnOptionArg {
-    optionarg::simple({{ constant_name }})
+    option_arg::simple({{ constant_name }})
 }"#
     ),
     (
         TEMPLATE_OPTION_EQUAL_NO_OPTIONAL,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::equal_no_optional({{ constant_name }}, {{ option_argument }})
+    option_arg::equal_no_optional({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_EQUAL_OPTIONAL,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::equal_optional({{ constant_name }}, {{ option_argument }})
+    option_arg::equal_optional({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_WITH_PARAMETER,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::with_parameter({{ constant_name }}, {{ option_argument }})
+    option_arg::with_parameter({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_WITH_OPTIONAL_PARAMETER,
         r#"pub fn {{ method_name }}({{ option_argument }}: &str) -> FnOptionArg {
-    optionarg::with_optional_parameter({{ constant_name }}, {{ option_argument }})
+    option_arg::with_optional_parameter({{ constant_name }}, {{ option_argument }})
 }"#
     ),
     (
         TEMPLATE_OPTION_VALUE_PARAMETER,
         r#"pub fn {{ method_name }}({{ value_parameter }}: &str) -> FnOptionArg {
-    optionarg::value_parameter({{ value_parameter }})
+    option_arg::value_parameter({{ value_parameter }})
 }"#
     ),
     (
         TEMPLATE_GIT_COMMAND_FILE,
-        r#"use crate::wrap_command::WrapCommand;
+        r#"use std::sync::Arc;
+use crate::wrap_command::{FnOptionArg, WrapCommand};
 
-pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
-    let mut command = WrapCommand::new("git", current_dir);
+pub fn git(cmd: &str) -> WrapCommand {
     let l_cmd = String::from(cmd);
-    command.option(Box::new(move |c: &mut  std::process::Command| { c.arg(l_cmd.as_str()); }));
-    command
+    WrapCommand::new("git")
+        .add_option(FnOptionArg(Arc::new(move || vec![String::from(l_cmd.as_str())])))
 }
 "#
     ),
@@ -103,21 +96,26 @@ pub fn git(cmd: &str, current_dir: Option<&str>) -> WrapCommand {
 macro_rules! {{ command_name }} {
     () => (
         {
-            $crate::git({{ command_name }}::GIT_COMMAND, None).execute()
+            $crate::git({{ command_name }}::GIT_COMMAND).run()
         }
     );
-    ($path:expr) => (
+    (path: $path:expr) => (
         {
-            $crate::git({{ command_name }}::GIT_COMMAND, Some($path)).execute()
+            $crate::git({{ command_name }}::GIT_COMMAND).current_dir($path).run()
         }
     );
-    ($path:expr, $($options:expr), *) => (
+    (path: $path:expr, options: $($option:expr), *) => (
         {
-            let mut command = $crate::git({{ command_name }}::GIT_COMMAND, $path);
-            $(
-                command.option($options);
-            )*
-            command.execute()
+            let command = $crate::git({{ command_name }}::GIT_COMMAND)
+            $(.add_option($option))*;
+            command.current_dir($path).run()
+        }
+     );
+    (options: $($option:expr), *) => (
+        {
+            let command = $crate::git({{ command_name }}::GIT_COMMAND)
+            $(.add_option($option))*;
+            command.run()
         }
      );
 }"#

@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const ANNOTATE: &str = "--annotate";
@@ -28,31 +28,31 @@ pub const CREATE_REFLOG: &str = "--create-reflog";
 /// Make an unsigned, annotated tag object.
 /// -a, --annotate
 pub fn annotate() -> FnOptionArg {
-    optionarg::simple(ANNOTATE)
+    option_arg::simple(ANNOTATE)
 }
 
 /// Make a GPG-signed tag, using the default e-mail address’s key.
 /// -s, --sign
 pub fn sign() -> FnOptionArg {
-    optionarg::simple(SIGN)
+    option_arg::simple(SIGN)
 }
 
 /// Make a GPG-signed tag, using the given key.
 /// -u <keyid>, --local-user=<keyid>
 pub fn local_user(keyid_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(LOCAL_USER, keyid_arg)
+    option_arg::equal_no_optional(LOCAL_USER, keyid_arg)
 }
 
 /// Replace an existing tag with the given name (instead of failing).
 /// -f, --force
 pub fn force() -> FnOptionArg {
-    optionarg::simple(FORCE)
+    option_arg::simple(FORCE)
 }
 
 /// Verify the GPG signature of the given tag names.
 /// -v, --verify
 pub fn verify() -> FnOptionArg {
-    optionarg::simple(VERIFY)
+    option_arg::simple(VERIFY)
 }
 
 /// <num> specifies how many lines from the annotation,
@@ -63,7 +63,7 @@ pub fn verify() -> FnOptionArg {
 /// If the tag is not annotated, the commit message is displayed instead.
 /// -n<num>
 pub fn n(num_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(N, num_arg)
+    option_arg::with_parameter(N, num_arg)
 }
 
 /// List tags.
@@ -76,7 +76,7 @@ pub fn n(num_arg: &str) -> FnOptionArg {
 /// See the documentation for each of those options for details.
 /// -l, --list
 pub fn list() -> FnOptionArg {
-    optionarg::simple(LIST)
+    option_arg::simple(LIST)
 }
 
 /// Sort based on the key given.
@@ -91,20 +91,20 @@ pub fn list() -> FnOptionArg {
 /// See git-config(1).
 /// --sort=<key>
 pub fn sort(key_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(SORT, key_arg)
+    option_arg::equal_no_optional(SORT, key_arg)
 }
 
 /// Respect any colors specified in the --format option.
 /// The <when> field must be one of always, never, or auto (if <when> is absent, behave as if always was given).
 /// --color[=<when>]
 pub fn color(when_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(COLOR, when_arg)
+    option_arg::equal_no_optional(COLOR, when_arg)
 }
 
 /// Sorting and filtering tags are case insensitive.
 /// -i, --ignore-case
 pub fn ignore_case() -> FnOptionArg {
-    optionarg::simple(IGNORE_CASE)
+    option_arg::simple(IGNORE_CASE)
 }
 
 /// Display tag listing in columns.
@@ -112,7 +112,7 @@ pub fn ignore_case() -> FnOptionArg {
 ///  This option is only applicable when listing tags without annotation lines.
 /// --column[=<options>]
 pub fn column(options_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(COLUMN, options_arg)
+    option_arg::equal_no_optional(COLUMN, options_arg)
 }
 
 /// Display tag listing in columns.
@@ -120,40 +120,40 @@ pub fn column(options_arg: &str) -> FnOptionArg {
 ///  This option is only applicable when listing tags without annotation lines.
 /// --no-column
 pub fn no_column() -> FnOptionArg {
-    optionarg::simple(NO_COLUMN)
+    option_arg::simple(NO_COLUMN)
 }
 
 /// Only list tags which contain the specified commit (HEAD if not specified).
 /// Implies --list.
 /// --contains [<commit>]
 pub fn contains(commit_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(CONTAINS, commit_arg)
+    option_arg::equal_no_optional(CONTAINS, commit_arg)
 }
 
 /// Only list tags which don’t contain the specified commit (HEAD if not specified).
 /// Implies --list.
 /// --no-contains [<commit>]
 pub fn no_contains(commit_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(NO_CONTAINS, commit_arg)
+    option_arg::equal_no_optional(NO_CONTAINS, commit_arg)
 }
 
 /// Only list tags whose commits are reachable from the specified commit (HEAD if not specified), incompatible with --no-merged.
 /// --merged [<commit>]
 pub fn merged(commit_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(MERGED, commit_arg)
+    option_arg::equal_no_optional(MERGED, commit_arg)
 }
 
 /// Only list tags whose commits are not reachable from the specified commit (HEAD if not specified), incompatible with --merged.
 /// --no-merged [<commit>]
 pub fn no_merged(commit_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(NO_MERGED, commit_arg)
+    option_arg::equal_no_optional(NO_MERGED, commit_arg)
 }
 
 /// Only list tags of the given object (HEAD if not specified).
 /// Implies --list.
 /// --points-at <object>
 pub fn points_at(object_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(POINTS_AT, object_arg)
+    option_arg::with_parameter(POINTS_AT, object_arg)
 }
 
 /// Use the given tag message (instead of prompting).
@@ -161,7 +161,7 @@ pub fn points_at(object_arg: &str) -> FnOptionArg {
 /// Implies -a if none of -a, -s, or -u <keyid> is given.
 /// -m <msg>, --message=<msg>
 pub fn message(msg_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(MESSAGE, msg_arg)
+    option_arg::equal_no_optional(MESSAGE, msg_arg)
 }
 
 /// Take the tag message from the given file.
@@ -169,14 +169,14 @@ pub fn message(msg_arg: &str) -> FnOptionArg {
 /// Implies -a if none of -a, -s, or -u <keyid> is given.
 /// -F <file>, --file=<file>
 pub fn file(file_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(FILE, file_arg)
+    option_arg::equal_no_optional(FILE, file_arg)
 }
 
 /// The message taken from file with -F and command line with -m are usually used as the tag message unmodified.
 /// This option lets you further edit the message taken from these sources.
 /// -e, --edit
 pub fn edit() -> FnOptionArg {
-    optionarg::simple(EDIT)
+    option_arg::simple(EDIT)
 }
 
 /// This option sets how the tag message is cleaned up.
@@ -186,7 +186,7 @@ pub fn edit() -> FnOptionArg {
 ///  removes just leading/trailing whitespace lines and strip removes both whitespace and commentary.
 /// --cleanup=<mode>
 pub fn cleanup(mode_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(CLEANUP, mode_arg)
+    option_arg::equal_no_optional(CLEANUP, mode_arg)
 }
 
 /// Create a reflog for the tag.
@@ -195,5 +195,5 @@ pub fn cleanup(mode_arg: &str) -> FnOptionArg {
 ///  currently does not negate the setting of core.logAllRefUpdates.
 /// --create-reflog
 pub fn create_reflog() -> FnOptionArg {
-    optionarg::simple(CREATE_REFLOG)
+    option_arg::simple(CREATE_REFLOG)
 }

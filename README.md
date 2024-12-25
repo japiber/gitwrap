@@ -49,10 +49,9 @@ use gitwrap::clone;
 
 
 fn initialize(repo_url: &str, repo_path: &str) {
-    let cmd = clone::clone(None, vec![
-        clone::repository(repo_url), 
-        clone::directory(repo_path)
-    ]);
+    let cmd = clone::clone()
+        .add_option(clone::repository(repo_url))
+        .add_option(clone::directory(repo_path));
 
     assert!(cmd.execute().is_ok());
 }
@@ -62,10 +61,13 @@ fn initialize(repo_url: &str, repo_path: &str) {
 
 ```rust
 fn initialize(repo_url: &str, repo_path: &str) {
-    assert!(clone!(None,
-        clone::repository("https://github.com/japiber/gitwrap.git"),
-        clone::directory(path.as_str()))
-        .is_ok());
+    assert!(
+        clone!(
+            options:
+            clone::repository("https://github.com/japiber/gitwrap.git"),
+            clone::directory(path.as_str())
+        ).is_ok()
+    );
 }
 ```
 
@@ -73,25 +75,28 @@ fn initialize(repo_url: &str, repo_path: &str) {
 
 ```rust
 fn set_repo_config(commit_email: &str, repo_path: &str) {
-    let mut cmd = config::config(Some(repo_path), vec![]);
+    let mut cmd = config::config().current_dir(repo_path);
     if (!commit_email.is_empty()) {
-        cmd.option(config::entry("user.email", commit_email));
+        cmd.add_option(config::entry("user.email", commit_email));
     }
 
     assert!(cmd.execute().is_ok());
 }
 ```
 
-### Execute a series of git commands at once
+### Execute a series of git commands at once with a BatchCommand or using the batch! macro
 
 ```rust
 fn clean_repo(path: &str) {
     let s_path = Some(path);
     assert!(
         batch!(
-            reset::reset(s_path, vec![]),
-            checkout::checkout(s_path, vec![checkout::pathspec(".")]),
-            clean::clean(s_path, vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
+            path: 
+                s_path,
+            commands:
+                reset::reset(),
+                checkout::checkout().add_option(checkout::pathspec(".")),
+                clean::clean().add_options(vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
         ).is_ok()
     );
 }
