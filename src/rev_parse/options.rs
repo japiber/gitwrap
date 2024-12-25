@@ -1,5 +1,5 @@
 // Warning!! Code generated automatically: this file must not be edited by hand
-use crate::optionarg;
+use crate::option_arg;
 use crate::wrap_command::FnOptionArg;
 
 pub const PARSEOPT: &str = "--parseopt";
@@ -50,7 +50,7 @@ pub const BEFORE: &str = "--before";
 /// Use git rev-parse in option parsing mode (see PARSEOPT section below).
 /// --parseopt
 pub fn parseopt() -> FnOptionArg {
-    optionarg::simple(PARSEOPT)
+    option_arg::simple(PARSEOPT)
 }
 
 /// Use git rev-parse in shell quoting mode (see SQ-QUOTE section below).
@@ -58,14 +58,14 @@ pub fn parseopt() -> FnOptionArg {
 /// Nothing else is done to command input.
 /// --sq-quote
 pub fn sq_quote() -> FnOptionArg {
-    optionarg::simple(SQ_QUOTE)
+    option_arg::simple(SQ_QUOTE)
 }
 
 /// Only meaningful in --parseopt mode.
 /// Tells the option parser to echo out the first -- met instead of skipping it.
 /// --keep-dashdash
 pub fn keep_dashdash() -> FnOptionArg {
-    optionarg::simple(KEEP_DASHDASH)
+    option_arg::simple(KEEP_DASHDASH)
 }
 
 /// Only meaningful in --parseopt mode.
@@ -73,44 +73,44 @@ pub fn keep_dashdash() -> FnOptionArg {
 /// This can be used to parse sub-commands that take options themselves.
 /// --stop-at-non-option
 pub fn stop_at_non_option() -> FnOptionArg {
-    optionarg::simple(STOP_AT_NON_OPTION)
+    option_arg::simple(STOP_AT_NON_OPTION)
 }
 
 /// Only meaningful in --parseopt mode.
 /// Output the options in their long form if available, and with their arguments stuck.
 /// --stuck-long
 pub fn stuck_long() -> FnOptionArg {
-    optionarg::simple(STUCK_LONG)
+    option_arg::simple(STUCK_LONG)
 }
 
 /// Do not output flags and parameters not meant for git rev-list command.
 /// --revs-only
 pub fn revs_only() -> FnOptionArg {
-    optionarg::simple(REVS_ONLY)
+    option_arg::simple(REVS_ONLY)
 }
 
 /// Do not output flags and parameters meant for git rev-list command.
 /// --no-revs
 pub fn no_revs() -> FnOptionArg {
-    optionarg::simple(NO_REVS)
+    option_arg::simple(NO_REVS)
 }
 
 /// Do not output non-flag parameters.
 /// --flags
 pub fn flags() -> FnOptionArg {
-    optionarg::simple(FLAGS)
+    option_arg::simple(FLAGS)
 }
 
 /// Do not output flag parameters.
 /// --no-flags
 pub fn no_flags() -> FnOptionArg {
-    optionarg::simple(NO_FLAGS)
+    option_arg::simple(NO_FLAGS)
 }
 
 /// If there is no parameter given by the user, use <arg> instead.
 /// --default <arg>
 pub fn default(arg_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(DEFAULT, arg_arg)
+    option_arg::with_parameter(DEFAULT, arg_arg)
 }
 
 /// Behave as if git rev-parse was invoked from the <arg> subdirectory of the working tree.
@@ -118,14 +118,14 @@ pub fn default(arg_arg: &str) -> FnOptionArg {
 /// This can be used to convert arguments to a command run in a subdirectory so that they can still be used after moving to the top-level of the repository.
 /// --prefix <arg>
 pub fn prefix(arg_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(PREFIX, arg_arg)
+    option_arg::with_parameter(PREFIX, arg_arg)
 }
 
 /// Verify that exactly one parameter is provided, and that it can be turned into a raw 20-byte SHA-1 that can be used to access the object database.
 /// If so, emit it to the standard output; otherwise, error out.
 /// --verify
 pub fn verify() -> FnOptionArg {
-    optionarg::simple(VERIFY)
+    option_arg::simple(VERIFY)
 }
 
 /// Only meaningful in --verify mode.
@@ -133,7 +133,7 @@ pub fn verify() -> FnOptionArg {
 /// SHA-1s for valid object names are printed to stdout on success.
 /// -q, --quiet
 pub fn quiet() -> FnOptionArg {
-    optionarg::simple(QUIET)
+    option_arg::simple(QUIET)
 }
 
 /// Usually the output is made one line per flag and parameter.
@@ -143,33 +143,33 @@ pub fn quiet() -> FnOptionArg {
 /// In contrast to the --sq-quote option, the command input is still interpreted as usual.
 /// --sq
 pub fn sq() -> FnOptionArg {
-    optionarg::simple(SQ)
+    option_arg::simple(SQ)
 }
 
 /// Same as --verify but shortens the object name to a unique prefix with at least length characters.
 /// The minimum length is 4, the default is the effective value of the core.abbrev configuration variable (see git-config(1)).
 /// --short[=length]
 pub fn short(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(SHORT, value)
+    option_arg::equal_optional(SHORT, value)
 }
 
 /// When showing object names, prefix them with ^ and strip ^ prefix from the object names that already have one.
 /// --not
 pub fn not() -> FnOptionArg {
-    optionarg::simple(NOT)
+    option_arg::simple(NOT)
 }
 
 /// A non-ambiguous short name of the objects name.
 /// The option core.warnAmbiguousRefs is used to select the strict abbreviation mode.
 /// --abbrev-ref[=(strict|loose)]
 pub fn abbrev_ref(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(ABBREV_REF, value)
+    option_arg::equal_optional(ABBREV_REF, value)
 }
 
 /// Usually the object names are output in SHA-1 form (with possible ^ prefix); this option makes them output in a form as close to the original input as possible.
 /// --symbolic
 pub fn symbolic() -> FnOptionArg {
-    optionarg::simple(SYMBOLIC)
+    option_arg::simple(SYMBOLIC)
 }
 
 /// This is similar to --symbolic, but it omits input that are not refs
@@ -179,13 +179,13 @@ pub fn symbolic() -> FnOptionArg {
 /// 'refs/heads/master').
 /// --symbolic-full-name
 pub fn symbolic_full_name() -> FnOptionArg {
-    optionarg::simple(SYMBOLIC_FULL_NAME)
+    option_arg::simple(SYMBOLIC_FULL_NAME)
 }
 
 /// Show all refs found in refs/.
 /// --all
 pub fn all() -> FnOptionArg {
-    optionarg::simple(ALL)
+    option_arg::simple(ALL)
 }
 
 /// Show all branches, tags, or remote-tracking branches, respectively (i.e., refs found in refs/heads, refs/tags, or refs/remotes, respectively).
@@ -193,7 +193,7 @@ pub fn all() -> FnOptionArg {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --branches[=pattern], --tags[=pattern], --remotes[=pattern]
 pub fn branches(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(BRANCHES, value)
+    option_arg::equal_optional(BRANCHES, value)
 }
 
 /// Show all branches, tags, or remote-tracking branches, respectively (i.e., refs found in refs/heads, refs/tags, or refs/remotes, respectively).
@@ -201,7 +201,7 @@ pub fn branches(value: &str) -> FnOptionArg {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --branches[=pattern], --tags[=pattern], --remotes[=pattern]
 pub fn tags(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(TAGS, value)
+    option_arg::equal_optional(TAGS, value)
 }
 
 /// Show all branches, tags, or remote-tracking branches, respectively (i.e., refs found in refs/heads, refs/tags, or refs/remotes, respectively).
@@ -209,7 +209,7 @@ pub fn tags(value: &str) -> FnOptionArg {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --branches[=pattern], --tags[=pattern], --remotes[=pattern]
 pub fn remotes(value: &str) -> FnOptionArg {
-    optionarg::equal_optional(REMOTES, value)
+    option_arg::equal_optional(REMOTES, value)
 }
 
 /// Show all refs matching the shell glob pattern pattern.
@@ -217,7 +217,7 @@ pub fn remotes(value: &str) -> FnOptionArg {
 /// If the pattern does not contain a globbing character (?, *, or [), it is turned into a prefix match by appending /*.
 /// --glob=pattern
 pub fn glob(pattern_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(GLOB, pattern_arg)
+    option_arg::equal_no_optional(GLOB, pattern_arg)
 }
 
 /// Do not include refs matching <glob-pattern> that the next --all, --branches, --tags, --remotes, or --glob would otherwise consider.
@@ -226,14 +226,14 @@ pub fn glob(pattern_arg: &str) -> FnOptionArg {
 /// If a trailing /* is intended, it must be given explicitly.
 /// --exclude=<glob-pattern>
 pub fn exclude(glob_pattern_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(EXCLUDE, glob_pattern_arg)
+    option_arg::equal_no_optional(EXCLUDE, glob_pattern_arg)
 }
 
 /// Show every object whose name begins with the given prefix.
 /// The <prefix> must be at least 4 hexadecimal digits long to avoid listing each and every object in the repository by mistake.
 /// --disambiguate=<prefix>
 pub fn disambiguate(prefix_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(DISAMBIGUATE, prefix_arg)
+    option_arg::equal_no_optional(DISAMBIGUATE, prefix_arg)
 }
 
 /// List the GIT_* environment variables that are local to the repository (e.g.
@@ -241,7 +241,7 @@ pub fn disambiguate(prefix_arg: &str) -> FnOptionArg {
 /// Only the names of the variables are listed, not their value, even if they are set.
 /// --local-env-vars
 pub fn local_env_vars() -> FnOptionArg {
-    optionarg::simple(LOCAL_ENV_VARS)
+    option_arg::simple(LOCAL_ENV_VARS)
 }
 
 /// Show $GIT_DIR if defined.
@@ -250,44 +250,44 @@ pub fn local_env_vars() -> FnOptionArg {
 /// If $GIT_DIR is not defined and the current directory is not detected to lie in a Git repository or work tree print a message to stderr and exit with nonzero status.
 /// --git-dir
 pub fn git_dir() -> FnOptionArg {
-    optionarg::simple(GIT_DIR)
+    option_arg::simple(GIT_DIR)
 }
 
 /// Like --git-dir, but its output is always the canonicalized absolute path.
 /// --absolute-git-dir
 pub fn absolute_git_dir() -> FnOptionArg {
-    optionarg::simple(ABSOLUTE_GIT_DIR)
+    option_arg::simple(ABSOLUTE_GIT_DIR)
 }
 
 /// Show $GIT_COMMON_DIR if defined, else $GIT_DIR.
 /// --git-common-dir
 pub fn git_common_dir() -> FnOptionArg {
-    optionarg::simple(GIT_COMMON_DIR)
+    option_arg::simple(GIT_COMMON_DIR)
 }
 
 /// When the current working directory is below the repository directory print 'true', otherwise 'false'.
 /// --is-inside-git-dir
 pub fn is_inside_git_dir() -> FnOptionArg {
-    optionarg::simple(IS_INSIDE_GIT_DIR)
+    option_arg::simple(IS_INSIDE_GIT_DIR)
 }
 
 /// When the current working directory is inside the work tree of the repository print 'true', otherwise 'false'.
 /// --is-inside-work-tree
 pub fn is_inside_work_tree() -> FnOptionArg {
-    optionarg::simple(IS_INSIDE_WORK_TREE)
+    option_arg::simple(IS_INSIDE_WORK_TREE)
 }
 
 /// When the repository is bare print 'true', otherwise 'false'.
 /// --is-bare-repository
 pub fn is_bare_repository() -> FnOptionArg {
-    optionarg::simple(IS_BARE_REPOSITORY)
+    option_arg::simple(IS_BARE_REPOSITORY)
 }
 
 /// Check if <path> is a valid repository or a gitfile that points at a valid repository, and print the location of the repository.
 /// If <path> is a gitfile then the resolved path to the real repository is printed.
 /// --resolve-git-dir <path>
 pub fn resolve_git_dir(path_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(RESOLVE_GIT_DIR, path_arg)
+    option_arg::with_parameter(RESOLVE_GIT_DIR, path_arg)
 }
 
 /// Resolve '$GIT_DIR/<path>' and takes other path relocation variables such as $GIT_OBJECT_DIRECTORY, $GIT_INDEX_FILE...
@@ -295,62 +295,62 @@ pub fn resolve_git_dir(path_arg: &str) -> FnOptionArg {
 /// For example, if $GIT_OBJECT_DIRECTORY is set to /foo/bar then 'git rev-parse --git-path objects/abc' returns /foo/bar/abc.
 /// --git-path <path>
 pub fn git_path(path_arg: &str) -> FnOptionArg {
-    optionarg::with_parameter(GIT_PATH, path_arg)
+    option_arg::with_parameter(GIT_PATH, path_arg)
 }
 
 /// When the command is invoked from a subdirectory,
 /// show the path of the top-level directory relative to the current directory (typically a sequence of '../', or an empty string).
 /// --show-cdup
 pub fn show_cdup() -> FnOptionArg {
-    optionarg::simple(SHOW_CDUP)
+    option_arg::simple(SHOW_CDUP)
 }
 
 /// When the command is invoked from a subdirectory,
 /// show the path of the current directory relative to the top-level directory.
 /// --show-prefix
 pub fn show_prefix() -> FnOptionArg {
-    optionarg::simple(SHOW_PREFIX)
+    option_arg::simple(SHOW_PREFIX)
 }
 
 /// Show the absolute path of the top-level directory.
 /// --show-toplevel
 pub fn show_toplevel() -> FnOptionArg {
-    optionarg::simple(SHOW_TOPLEVEL)
+    option_arg::simple(SHOW_TOPLEVEL)
 }
 
 /// Show the absolute path of the root of the superproject’s working tree (if exists) that uses the current repository as its submodule.
 /// Outputs nothing if the current repository is not used as a submodule by any project.
 /// --show-superproject-working-tree
 pub fn show_superproject_working_tree() -> FnOptionArg {
-    optionarg::simple(SHOW_SUPERPROJECT_WORKING_TREE)
+    option_arg::simple(SHOW_SUPERPROJECT_WORKING_TREE)
 }
 
 /// Show the path to the shared index file in split index mode, or empty if not in split-index mode.
 /// --shared-index-path
 pub fn shared_index_path() -> FnOptionArg {
-    optionarg::simple(SHARED_INDEX_PATH)
+    option_arg::simple(SHARED_INDEX_PATH)
 }
 
 /// Parse the date string, and output the corresponding --max-age= parameter for git rev-list.
 /// --since=datestring, --after=datestring
 pub fn since(datestring_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(SINCE, datestring_arg)
+    option_arg::equal_no_optional(SINCE, datestring_arg)
 }
 
 /// Parse the date string, and output the corresponding --max-age= parameter for git rev-list.
 /// --since=datestring, --after=datestring
 pub fn after(datestring_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(AFTER, datestring_arg)
+    option_arg::equal_no_optional(AFTER, datestring_arg)
 }
 
 /// Parse the date string, and output the corresponding --min-age= parameter for git rev-list.
 /// --until=datestring, --before=datestring
 pub fn until(datestring_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(UNTIL, datestring_arg)
+    option_arg::equal_no_optional(UNTIL, datestring_arg)
 }
 
 /// Parse the date string, and output the corresponding --min-age= parameter for git rev-list.
 /// --until=datestring, --before=datestring
 pub fn before(datestring_arg: &str) -> FnOptionArg {
-    optionarg::equal_no_optional(BEFORE, datestring_arg)
+    option_arg::equal_no_optional(BEFORE, datestring_arg)
 }
