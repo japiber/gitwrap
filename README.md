@@ -71,16 +71,16 @@ fn initialize(repo_url: &str, repo_path: &str) {
 }
 ```
 
-### For a fine-grained control over the options command functions must be used
+### Fine-grained control over the options command
 
 ```rust
 fn set_repo_config(commit_email: &str, repo_path: &str) {
-    let mut cmd = config::config().current_dir(repo_path);
+    let mut cmd = config::config();
     if (!commit_email.is_empty()) {
-        cmd.add_option(config::entry("user.email", commit_email));
+        cmd = cmd.add_option(config::entry("user.email", commit_email));
     }
 
-    assert!(cmd.run().is_ok());
+    assert!(cmd.current_dir(repo_path).run().is_ok());
 }
 ```
 
@@ -96,7 +96,11 @@ fn clean_repo(path: &str) {
             commands:
                 reset::reset(),
                 checkout::checkout().add_option(checkout::pathspec(".")),
-                clean::clean().add_options(vec![clean::force(), clean::recurse_directories(), clean::no_gitignore()])
+                clean::clean().add_options(vec![
+                    clean::force(), 
+                    clean::recurse_directories(), 
+                    clean::no_gitignore()
+                ])
         ).is_ok()
     );
 }

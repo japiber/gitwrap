@@ -1,6 +1,7 @@
 [
   {
-    "command_name": "pull",
+    "section": "pull",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-pull",
     "description": "Incorporates changes from a remote repository into the current branch.\nIf the current branch is behind the remote, then by default it will fast-forward the current branch to match the remote.\nIf the current branch and the remote have diverged, the user needs to specify how to reconcile the divergent branches with --rebase or --no-rebase",
@@ -218,7 +219,8 @@
     ]
   },
   {
-    "command_name": "fetch",
+    "section": "fetch",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-fetch",
     "description": "Fetch branches and/or tags (collectively, \"refs\") from one or more other repositories, along with the objects necessary to complete their histories.\nRemote-tracking branches are updated.",
@@ -366,7 +368,8 @@
     ]
   },
   {
-    "command_name": "init",
+    "section": "init",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-init",
     "description": "This command creates an empty Git repository - basically a .git directory with subdirectories for objects, refs/heads, refs/tags, and template files.\nAn initial branch without any commits will be created",
@@ -399,7 +402,8 @@
     ]
   },
   {
-    "command_name": "rebase",
+    "section": "rebase",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-rebase",
     "description": "Reapply commits on top of another base tip",
@@ -654,7 +658,8 @@
     ]
   },
   {
-    "command_name": "push",
+    "section": "push",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-push",
     "description": "Updates remote refs using local refs, while sending objects necessary to complete the given refs.",
@@ -812,7 +817,8 @@
     ]
   },
   {
-    "command_name": "clone",
+    "section": "clone",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-clone",
     "description": "Clones a repository into a newly created directory,\ncreates remote-tracking branches for each branch in the cloned repository,\nand creates and checks out an initial branch that is forked from the cloned repository’s currently active branch",
@@ -952,7 +958,8 @@
     ]
   },
   {
-    "command_name": "checkout",
+    "section": "checkout",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-checkout",
     "description": "Switch branches or restore working tree files",
@@ -1081,7 +1088,8 @@
     ]
   },
   {
-    "command_name": "config",
+    "section": "config",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-config",
     "description": "Get and set repository or global options.\nYou can query/set/replace/unset options with this command.\nThe name is actually the section and the key separated by a dot, and the value will be escaped.",
@@ -1159,7 +1167,8 @@
     ]
   },
   {
-    "command_name": "reset",
+    "section": "reset",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-reset",
     "description": "Reset current HEAD to the specified state",
@@ -1209,7 +1218,8 @@
     ]
   },
   {
-    "command_name": "commit",
+    "section": "commit",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-commit",
     "description": "Record changes to the repository.\nCreate a new commit containing the current contents of the index and the given log message describing the changes.\nThe new commit is a direct child of HEAD, usually the tip of the current branch, and the branch is updated to point to it.",
@@ -1409,7 +1419,8 @@
     ]
   },
   {
-    "command_name": "add",
+    "section": "add",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-add",
     "description": "Add file contents to the index.\nThis command updates the index using the current content found in the working tree, to prepare the content staged for the next commit.\nIt typically adds the current content of existing paths as a whole, but with some options it can also be used to add content with only part of the changes made to the working tree files applied, or remove paths that do not exist in the working tree anymore.",
@@ -1494,7 +1505,8 @@
     ]
   },
   {
-    "command_name": "merge",
+    "section": "merge",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-merge",
     "description": "Join two or more development histories together.\nIncorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.\nThis command is used by git pull to incorporate changes from another repository and can be used by hand to merge changes from one branch into another.",
@@ -1653,7 +1665,8 @@
     ]
   },
   {
-    "command_name": "rev-parse",
+    "section": "rev-parse",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-rev-parse",
     "description": "Pick out and massage parameters.\n",
@@ -1881,7 +1894,8 @@
     ]
   },
   {
-    "command_name": "tag",
+    "section": "tag",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-tag",
     "description": "Create, list, delete or verify a tag object signed with GPG",
@@ -1999,7 +2013,8 @@
     ]
   },
   {
-    "command_name": "status",
+    "section": "status",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-status",
     "description": "Show the working tree status.\nDisplays paths that have differences between the index file and the current HEAD commit, paths that have differences between the working tree and the index file, and paths in the working tree that are not tracked by Git",
@@ -2092,7 +2107,8 @@
     ]
   },
   {
-    "command_name": "notes",
+    "section": "notes",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-notes",
     "description": "Add or inspect object notes.\nA typical use of notes is to supplement a commit message without changing the commit itself.\nNotes can be shown by git log along with the original commit message.",
@@ -2176,7 +2192,8 @@
     ]
   },
   {
-    "command_name": "ls-files",
+    "section": "ls-files",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-ls-files",
     "description": "Show information about files in the index and the working tree.\nThis command merges the file listing in the index with the actual working directory list, and shows different combinations of the two.",
@@ -2336,7 +2353,8 @@
     ]
   },
   {
-    "command_name": "branch",
+    "section": "branch",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-branch",
     "description": "List, create, or delete branches.",
@@ -2487,7 +2505,8 @@
     ]
   },
   {
-    "command_name": "clean",
+    "section": "clean",
+    "is_command": true,
     "enabled": true,
     "doc-url": "https://git-scm.com/docs/git-clean",
     "description": "Remove untracked files from the working tree.\nCleans the working tree by recursively removing files that are not under version control, starting from the current directory.",
@@ -2550,10 +2569,133 @@
     ]
   },
   {
-    "command_name": "",
-    "enabled": false,
+    "section": "generic",
+    "is_command": false,
+    "enabled": true,
+    "doc-url": "https://git-scm.com/docs/git#_git_commandsc",
+    "description": "These are generic options not related with any specific git commands. Some of them can go with other commands and some of them must be isolated without any command.",
     "options": [
       {
+        "argument": "--version",
+        "arguments": "--version, -v",
+        "description": "Prints the Git suite version that the git program came from."
+      },
+      {
+        "argument": "--help",
+        "arguments": "--help, -h",
+        "description": "Prints the synopsis and a list of the most commonly used commands."
+      },
+      {
+        "method_name": "working_path",
+        "argument": "-C <path>",
+        "arguments": "-C <path>",
+        "description": "Run as if git was started in <path> instead of the current working directory."
+      },
+      {
+        "argument": "--exec-path[=<path>]",
+        "arguments": "--exec-path[=<path>]",
+        "description": "Path to wherever your core Git programs are installed.\nThis can also be controlled by setting the GIT_EXEC_PATH environment variable.\nIf no path is given, git will print the current setting and then exit."
+      },
+      {
+        "argument": "--html-path",
+        "arguments": "--html-path",
+        "description": "Print the path, without trailing slash, where Git’s HTML documentation is installed and exit"
+      },
+      {
+        "argument": "--man-path",
+        "arguments": "--man-path",
+        "description": "Print the manpath (see man(1)) for the man pages for this version of Git and exit."
+      },
+      {
+        "argument": "--info-path",
+        "arguments": "--info-path",
+        "description": "Print the path where the Info files documenting this version of Git are installed and exit"
+      },
+      {
+        "argument": "--paginate",
+        "arguments": "--paginate, -p",
+        "description": "Pipe all output into less (or if set, $PAGER) if standard output is a terminal. This overrides the pager.<cmd> configuration options"
+      },
+      {
+        "argument": "--no-pager",
+        "arguments": "--no-pager, -P",
+        "description": "Do not pipe Git output into a pager."
+      },
+      {
+        "argument": "--git-dir=<path>",
+        "arguments": "--git-dir=<path>",
+        "description": "Set the path to the repository (\".git\" directory).\nThis can also be controlled by setting the GIT_DIR environment variable.\nIt can be an absolute path or relative path to current working directory."
+      },
+      {
+        "argument": "--work-tree=<path>",
+        "arguments": "--work-tree=<path>",
+        "description": "Set the path to the working tree.\nIt can be an absolute path or a path relative to the current working directory.\nThis can also be controlled by setting the GIT_WORK_TREE environment variable and the core.worktree configuration variable"
+      },
+      {
+        "argument": "--namespace=<path>",
+        "arguments": "--namespace=<path>",
+        "description": "Set the Git namespace.\nSee gitnamespaces[7] for more details.\nEquivalent to setting the GIT_NAMESPACE environment variable."
+      },
+      {
+        "argument": "--bare",
+        "arguments": "--bare",
+        "description": "Treat the repository as a bare repository.\nIf GIT_DIR environment is not set, it is set to the current working directory."
+      },
+      {
+        "argument": "--no-replace-objects",
+        "arguments": "--no-replace-objects",
+        "description": "Do not use replacement refs to replace Git objects.\nThis is equivalent to exporting the GIT_NO_REPLACE_OBJECTS environment variable with any value."
+      },
+      {
+        "argument": "--no-lazy-fetch",
+        "arguments": "--no-lazy-fetch",
+        "description": "Do not fetch missing objects from the promisor remote on demand.\nUseful together with git cat-file -e <object> to see if the object is locally available.\nThis is equivalent to setting the GIT_NO_LAZY_FETCH environment variable to 1"
+      },
+      {
+        "argument": "--no-optional-locks",
+        "arguments": "--no-optional-locks",
+        "description": "Do not perform optional operations that require locks.\nThis is equivalent to setting the GIT_OPTIONAL_LOCKS to 0."
+      },
+      {
+        "argument": "--no-advice",
+        "arguments": "--no-advice",
+        "description": "Disable all advice hints from being printed"
+      },
+      {
+        "argument": "--literal-pathspecs ",
+        "arguments": "--literal-pathspecs ",
+        "description": "Treat pathspecs literally (i.e. no globbing, no pathspec magic).\nThis is equivalent to setting the GIT_LITERAL_PATHSPECS environment variable to 1."
+      },
+      {
+        "argument": "--glob-pathspecs",
+        "arguments": "--glob-pathspecs",
+        "description": "Add \"glob\" magic to all pathspec.\nThis is equivalent to setting the GIT_GLOB_PATHSPECS environment variable to 1."
+      },
+      {
+        "argument": "--noglob-pathspecs",
+        "arguments": "--noglob-pathspecs",
+        "description": "Add \"literal\" magic to all pathspec.\nThis is equivalent to setting the GIT_NOGLOB_PATHSPECS environment variable to 1."
+      },
+      {
+        "argument": "--icase-pathspecs",
+        "arguments": "--icase-pathspecs",
+        "description": "Add \"icase\" magic to all pathspec.\nThis is equivalent to setting the GIT_ICASE_PATHSPECS environment variable to 1."
+      },
+      {
+        "argument": "--attr-source=<tree-ish>",
+        "arguments": "--attr-source=<tree-ish>",
+        "description": "Read gitattributes from <tree-ish> instead of the worktree. See gitattributes[5]. This is equivalent to setting the GIT_ATTR_SOURCE environment variable."
+      }
+    ]
+  },
+  {
+    "section": "",
+    "is_command": false,
+    "enabled": false,
+    "description": "",
+    "options": [
+      {
+        "method_name": "optional",
         "argument": "",
         "arguments": "",
         "description": ""
