@@ -111,9 +111,14 @@ fn test_batch() {
                 path.as_str(),
             commands:
                 reset::reset(),
-                checkout::checkout().add_option(checkout::pathspec(".")),
-                reset::reset().add_option(reset::hard()),
-                clean::clean().add_option(clean::force()).add_option(clean::recurse_directories()).add_option(clean::no_gitignore())
+                checkout::checkout()
+                    .add_option(checkout::pathspec(".")),
+                reset::reset()
+                    .add_option(reset::hard()),
+                clean::clean()
+                    .add_option(clean::force())
+                    .add_option(clean::recurse_directories())
+                    .add_option(clean::no_gitignore())
         ).is_ok());
 
         assert!(fs::exists(format!("{}/{}", path, "README.md")).is_ok_and(|x| x));
