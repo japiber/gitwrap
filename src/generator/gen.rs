@@ -31,32 +31,40 @@ pub fn main() {
     } else {
         &args[1]
     };
+    generate(desc_file);
+}
+
+fn generate(desc_file: &str) {
     println!("reading git commands description file: {desc_file}");
-    let json = read_descriptions(desc_file);
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("Time went backwards");
-    let output_dir = format!("output_{:?}", now.as_millis());
-    let engine = command_templates();
-    fs::create_dir_all(&output_dir).expect("could not create output dir");
+    let output_dir = create_output_dir();
     let git_command_file = format!("{output_dir}/{GIT_COMMAND_FILENAME}");
+    let engine = command_templates();
     git_command_file_create(&engine, &git_command_file);
-    for desc in json.as_array().unwrap() {
-        let enabled = desc.get("enabled").unwrap().as_bool().unwrap();
-        if enabled {
-            let command_name = desc.get("command_name").unwrap().as_str().unwrap();
-            let options = desc.get("options").unwrap().as_array().unwrap();
-            let description = desc.get("description").unwrap().as_str().unwrap();
-            let doc_url = desc.get("doc-url").unwrap().as_str().unwrap();
-            command_generator(
-                output_dir.as_str(),
-                &engine,
-                command_name,
-                options,
-                description,
-                doc_url,
-            );
-            git_command_file_append_command(&engine, command_name, &git_command_file);
+    let json = read_descriptions(desc_file);
+    for section in json.as_array().unwrap() {
+        section_generator(output_dir.as_str(), &engine, section, git_command_file.as_str())
+    }
+}
+
+fn section_generator(output_dir: &str, engine: &Engine, section: &Value, git_command_file: &str) {
+    let enabled = section.get("enabled").unwrap().as_bool().unwrap();
+    if enabled {
+        let command_name = section.get("section").unwrap().as_str().unwrap();
+        let is_command = section.get("is_command").unwrap().as_bool().unwrap();
+        let options = section.get("options").unwrap().as_array().unwrap();
+        let description = section.get("description").unwrap().as_str().unwrap();
+        let doc_url = section.get("doc-url").unwrap().as_str().unwrap();
+        command_generator(
+            output_dir,
+            engine,
+            command_name,
+            options,
+            description,
+            doc_url,
+            is_command
+        );
+        if is_command {
+            git_command_file_append_command(engine, command_name, git_command_file);
         }
     }
 }
@@ -68,6 +76,7 @@ fn command_generator(
     options: &Vec<Value>,
     description: &str,
     doc_url: &str,
+    is_command: bool
 ) {
     let normalized_command_name = normalize(command_name);
     let command_path = format!("{output_dir}/{normalized_command_name}");
@@ -78,6 +87,7 @@ fn command_generator(
         format!("{command_path}/{MOD_RS_FILENAME}").as_str(),
         description,
         doc_url,
+        is_command
     );
     command_options_file_generator(
         engine,
@@ -93,11 +103,12 @@ fn command_mod_file_generator(
     mod_file_path: &str,
     description: &str,
     doc_url: &str,
+    is_command: bool
 ) {
     let tpl = engine.template(TEMPLATE_MOD_RS);
     let descriptions: Vec<&str> = description.lines().collect();
     let mod_rs_content = tpl
-        .render(upon::value!{command_name: normalize(cmd), git_command: cmd, descriptions: descriptions, doc_url: doc_url})
+        .render(upon::value!{is_command: is_command, command_name: normalize(cmd), git_command: cmd, descriptions: descriptions, doc_url: doc_url})
         .to_string()
         .expect("could not render template mod_rs");
 
@@ -263,4 +274,13 @@ fn render(engine: &Engine, template_name: &str, template_values: upon::Value) ->
 fn read_descriptions(file_name: &str) -> Value {
     let contents = fs::read_to_string(file_name).expect("Should have been able to read the file");
     from_str(contents.as_str()).expect("file should be proper JSON")
+}
+
+fn create_output_dir() -> String {
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards");
+    let output_dir = format!("output_{:?}", now.as_millis());
+    fs::create_dir_all(&output_dir).expect("could not create output dir");
+    output_dir
 }

@@ -31,3 +31,4 @@ pub mod rebase;
 pub mod reset;
 pub mod rev_parse;
 pub mod status;
+pub mod generic;

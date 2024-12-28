@@ -18,11 +18,11 @@ pub const TEMPLATE_OPTION_NAME_CONSTANT: &str = "option_name_constant";
 static GIT_TEMPLATES_COMMON: &[(&str, &str)] = &[
     (
         TEMPLATE_MOD_RS,
-        r#"use crate::wrap_command::WrapCommand;
-use crate::git;
-
-mod options;
+        r#"mod options;
 pub use options::*;
+
+{% if is_command %}use crate::wrap_command::WrapCommand;
+use crate::git;
 
 pub const GIT_COMMAND: &str = "{{ git_command }}";
 
@@ -30,7 +30,7 @@ pub const GIT_COMMAND: &str = "{{ git_command }}";
 {% endfor %}/// [Git doc]({{ doc_url }})
 pub fn {{ command_name }}() -> WrapCommand {
     git(GIT_COMMAND)
-}
+}{% endif %}
 "#
     ),
     (
